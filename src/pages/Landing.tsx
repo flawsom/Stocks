@@ -492,6 +492,45 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* ── Market guides — SEO hubs (hub/spoke internal links) ── */}
+      <section className="px-6 md:px-10 py-16 md:py-20 border-t border-editorial-verdant/40">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <span className={cn(MICRO, "text-editorial-marker")}>Market Guides</span>
+              <h2 className="mt-4 font-serif text-[clamp(28px,4vw,48px)] leading-[0.95] tracking-[-0.02em] text-editorial-ink">
+                A live guide for every market.
+              </h2>
+            </div>
+            <p className="max-w-sm text-sm font-times leading-relaxed text-editorial-newsprint">
+              Free reference pages for each asset class — what&rsquo;s covered, where the data comes from, and how to open
+              the desk in the terminal.
+            </p>
+          </div>
+          <ul className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-px bg-editorial-verdant/25 border border-editorial-verdant/25">
+            {[
+              { to: "/stocks", label: "US Stocks", blurb: "Live quotes, charts & AI forecasts for 18 blue-chip stocks" },
+              { to: "/crypto", label: "Crypto", blurb: "14 pairs streamed 24/7 from independent venues" },
+              { to: "/forex", label: "Forex", blurb: "12 major & cross pairs, keyless, quoted to the pip" },
+              { to: "/indices", label: "Indices", blurb: "Real S&P 500, Nasdaq, Dow, Russell 2000 & VIX levels" },
+              { to: "/futures", label: "Futures", blurb: "E-mini S&P, crude, metals & grains on real contracts" },
+            ].map((m) => (
+              <li key={m.to} className="bg-editorial-bone p-5">
+                <Link to={m.to} className="group block">
+                  <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-editorial-ink group-hover:text-editorial-marker transition-colors">
+                    {m.label}
+                  </span>
+                  <p className="mt-2 text-[13px] font-times leading-relaxed text-editorial-newsprint">{m.blurb}</p>
+                  <span className="mt-3 inline-block text-[11px] font-semibold uppercase tracking-[0.16em] text-editorial-marker">
+                    Open guide →
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
       {/* ── Live market briefs — the carousel ───────────────────── */}
       <section className="px-6 md:px-10 py-20 md:py-28 border-t border-editorial-verdant/40 bg-editorial-bone">
         <div className="max-w-[1400px] mx-auto">

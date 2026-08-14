@@ -1,0 +1,20 @@
+# OmegaTrade Ultra
+
+> Free real-time multi-market trading terminal — live stock, crypto, forex, index and futures prices with an in-browser AI forecast ensemble. Zero mock data, 20+ free data sources, paper trading included. No account, no cost.
+
+## Key pages
+
+- [Home](https://stock.unifies.codes/): Multi-market terminal landing page with a live real-time ticker.
+- [US Stocks](https://stock.unifies.codes/stocks): Live prices, charts and AI forecasts for 18 blue-chip US stocks (AAPL, NVDA, TSLA, MSFT, AMZN and more).
+- [Crypto](https://stock.unifies.codes/crypto): 14 crypto pairs (BTC, ETH, SOL, XRP, ...) streamed 24/7 from independent venues.
+- [Forex](https://stock.unifies.codes/forex): 12 major and cross currency pairs with keyless, live quotes.
+- [Indices](https://stock.unifies.codes/indices): Real S&P 500, Nasdaq Composite, Dow, Russell 2000 and VIX index levels.
+- [Futures](https://stock.unifies.codes/futures): E-mini S&P 500, crude oil, natural gas, metals, grains and softs futures on real contracts.
+- [Trading Terminal](https://stock.unifies.codes/terminal): The full live terminal — candlestick charts, order books, technical analysis, AI forecasts and paper trading.
+
+## Facts
+
+- The terminal runs entirely in the browser. There is no account, no subscription, and nothing to install.
+- Prices come from free public providers — Finnhub, Polygon, Kraken, Coinbase, OKX, Binance public market data, TwelveData, er-api, the European Central Bank, Alpha Vantage and Yahoo Finance relays — with automatic failover when a source is rate-limited.
+- The self-improving 7-model AI forecast ensemble runs client-side, keeps a public accuracy ledger of its own predictions and retrains on its own misses.
+- Every number displayed is live; the application contains no mock data.

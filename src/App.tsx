@@ -1,8 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import { Suspense, lazy, useEffect } from "react";
 import { Toaster } from "sonner";
 import Landing from "@/pages/Landing";
 import NotFound from "@/pages/NotFound";
+import MarketPage, { MARKET_GUIDES } from "@/pages/MarketPage";
 import { startLiveFeeds } from "@/lib/feeds";
 import useCanvasCursor from "@/hooks/useCanvasCursor";
 
@@ -41,32 +43,37 @@ export default function App() {
   useCanvasCursor();
 
   return (
-    <BrowserRouter basename={BASE}>
-      <canvas id="canvas" aria-hidden="true" />
-      <Toaster
-        position="bottom-right"
-        toastOptions={{
-          style: {
-            background: "#ffffff",
-            border: "1px solid #c8d2c8",
-            color: "#121613",
-            fontFamily: "JetBrains Mono, monospace",
-            fontSize: "12px",
-          },
-        }}
-      />
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route
-          path="/terminal"
-          element={
-            <Suspense fallback={<TerminalFallback />}>
-              <TradingDashboard />
-            </Suspense>
-          }
+    <HelmetProvider>
+      <BrowserRouter basename={BASE}>
+        <canvas id="canvas" aria-hidden="true" />
+        <Toaster
+          position="bottom-right"
+          toastOptions={{
+            style: {
+              background: "#ffffff",
+              border: "1px solid #c8d2c8",
+              color: "#121613",
+              fontFamily: "JetBrains Mono, monospace",
+              fontSize: "12px",
+            },
+          }}
         />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route
+            path="/terminal"
+            element={
+              <Suspense fallback={<TerminalFallback />}>
+                <TradingDashboard />
+              </Suspense>
+            }
+          />
+          {MARKET_GUIDES.map((g) => (
+            <Route key={g.slug} path={`/${g.slug}`} element={<MarketPage market={g.market} />} />
+          ))}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </HelmetProvider>
   );
 }
