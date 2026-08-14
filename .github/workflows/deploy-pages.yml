@@ -1,0 +1,62 @@
+# Free static hosting via GitHub Pages — no servers, no cost.
+#
+# How to enable (one-time, ~30 seconds):
+#   1. Repo → Settings → Pages → Source: "GitHub Actions"
+# Your live site: https://stock.unifies.codes/
+#
+# The build uses the project's own `bun run build` script, which emits a
+# static SPA into `dist/`. SPA routing is handled by the repo's
+# `vercel.json` rewrites + `public/_redirects` — see the README for the
+# Netlify/Vercel alternatives.
+
+name: Deploy to GitHub Pages
+
+# Auto-deploys on every push to `main`. Manual deploys are still available
+# from the Actions tab ("Deploy to GitHub Pages" → Run workflow).
+# Note: a run is attributed to whoever triggers it — pushing with your own
+# account keeps every run under your name.
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+      # The site is served at the custom domain root (stock.unifies.codes),
+      # so assets are built with Vite's default base "/". GitHub Pages
+      # automatically redirects the github.io URL to the custom domain.
+      - name: Build
+        run: bun run build
+      # GitHub Pages has no SPA rewrites: copy the built index into 404.html
+      # so deep links (/Stocks/terminal) boot the app and the router restores
+      # the requested route.
+      - name: SPA fallback for GitHub Pages
+        run: cp dist/index.html dist/404.html
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

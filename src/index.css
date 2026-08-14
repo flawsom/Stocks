@@ -1,0 +1,269 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Editorial broadsheet "green room" — bone-white canvas, press-black ink,
+       single highlighter-green accent. The whole app (landing + terminal)
+       shares this light system. */
+    --background: 132 100% 99%;
+    --foreground: 130 10% 8%;
+    --card: 132 100% 99%;
+    --card-foreground: 130 10% 8%;
+    --popover: 132 100% 99%;
+    --popover-foreground: 130 10% 8%;
+    --primary: 136 74% 34%;
+    --primary-foreground: 132 100% 99%;
+    --secondary: 130 30% 95%;
+    --secondary-foreground: 130 10% 15%;
+    --muted: 130 30% 95%;
+    --muted-foreground: 138 10% 35%;
+    --accent: 136 74% 34%;
+    --accent-foreground: 132 100% 99%;
+    --destructive: 2 64% 52%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 130 20% 80%;
+    --input: 130 20% 80%;
+    --ring: 136 74% 34%;
+    --radius: 0.375rem;
+  }
+
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-terminal-bg text-foreground font-sans;
+    background: #fafffa;
+    min-height: 100vh;
+  }
+
+  #root {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #fafffa;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #c8d2c8;
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #93b799;
+  }
+
+  /* lightweight-charts overrides */
+  .tv-lightweight-charts {
+    border-radius: 0 !important;
+  }
+}
+
+@layer components {
+  .terminal-panel {
+    @apply bg-terminal-panel border border-terminal-border rounded-lg;
+    background: linear-gradient(180deg, #ffffff 0%, #f4f9f2 100%);
+  }
+
+  .glass-panel {
+    background: rgba(250, 255, 250, 0.88);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(35, 41, 36, 0.15);
+    border-radius: 8px;
+  }
+
+  .price-up {
+    @apply text-bull font-mono font-semibold;
+    text-shadow: 0 0 10px rgba(10, 156, 54, 0.15);
+  }
+
+  .price-down {
+    @apply text-bear font-mono font-semibold;
+    text-shadow: 0 0 10px rgba(212, 59, 54, 0.15);
+  }
+
+  .price-neutral {
+    @apply text-slate-400 font-mono;
+  }
+
+  .btn-terminal {
+    @apply px-3 py-1.5 text-xs font-mono font-medium rounded
+           border border-terminal-border bg-terminal-surface
+           text-slate-300 hover:border-brand-cyan hover:text-brand-cyan
+           transition-all duration-200 cursor-pointer;
+  }
+
+  .btn-terminal-active {
+    @apply border-brand-cyan text-brand-cyan bg-terminal-bg;
+    box-shadow: 0 0 10px rgba(22, 160, 52, 0.2);
+  }
+
+  .metric-card {
+    @apply terminal-panel p-3 flex flex-col gap-1;
+  }
+
+  .metric-label {
+    @apply text-xs font-mono text-slate-500 uppercase tracking-wider;
+  }
+
+  .metric-value {
+    @apply text-base font-mono font-semibold text-slate-100;
+  }
+
+  .indicator-dot {
+    @apply w-1.5 h-1.5 rounded-full animate-pulse-glow;
+  }
+
+  .live-indicator {
+    @apply flex items-center gap-1.5 text-xs font-mono;
+  }
+
+  /* Scan line effect */
+  .scan-line-overlay::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(22, 160, 52, 0.08), transparent);
+    animation: scanLine 4s linear infinite;
+    pointer-events: none;
+  }
+
+  /* Accent glow on borders */
+  .cyan-border {
+    border-color: rgba(22, 160, 52, 0.35) !important;
+    box-shadow: 0 0 8px rgba(22, 160, 52, 0.12);
+  }
+
+  .prediction-badge {
+    @apply px-2 py-0.5 rounded text-xs font-mono font-bold;
+  }
+
+  .prediction-up {
+    @apply prediction-badge bg-bull-dark text-bull border border-bull/30;
+  }
+
+  .prediction-down {
+    @apply prediction-badge bg-bear-dark text-bear border border-bear/30;
+  }
+
+  .prediction-neutral {
+    @apply prediction-badge bg-terminal-surface text-slate-400 border border-terminal-border;
+  }
+
+  .neural-node {
+    @apply w-2 h-2 rounded-full bg-neural border border-neural/50 animate-neural-pulse;
+  }
+
+  .training-bar {
+    @apply h-1 rounded-full bg-terminal-border overflow-hidden;
+  }
+
+  .training-fill {
+    @apply h-full rounded-full transition-all duration-300;
+    background: linear-gradient(90deg, #7c3aed, #a78bfa);
+  }
+
+  /* Ticker tape animation */
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .ticker-tape {
+    animation: ticker 40s linear infinite;
+  }
+
+  .ticker-tape:hover {
+    animation-play-state: paused;
+  }
+}
+
+@layer utilities {
+  /* Editorial broadsheet — duotone image treatment: every photographic asset is
+     pushed through the grayscale→green filter chain so the whole page reads as
+     a two-tone green duotone (blacks → deep green-black, whites → bone). */
+  .editorial-img {
+    filter: grayscale(1) saturate(1) invert(0.27) sepia(0.07) saturate(10.67) hue-rotate(80deg) brightness(1.02) contrast(0.83);
+  }
+
+  /* Small-caps micro-label — the chrome of the editorial system (11px/550/uppercase). */
+  .micro-label {
+    font-size: 11px;
+    font-weight: 550;
+    letter-spacing: 0.11px;
+    text-transform: uppercase;
+  }
+
+  /* Hairline underline link — Times body with a 1px underline hugging the baseline. */
+  .underline-link {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1px;
+  }
+
+  .text-glow-cyan {
+    text-shadow: 0 0 10px rgba(22, 160, 52, 0.35);
+  }
+  .text-glow-green {
+    text-shadow: 0 0 10px rgba(10, 156, 54, 0.35);
+  }
+  .text-glow-gold {
+    text-shadow: 0 0 10px rgba(161, 98, 7, 0.35);
+  }
+  .text-glow-red {
+    text-shadow: 0 0 10px rgba(212, 59, 54, 0.35);
+  }
+  .text-glow-purple {
+    text-shadow: 0 0 10px rgba(124, 58, 237, 0.35);
+  }
+  .border-glow-cyan {
+    box-shadow: 0 0 0 1px rgba(22, 160, 52, 0.3), 0 0 12px rgba(22, 160, 52, 0.12);
+  }
+  .font-terminal {
+    font-family: "JetBrains Mono", monospace;
+  }
+  .truncate-price {
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+/* ── Canvas cursor trail (global overlay) ──────────────────────────────────
+   Fixed, full-viewport, above all content but pointer-transparent so it
+   never blocks clicks, taps, scrolling, or text selection. The trail is
+   drawn by src/hooks/useCanvasCursor.ts on every page. */
+#canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #canvas {
+    display: none;
+  }
+}

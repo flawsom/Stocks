@@ -1,0 +1,189 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 980" width="1400" height="980" role="img" aria-label="OmegaTrade Ultra interface screens — terminal, mobile, auth, analytics, settings, depth">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0e1410"/>
+      <stop offset="1" stop-color="#090d0b"/>
+    </linearGradient>
+    <linearGradient id="p2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.02"/>
+    </linearGradient>
+    <radialGradient id="orb2" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#2bee4b" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#2bee4b" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur2" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="40"/>
+    </filter>
+  </defs>
+
+  <rect width="1400" height="980" fill="url(#bg2)"/>
+  <circle cx="180" cy="180" r="300" fill="url(#orb2)" filter="url(#blur2)"/>
+  <circle cx="1220" cy="800" r="320" fill="url(#orb2)" filter="url(#blur2)"/>
+
+  <!-- panel frame -->
+  <g>
+    <rect x="60" y="60" width="620" height="400" rx="20" fill="url(#p2)" stroke="#ffffff" stroke-opacity="0.14"/>
+    <!-- terminal header -->
+    <rect x="60" y="60" width="620" height="56" rx="20" fill="#ffffff" fill-opacity="0.05"/>
+    <text x="84" y="95" font-family="monospace" font-size="14" font-weight="700" fill="#2bee4b">Ω ULTRA TERMINAL</text>
+    <g font-family="system-ui, sans-serif" font-size="11" fill="#7d8f80" text-anchor="middle">
+      <text x="240" y="93">STK</text><text x="310" y="93" fill="#2bee4b">CRYP</text><text x="380" y="93">FX</text><text x="450" y="93">IND</text><text x="520" y="93">FUT</text>
+    </g>
+    <text x="650" y="93" font-family="monospace" font-size="12" fill="#2bee4b" text-anchor="end">● LIVE</text>
+    <!-- watchlist column -->
+    <g font-family="monospace" font-size="12">
+      <text x="84" y="150" fill="#7d8f80">AAPL</text><text x="300" y="150" fill="#fafffa" text-anchor="end">305.82</text><text x="330" y="150" fill="#2bee4b">▲</text>
+      <text x="84" y="178" fill="#7d8f80">MSFT</text><text x="300" y="178" fill="#fafffa" text-anchor="end">472.10</text><text x="330" y="178" fill="#2bee4b">▲</text>
+      <text x="84" y="206" fill="#7d8f80">BTC</text><text x="300" y="206" fill="#fafffa" text-anchor="end">62,791</text><text x="330" y="206" fill="#2bee4b">▲</text>
+      <text x="84" y="234" fill="#7d8f80">^GSPC</text><text x="300" y="234" fill="#fafffa" text-anchor="end">7,803.7</text><text x="330" y="234" fill="#2bee4b">▲</text>
+      <text x="84" y="262" fill="#7d8f80">EUR/USD</text><text x="300" y="262" fill="#fafffa" text-anchor="end">1.1571</text><text x="330" y="262" fill="#d43b36">▼</text>
+      <text x="84" y="290" fill="#7d8f80">ES</text><text x="300" y="290" fill="#fafffa" text-anchor="end">7,828</text><text x="330" y="290" fill="#2bee4b">▲</text>
+    </g>
+    <line x1="360" y1="130" x2="360" y2="440" stroke="#1d2a20"/>
+    <!-- chart panel -->
+    <rect x="376" y="140" width="288" height="130" rx="10" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.08"/>
+    <g>
+      <rect x="392" y="218" width="10" height="38" fill="#0a9c36"/>
+      <rect x="412" y="204" width="10" height="30" fill="#d43b36"/>
+      <rect x="432" y="212" width="10" height="40" fill="#0a9c36"/>
+      <rect x="452" y="192" width="10" height="26" fill="#d43b36"/>
+      <rect x="472" y="206" width="10" height="36" fill="#0a9c36"/>
+      <rect x="492" y="182" width="10" height="24" fill="#d43b36"/>
+      <rect x="512" y="196" width="10" height="34" fill="#0a9c36"/>
+      <rect x="532" y="176" width="10" height="22" fill="#d43b36"/>
+      <rect x="552" y="188" width="10" height="32" fill="#0a9c36"/>
+      <rect x="572" y="168" width="10" height="20" fill="#d43b36"/>
+      <rect x="592" y="180" width="10" height="30" fill="#0a9c36"/>
+      <rect x="612" y="160" width="10" height="18" fill="#d43b36"/>
+      <polyline points="392,236 412,220 432,228 452,206 472,224 492,194 512,212 532,186 552,204 572,178 592,196 612,168" fill="none" stroke="#2bee4b" stroke-width="2.5"/>
+    </g>
+    <!-- right rail -->
+    <rect x="376" y="286" width="140" height="60" rx="10" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.08"/>
+    <text x="392" y="312" font-family="system-ui, sans-serif" font-size="11" fill="#7d8f80">AI TARGET</text>
+    <text x="392" y="334" font-family="monospace" font-size="16" fill="#2bee4b">62,900</text>
+    <rect x="532" y="286" width="132" height="60" rx="10" fill="#ffffff" fill-opacity="0.03" stroke="#ffffff" stroke-opacity="0.08"/>
+    <text x="548" y="312" font-family="system-ui, sans-serif" font-size="11" fill="#7d8f80">ACCURACY</text>
+    <text x="548" y="334" font-family="monospace" font-size="16" fill="#fafffa">67.4%</text>
+    <text x="376" y="382" font-family="system-ui, sans-serif" font-size="12" fill="#7d8f80">Composite signal:</text>
+    <rect x="520" y="368" width="120" height="26" rx="13" fill="#0a9c36" fill-opacity="0.18" stroke="#0a9c36" stroke-opacity="0.5"/>
+    <text x="580" y="385" text-anchor="middle" font-family="monospace" font-size="12" font-weight="700" fill="#0a9c36">BULLISH</text>
+    <text x="376" y="420" font-family="monospace" font-size="11" fill="#4f6152">BUY 1 @ 62,791 · est. fee $0.13</text>
+    <text x="660" y="420" font-family="monospace" font-size="11" fill="#2bee4b" text-anchor="end">BUY ▸</text>
+    <text x="84" y="440" font-family="system-ui, sans-serif" font-size="12" fill="#9fe8ac">Live terminal — 5 markets · tick-by-tick</text>
+    <text x="650" y="440" font-family="system-ui, sans-serif" font-size="12" fill="#4f6152" text-anchor="end">TICK 0.4s · 20+ sources</text>
+  </g>
+
+  <!-- mobile frame -->
+  <g>
+    <rect x="720" y="60" width="300" height="400" rx="24" fill="url(#p2)" stroke="#ffffff" stroke-opacity="0.14"/>
+    <rect x="832" y="72" width="76" height="10" rx="5" fill="#ffffff" fill-opacity="0.12"/>
+    <text x="870" y="130" text-anchor="middle" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#fafffa">Ω ULTRA</text>
+    <text x="870" y="150" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#7d8f80">Watchlist</text>
+    <g font-family="monospace" font-size="12">
+      <text x="744" y="196" fill="#7d8f80">BTC/USDT</text><text x="996" y="196" fill="#fafffa" text-anchor="end">62,791</text>
+      <text x="744" y="226" fill="#7d8f80">ETH/USDT</text><text x="996" y="226" fill="#fafffa" text-anchor="end">3,412</text>
+      <text x="744" y="256" fill="#7d8f80">SOL/USDT</text><text x="996" y="256" fill="#fafffa" text-anchor="end">148.2</text>
+      <text x="744" y="286" fill="#7d8f80">AAPL</text><text x="996" y="286" fill="#fafffa" text-anchor="end">305.82</text>
+      <text x="744" y="316" fill="#7d8f80">^GSPC</text><text x="996" y="316" fill="#fafffa" text-anchor="end">7,803.7</text>
+    </g>
+    <line x1="744" y1="336" x2="996" y2="336" stroke="#1d2a20"/>
+    <rect x="744" y="352" width="252" height="60" rx="12" fill="#2bee4b" fill-opacity="0.14" stroke="#2bee4b" stroke-opacity="0.35"/>
+    <text x="870" y="380" text-anchor="middle" font-family="monospace" font-size="12" fill="#2bee4b">▲ AI SIGNAL · UP · 84%</text>
+    <text x="870" y="400" text-anchor="middle" font-family="monospace" font-size="11" fill="#9fe8ac">target 62,900 · σ 0.03</text>
+    <text x="870" y="446" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#4f6152">Responsive · mobile-first</text>
+  </g>
+
+  <!-- auth frame -->
+  <g>
+    <rect x="1060" y="60" width="280" height="400" rx="20" fill="url(#p2)" stroke="#ffffff" stroke-opacity="0.14"/>
+    <text x="1200" y="120" text-anchor="middle" font-family="Georgia, serif" font-size="26" font-weight="700" fill="#fafffa">Ω ULTRA.</text>
+    <text x="1200" y="146" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#7d8f80">Sign in to your desk</text>
+    <rect x="1090" y="180" width="220" height="44" rx="10" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.14"/>
+    <text x="1106" y="207" font-family="system-ui, sans-serif" font-size="13" fill="#7d8f80">you@example.com</text>
+    <rect x="1090" y="236" width="220" height="44" rx="10" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.14"/>
+    <text x="1106" y="263" font-family="system-ui, sans-serif" font-size="13" fill="#7d8f80">••••••••••</text>
+    <rect x="1090" y="292" width="220" height="46" rx="10" fill="#2bee4b"/>
+    <text x="1200" y="320" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#061308">SIGN IN</text>
+    <text x="1200" y="370" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#7d8f80">or continue with</text>
+    <rect x="1090" y="390" width="104" height="40" rx="10" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.14"/>
+    <rect x="1206" y="390" width="104" height="40" rx="10" fill="#ffffff" fill-opacity="0.05" stroke="#ffffff" stroke-opacity="0.14"/>
+    <text x="1142" y="415" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#fafffa">G</text>
+    <text x="1258" y="415" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#fafffa">GitHub</text>
+  </g>
+
+  <!-- analytics frame -->
+  <g>
+    <rect x="60" y="500" width="620" height="420" rx="20" fill="url(#p2)" stroke="#ffffff" stroke-opacity="0.14"/>
+    <text x="84" y="540" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#fafffa">Signal Analytics</text>
+    <text x="650" y="540" text-anchor="end" font-family="monospace" font-size="12" fill="#2bee4b">● LIVE</text>
+    <!-- bar chart -->
+    <g>
+      <rect x="90" y="700" width="46" height="60" fill="#0a9c36" opacity="0.85"/>
+      <rect x="152" y="660" width="46" height="100" fill="#2bee4b" opacity="0.85"/>
+      <rect x="214" y="690" width="46" height="70" fill="#0a9c36" opacity="0.85"/>
+      <rect x="276" y="640" width="46" height="120" fill="#2bee4b" opacity="0.85"/>
+      <rect x="338" y="676" width="46" height="84" fill="#0a9c36" opacity="0.85"/>
+      <rect x="400" y="620" width="46" height="140" fill="#2bee4b" opacity="0.85"/>
+      <rect x="462" y="656" width="46" height="104" fill="#0a9c36" opacity="0.85"/>
+      <rect x="524" y="600" width="46" height="160" fill="#2bee4b" opacity="0.85"/>
+      <line x1="80" y1="592" x2="620" y2="592" stroke="#1d2a20"/>
+    </g>
+    <text x="90" y="780" font-family="monospace" font-size="11" fill="#4f6152">Mon</text>
+    <text x="270" y="780" font-family="monospace" font-size="11" fill="#4f6152">Wed</text>
+    <text x="520" y="780" font-family="monospace" font-size="11" fill="#4f6152">Fri</text>
+    <g font-family="monospace" font-size="13">
+      <rect x="84" y="820" width="180" height="52" rx="10" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-opacity="0.1"/>
+      <text x="100" y="842" fill="#7d8f80">Accuracy (24h)</text>
+      <text x="100" y="862" fill="#2bee4b" font-weight="700">67.4%</text>
+      <rect x="284" y="820" width="180" height="52" rx="10" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-opacity="0.1"/>
+      <text x="300" y="842" fill="#7d8f80">Signal P&amp;L vs B&amp;H</text>
+      <text x="300" y="862" fill="#fafffa" font-weight="700">+4.2%</text>
+      <rect x="484" y="820" width="180" height="52" rx="10" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-opacity="0.1"/>
+      <text x="500" y="842" fill="#7d8f80">Hard examples mined</text>
+      <text x="500" y="862" fill="#9fe8ac" font-weight="700">38</text>
+    </g>
+  </g>
+
+  <!-- settings frame -->
+  <g>
+    <rect x="720" y="500" width="300" height="420" rx="20" fill="url(#p2)" stroke="#ffffff" stroke-opacity="0.14"/>
+    <text x="744" y="540" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#fafffa">Settings</text>
+    <g font-family="system-ui, sans-serif" font-size="13">
+      <text x="744" y="586" fill="#7d8f80">Data provider mesh</text>
+      <text x="996" y="586" text-anchor="end" fill="#2bee4b">20+ live</text>
+      <line x1="744" y1="600" x2="996" y2="600" stroke="#1d2a20"/>
+      <text x="744" y="634" fill="#7d8f80">Auto-training</text>
+      <text x="996" y="634" text-anchor="end" fill="#2bee4b">ON</text>
+      <line x1="744" y1="648" x2="996" y2="648" stroke="#1d2a20"/>
+      <text x="744" y="682" fill="#7d8f80">Uncertainty guard</text>
+      <text x="996" y="682" text-anchor="end" fill="#2bee4b">σ 0.14</text>
+      <line x1="744" y1="696" x2="996" y2="696" stroke="#1d2a20"/>
+      <text x="744" y="730" fill="#7d8f80">Paper account</text>
+      <text x="996" y="730" text-anchor="end" fill="#fafffa">$102,410</text>
+      <line x1="744" y1="744" x2="996" y2="744" stroke="#1d2a20"/>
+      <text x="744" y="778" fill="#7d8f80">Theme</text>
+      <text x="996" y="778" text-anchor="end" fill="#fafffa">Editorial</text>
+    </g>
+  </g>
+
+  <!-- order book frame -->
+  <g>
+    <rect x="1060" y="500" width="280" height="420" rx="20" fill="url(#p2)" stroke="#ffffff" stroke-opacity="0.14"/>
+    <text x="1084" y="540" font-family="system-ui, sans-serif" font-size="15" font-weight="700" fill="#fafffa">Order Depth</text>
+    <text x="1316" y="540" text-anchor="end" font-family="monospace" font-size="12" fill="#2bee4b">SPREAD 0.01</text>
+    <g font-family="monospace" font-size="12">
+      <text x="1084" y="580" fill="#7d8f80">BID</text><text x="1180" y="580" fill="#fafffa" text-anchor="end">62,790.5</text><text x="1316" y="580" fill="#0a9c36" text-anchor="end">1.24</text>
+      <text x="1084" y="606" fill="#7d8f80">BID</text><text x="1180" y="606" fill="#fafffa" text-anchor="end">62,790.0</text><text x="1316" y="606" fill="#0a9c36" text-anchor="end">3.10</text>
+      <text x="1084" y="632" fill="#7d8f80">BID</text><text x="1180" y="632" fill="#fafffa" text-anchor="end">62,789.5</text><text x="1316" y="632" fill="#0a9c36" text-anchor="end">0.87</text>
+    </g>
+    <line x1="1084" y1="650" x2="1316" y2="650" stroke="#1d2a20"/>
+    <g font-family="monospace" font-size="12">
+      <text x="1084" y="676" fill="#7d8f80">ASK</text><text x="1180" y="676" fill="#fafffa" text-anchor="end">62,791.0</text><text x="1316" y="676" fill="#d43b36" text-anchor="end">2.05</text>
+      <text x="1084" y="702" fill="#7d8f80">ASK</text><text x="1180" y="702" fill="#fafffa" text-anchor="end">62,791.5</text><text x="1316" y="702" fill="#d43b36" text-anchor="end">4.60</text>
+      <text x="1084" y="728" fill="#7d8f80">ASK</text><text x="1180" y="728" fill="#fafffa" text-anchor="end">62,792.0</text><text x="1316" y="728" fill="#d43b36" text-anchor="end">1.12</text>
+    </g>
+    <text x="1200" y="790" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#7d8f80">Built from live</text>
+    <text x="1200" y="812" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#7d8f80">venue order books</text>
+  </g>
+</svg>
