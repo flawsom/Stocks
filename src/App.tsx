@@ -13,7 +13,7 @@ const TradingDashboard = lazy(() => import("@/pages/TradingDashboard"));
 
 // Router basename follows Vite's build-time base. On GitHub Pages the site is
 // served at the custom domain root (stock.unifies.codes), so the base is "/";
-// on Freebuff/Vercel/Netlify the base is "/" and behavior is unchanged.
+// on Vercel/Netlify and local dev the base is "/" and behavior is unchanged.
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") || "/";
 
 function TerminalFallback() {

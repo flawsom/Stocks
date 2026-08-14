@@ -1,7 +1,7 @@
 import type { MarketSymbol, Timeframe, MarketType } from "@/types";
 
 /**
- * Read a Vite env var (set in the Freebuff Keys/API-keys tab as VITE_*) safely
+ * Read a Vite env var (set as VITE_* in the environment) safely
  * in both the browser bundle and the Node test runner. Returns undefined when
  * unset so each key falls back to its bundled shared key below.
  */
