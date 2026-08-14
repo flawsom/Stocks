@@ -26,7 +26,7 @@ A professional-grade, **zero-cost** trading terminal that streams **live real-ti
 <img src="https://img.shields.io/badge/Zero%20Mock%20Data-verified-2bee4b?style=flat-square" alt="Zero mock data" />
 
 <!-- CTA BUTTONS -->
-<a href="https://flawsom.github.io/Stocks/"><kbd style="background:#2bee4b;color:#061308;padding:10px 22px;border-radius:6px;font-weight:700;font-family:sans-serif;text-decoration:none;">🚀 LIVE DEMO</kbd></a>
+<a href="https://stock.unifies.codes/"><kbd style="background:#2bee4b;color:#061308;padding:10px 22px;border-radius:6px;font-weight:700;font-family:sans-serif;text-decoration:none;">🚀 LIVE DEMO</kbd></a>
 <a href="#table-of-contents"><kbd style="background:#121613;color:#fafffa;padding:10px 22px;border-radius:6px;font-weight:700;font-family:sans-serif;text-decoration:none;">📖 DOCUMENTATION</kbd></a>
 <a href="#quick-start"><kbd style="background:#121613;color:#fafffa;padding:10px 22px;border-radius:6px;font-weight:700;font-family:sans-serif;text-decoration:none;">⚡ INSTALLATION</kbd></a>
 <a href="https://github.com/flawsom/Stocks"><kbd style="background:#121613;color:#fafffa;padding:10px 22px;border-radius:6px;font-weight:700;font-family:sans-serif;text-decoration:none;">⭐ GITHUB</kbd></a>
@@ -36,7 +36,7 @@ A professional-grade, **zero-cost** trading terminal that streams **live real-ti
 <a href="https://vercel.com/new/clone?repository-url=https://github.com/flawsom/Stocks"><img src="https://vercel.com/button" alt="Deploy with Vercel" /></a>
 <a href="https://app.netlify.com/start/deploy?repository=https://github.com/flawsom/Stocks"><img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" /></a>
 
-> 🟢 **Live demo note:** `flawsom.github.io/Stocks` goes live the moment GitHub Pages is enabled — **Repo → Settings → Pages → Source: "GitHub Actions"**. The included workflow then deploys every push automatically. Prefer an instant host? The Vercel / Netlify buttons above are live now.
+> 🟢 **Live demo note:** `stock.unifies.codes` goes live the moment GitHub Pages is enabled — **Repo → Settings → Pages → Source: "GitHub Actions"**. The included workflow then deploys every push automatically. Prefer an instant host? The Vercel / Netlify buttons above are live now.
 
 </div>
 
@@ -113,7 +113,7 @@ A professional-grade, **zero-cost** trading terminal that streams **live real-ti
 | **Settings** | Provider mesh status, auto-training, uncertainty guard, paper account, theme |
 | **Order depth** | Live bid/ask ladder with spread + real venue order books |
 
-> 🖼️ The terminal itself is best seen live — open the **[Live Demo](https://flawsom.github.io/Stocks/)** and watch the candles build themselves.
+> 🖼️ The terminal itself is best seen live — open the **[Live Demo](https://stock.unifies.codes/)** and watch the candles build themselves.
 
 <div align="right"><a href="#top">Back to top ↑</a></div>
 
@@ -123,7 +123,7 @@ A professional-grade, **zero-cost** trading terminal that streams **live real-ti
 
 | Type | Link |
 |---|---|
-| 🟢 **Live deployment** | [flawsom.github.io/Stocks](https://flawsom.github.io/Stocks/) — zero cost; enable once via Settings → Pages → "GitHub Actions" |
+| 🟢 **Live deployment** | [stock.unifies.codes](https://stock.unifies.codes/) — zero cost; enable once via Settings → Pages → "GitHub Actions" |
 | ▶️ **Video walkthrough** | Drop a `demo.mp4` in `assets/readme/` and reference it here: `<video src="assets/readme/demo.mp4" controls />` |
 | 🎞️ **GIF teaser** | Drop a `demo.gif` in `assets/readme/` and reference it here: `![](assets/readme/demo.gif)` |
 | 📺 **YouTube** | Embed with `<iframe width="560" height="315" src="https://www.youtube.com/embed/…" />` once a channel video is published |
@@ -536,7 +536,7 @@ The app builds to a **pure static bundle** (`dist/`) — deploy it anywhere. Pic
 # The included workflow (.github/workflows/deploy-pages.yml) then deploys
 # every push to main automatically.
 ```
-Live at: `https://flawsom.github.io/Stocks/`
+Live at: `https://stock.unifies.codes/`
 
 ### ▲ Vercel (free Hobby tier)
 

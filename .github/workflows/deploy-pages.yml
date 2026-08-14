@@ -38,11 +38,11 @@ jobs:
           bun-version: latest
       - name: Install dependencies
         run: bun install --frozen-lockfile
-      # GitHub Pages serves this repo under /Stocks/, so assets must be
-      # built with the repo-relative base (Vite's default "/" would 404
-      # every bundle and render a blank page).
+      # The site is served at the custom domain root (stock.unifies.codes),
+      # so assets are built with Vite's default base "/". GitHub Pages
+      # automatically redirects the github.io URL to the custom domain.
       - name: Build
-        run: bun run build -- --base=/Stocks/
+        run: bun run build
       # GitHub Pages has no SPA rewrites: copy the built index into 404.html
       # so deep links (/Stocks/terminal) boot the app and the router restores
       # the requested route.

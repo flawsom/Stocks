@@ -11,10 +11,9 @@ import useCanvasCursor from "@/hooks/useCanvasCursor";
 // This is the single biggest lever for landing-page Core Web Vitals.
 const TradingDashboard = lazy(() => import("@/pages/TradingDashboard"));
 
-// Router basename follows Vite's build-time base. On GitHub Pages the app is
-// served under /Stocks/ (workflow builds with --base=/Stocks/), so internal
-// links resolve to /Stocks/terminal; on Freebuff/Vercel/Netlify the base is
-// "/" and behavior is unchanged.
+// Router basename follows Vite's build-time base. On GitHub Pages the site is
+// served at the custom domain root (stock.unifies.codes), so the base is "/";
+// on Freebuff/Vercel/Netlify the base is "/" and behavior is unchanged.
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "") || "/";
 
 function TerminalFallback() {

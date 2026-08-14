@@ -6,4 +6,4 @@ Allow: /
 Disallow: /*/assets/
 
 # Public sitemap
-Sitemap: https://flawsom.github.io/Stocks/sitemap.xml
+Sitemap: https://stock.unifies.codes/sitemap.xml
