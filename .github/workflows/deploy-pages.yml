@@ -2,8 +2,8 @@
 #
 # How to enable (one-time, ~30 seconds):
 #   1. Repo → Settings → Pages → Source: "GitHub Actions"
-#   2. Push to `main` — this workflow builds and deploys automatically.
-# Your live site: https://<your-github-username>.github.io/<repo-name>/
+#   2. Deploy from the Actions tab: "Deploy to GitHub Pages" → Run workflow.
+# Your live site: https://stock.unifies.codes/
 #
 # The build uses the project's own `bun run build` script, which emits a
 # static SPA into `dist/`. SPA routing is handled by the repo's
@@ -12,9 +12,14 @@
 
 name: Deploy to GitHub Pages
 
+# Manual deploys only. This repo is pushed through a Freebuff GitHub App
+# credential, and an automatic `push` trigger would attribute every run to
+# the bot instead of to the repo owner. With manual dispatch, every run is
+# attributed to the person who clicks "Run workflow".
+# To auto-deploy on your own pushes again, add back:
+#   push:
+#     branches: ["main"]
 on:
-  push:
-    branches: ["main"]
   workflow_dispatch:
 
 permissions:

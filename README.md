@@ -36,7 +36,7 @@ A professional-grade, **zero-cost** trading terminal that streams **live real-ti
 <a href="https://vercel.com/new/clone?repository-url=https://github.com/flawsom/Stocks"><img src="https://vercel.com/button" alt="Deploy with Vercel" /></a>
 <a href="https://app.netlify.com/start/deploy?repository=https://github.com/flawsom/Stocks"><img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" /></a>
 
-> 🟢 **Live demo note:** `stock.unifies.codes` goes live the moment GitHub Pages is enabled — **Repo → Settings → Pages → Source: "GitHub Actions"**. The included workflow then deploys every push automatically. Prefer an instant host? The Vercel / Netlify buttons above are live now.
+> 🟢 **Live demo note:** `stock.unifies.codes` goes live the moment GitHub Pages is enabled — **Repo → Settings → Pages → Source: "GitHub Actions"**, then **Actions → "Deploy to GitHub Pages" → Run workflow**. Prefer an instant host? The Vercel / Netlify buttons above are live now.
 
 </div>
 
@@ -529,12 +529,12 @@ npx prettier --write .  # formatting (optional, Prettier config not required by 
 
 The app builds to a **pure static bundle** (`dist/`) — deploy it anywhere. Pick one:
 
-### 🆓 GitHub Pages (zero cost, automated)
+### 🆓 GitHub Pages (zero cost, manual deploy)
 
 ```bash
 # Enable once: Repo → Settings → Pages → Source: "GitHub Actions"
-# The included workflow (.github/workflows/deploy-pages.yml) then deploys
-# every push to main automatically.
+# Deploy from the Actions tab: "Deploy to GitHub Pages" → Run workflow
+# (manual dispatch keeps every run attributed to the repo owner).
 ```
 Live at: `https://stock.unifies.codes/`
 
