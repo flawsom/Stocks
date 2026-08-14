@@ -1,0 +1,9 @@
+# OmegaTrade Ultra — crawl rules
+User-agent: *
+Allow: /
+
+# The app is a single-page client; deep links are restored by the router.
+Disallow: /*/assets/
+
+# Public sitemap
+Sitemap: https://flawsom.github.io/Stocks/sitemap.xml

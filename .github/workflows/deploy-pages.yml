@@ -1,0 +1,59 @@
+# Free static hosting via GitHub Pages — no servers, no cost.
+#
+# How to enable (one-time, ~30 seconds):
+#   1. Repo → Settings → Pages → Source: "GitHub Actions"
+#   2. Push to `main` — this workflow builds and deploys automatically.
+# Your live site: https://<your-github-username>.github.io/<repo-name>/
+#
+# The build uses the project's own `bun run build` script, which emits a
+# static SPA into `dist/`. SPA routing is handled by the repo's
+# `vercel.json` rewrites + `public/_redirects` — see the README for the
+# Netlify/Vercel alternatives.
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+      # GitHub Pages serves this repo under /Stocks/, so assets must be
+      # built with the repo-relative base (Vite's default "/" would 404
+      # every bundle and render a blank page).
+      - name: Build
+        run: bun run build -- --base=/Stocks/
+      # GitHub Pages has no SPA rewrites: copy the built index into 404.html
+      # so deep links (/Stocks/terminal) boot the app and the router restores
+      # the requested route.
+      - name: SPA fallback for GitHub Pages
+        run: cp dist/index.html dist/404.html
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
