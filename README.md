@@ -33,7 +33,7 @@ A professional-grade, **zero-cost** trading terminal that streams **live real-ti
 
 <br />
 
-<a href="https://vercel.com/new/clone?repository-url=https://github.com/flawsom/Stocks"><img src="https://vercel.com/button" alt="Deploy with Vercel" /></a>
+<a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fflawsom%2FStocks&env=VITE_FINNHUB_KEY,VITE_TWELVE_DATA_KEY,VITE_POLYGON_KEY,VITE_ALPHA_VANTAGE_KEY&project-name=omegatrade-ultra&repository-name=omegatrade-ultra"><img src="https://vercel.com/button" alt="Deploy with Vercel" /></a>
 <a href="https://app.netlify.com/start/deploy?repository=https://github.com/flawsom/Stocks"><img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" /></a>
 
 > 🟢 **Live demo note:** `stock.unifies.codes` goes live the moment GitHub Pages is enabled — **Repo → Settings → Pages → Source: "GitHub Actions"**, then **Actions → "Deploy to GitHub Pages" → Run workflow**. Prefer an instant host? The Vercel / Netlify buttons above are live now.
@@ -540,9 +540,15 @@ Live at: `https://stock.unifies.codes/`
 
 ### ▲ Vercel (free Hobby tier)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/flawsom/Stocks)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fflawsom%2FStocks&env=VITE_FINNHUB_KEY,VITE_TWELVE_DATA_KEY,VITE_POLYGON_KEY,VITE_ALPHA_VANTAGE_KEY&project-name=omegatrade-ultra&repository-name=omegatrade-ultra)
 
-Framework preset: **Vite** · Build: `bun install && bun run build` · Output: `dist` · SPA rewrites via `vercel.json` (included).
+One click does everything:
+
+1. **Clone & import** — Vercel forks the repo into your account and creates the project.
+2. **Env setup** — the link pre-registers the four optional `VITE_*` provider keys. Fill them in if you want (all free), or leave them **blank and skip** — bundled shared keys + the keyless mesh keep everything running.
+3. **Build & deploy** — framework preset **Vite** is auto-detected · build `bun run build` (or `npm run build`) · output `dist` · SPA routing via `vercel.json` (included). Your live URL appears in ~1 minute.
+
+Afterwards you can manage the env vars under **Project → Settings → Environment Variables** (they are build-time vars, so redeploy after changing them), and attach your own domain under **Settings → Domains** — e.g. point `stock.unifies.codes` at Vercel instead of GitHub Pages to sidestep ISP-level GitHub Pages blocks.
 
 ### 🏗️ Netlify (free tier)
 
