@@ -51,7 +51,7 @@ function TickAge() {
   const age = lastTick > 0 ? now - lastTick : -1;
   const secs = age / 1000;
   const color = age < 0 ? "text-slate-700" : secs < 5 ? "text-bull" : secs < 20 ? "text-predict" : "text-bear";
-  const label = age < 0 ? "TICK —" : secs < 1 ? `TICK ${(Math.round(secs * 10) / 10).toFixed(1)}s` : `TICK ${Math.round(secs)}s`;
+  const label = age < 0 ? "TICK -" : secs < 1 ? `TICK ${(Math.round(secs * 10) / 10).toFixed(1)}s` : `TICK ${Math.round(secs)}s`;
   return (
     <span className={cn("text-xs font-mono", color)} title="Seconds since the last real market heartbeat">
       {label}
@@ -76,24 +76,24 @@ function MarketStats() {
     { label: "VOLUME", value: formatVolume(totalVolume), color: "text-slate-300" },
     {
       label: "EMA 20",
-      value: indicators?.ema20 ? formatPrice(indicators.ema20) : "—",
+      value: indicators?.ema20 ? formatPrice(indicators.ema20) : "-",
       color: "text-brand-cyan",
     },
     {
       label: "EMA 50",
-      value: indicators?.ema50 ? formatPrice(indicators.ema50) : "—",
+      value: indicators?.ema50 ? formatPrice(indicators.ema50) : "-",
       color: "text-predict",
     },
     {
       label: "RSI",
-      value: indicators?.rsi14 ? indicators.rsi14.toFixed(1) : "—",
+      value: indicators?.rsi14 ? indicators.rsi14.toFixed(1) : "-",
       color: indicators?.rsi14
         ? indicators.rsi14 > 70 ? "text-bear" : indicators.rsi14 < 30 ? "text-bull" : "text-slate-300"
         : "text-slate-600",
     },
     {
       label: "ATR",
-      value: indicators?.atr14 ? formatPrice(indicators.atr14) : "—",
+      value: indicators?.atr14 ? formatPrice(indicators.atr14) : "-",
       color: "text-neural",
     },
     ...(prediction ? [{
@@ -162,7 +162,7 @@ function SafetyBanner() {
       <div className="flex items-center gap-2 px-4 py-1.5 bg-bear/15 border-b border-bear/40 flex-none">
         <AlertTriangle size={12} className="text-bear shrink-0" />
         <span className="text-xs font-mono text-bear flex-1">
-          CIRCUIT BREAKER — MC uncertainty σ={uncertainty?.std.toFixed(3) ?? "—"} above {uncertainty?.thresholdCircuit.toFixed(2) ?? 0.14}. Auto-training halted until variance normalizes.
+          CIRCUIT BREAKER - MC uncertainty σ={uncertainty?.std.toFixed(3) ?? "-"} above {uncertainty?.thresholdCircuit.toFixed(2) ?? 0.14}. Auto-training halted until variance normalizes.
         </span>
       </div>
     );
@@ -172,7 +172,7 @@ function SafetyBanner() {
       <div className="flex items-center gap-2 px-4 py-1.5 bg-predict/15 border-b border-predict/40 flex-none">
         <AlertTriangle size={12} className="text-predict shrink-0" />
         <span className="text-xs font-mono text-predict flex-1">
-          DATA DE-SYNC — {integrity.sources.length} providers disagree by {integrity.maxDevPct.toFixed(2)}%. Autonomous ML updates paused pending re-convergence.
+          DATA DE-SYNC - {integrity.sources.length} providers disagree by {integrity.maxDevPct.toFixed(2)}%. Autonomous ML updates paused pending re-convergence.
         </span>
       </div>
     );
@@ -235,7 +235,7 @@ function IndicatorToggles() {
           !showAttribution && "border-terminal-border text-slate-600 bg-terminal-bg/80"
         )}
         style={showAttribution ? { borderColor: "#7c3aed60", backgroundColor: "#7c3aed15", color: "#7c3aed" } : {}}
-        title="Grad-CAM attribution heatmap — candles colored by what drove the AI signal"
+        title="Grad-CAM attribution heatmap - candles colored by what drove the AI signal"
       >
         XAI
       </button>
@@ -294,7 +294,7 @@ export default function TradingDashboard() {
       prevPredictionRef.current = key;
       const emoji = prediction.direction === "up" ? "▲" : prediction.direction === "down" ? "▼" : "◆";
       toast(
-        `${emoji} AI Signal: ${activeSymbol} ${prediction.direction.toUpperCase()} — ${prediction.confidence}% confidence`,
+        `${emoji} AI Signal: ${activeSymbol} ${prediction.direction.toUpperCase()} - ${prediction.confidence}% confidence`,
         { duration: 5000 }
       );
     }
@@ -333,7 +333,7 @@ export default function TradingDashboard() {
           symbol: activeSymbol,
           type: "price_above",
           value: rsi,
-          message: `RSI Overbought: ${activeSymbol} RSI = ${rsi.toFixed(1)} — Consider short bias`,
+          message: `RSI Overbought: ${activeSymbol} RSI = ${rsi.toFixed(1)} - Consider short bias`,
           timestamp: Date.now(),
           read: false,
         });
@@ -343,7 +343,7 @@ export default function TradingDashboard() {
           symbol: activeSymbol,
           type: "price_below",
           value: rsi,
-          message: `RSI Oversold: ${activeSymbol} RSI = ${rsi.toFixed(1)} — Consider long bias`,
+          message: `RSI Oversold: ${activeSymbol} RSI = ${rsi.toFixed(1)} - Consider long bias`,
           timestamp: Date.now(),
           read: false,
         });
@@ -354,12 +354,12 @@ export default function TradingDashboard() {
   return (
     <div className="flex flex-col h-screen bg-terminal-bg overflow-hidden">
       <Helmet>
-        <title>Live Trading Terminal — Free Real-Time Charts & AI Forecasts — OmegaTrade Ultra</title>
-        <meta name="description" content="Open the live trading terminal — real-time charts, order books, technical analysis and AI forecasts across stocks, crypto, forex, indices and futures. Free, no account." />
+        <title>Live Trading Terminal - Free Real-Time Charts & AI Forecasts - OmegaTrade Ultra</title>
+        <meta name="description" content="Open the live trading terminal - real-time charts, order books, technical analysis and AI forecasts across stocks, crypto, forex, indices and futures. Free, no account." />
         <link rel="canonical" href="https://stocks.unifies.codes/terminal" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://stocks.unifies.codes/terminal" />
-        <meta property="og:title" content="Live Trading Terminal — OmegaTrade Ultra" />
+        <meta property="og:title" content="Live Trading Terminal - OmegaTrade Ultra" />
         <meta property="og:description" content="Free real-time multi-market trading terminal with AI forecasts, technical analysis and paper trading." />
         <meta property="og:image" content="https://stocks.unifies.codes/og-image.png" />
       </Helmet>
@@ -391,7 +391,7 @@ export default function TradingDashboard() {
                     {candleSource.streaming ? "STREAMING HISTORY" : "AWAITING DATA"}
                   </div>
                   <div className="text-[11px] font-mono text-slate-500 leading-relaxed">
-                    {candleSource.note || "Candles are built from the live market stream — they appear as real trades and quotes arrive."}
+                    {candleSource.note || "Candles are built from the live market stream - they appear as real trades and quotes arrive."}
                   </div>
                 </div>
               </div>

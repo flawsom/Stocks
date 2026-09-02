@@ -4,7 +4,7 @@ import { getSymbolsByMarket } from "@/constants/config";
 import type { MarketType, MarketSymbol } from "@/types";
 
 /* ────────────────────────────────────────────────────────────────
- * OMEGATRADE ULTRA — Market guides (programmatic SEO hubs)
+ * OMEGATRADE ULTRA - Market guides (programmatic SEO hubs)
  *
  * One real, standalone page per asset class. Every page has unique
  * editorial copy (no templated mad-libs), a BreadcrumbList + WebPage
@@ -31,13 +31,13 @@ export const MARKET_GUIDES: MarketGuide[] = [
     slug: "stocks",
     market: "stocks",
     label: "US Stocks",
-    micro: "The Coverage — US Equities",
+    micro: "The Coverage - US Equities",
     h1: "Live stock prices, free.",
-    metaTitle: "Free Real-Time Stock Prices & Charts — OmegaTrade Ultra",
+    metaTitle: "Free Real-Time Stock Prices & Charts - OmegaTrade Ultra",
     metaDescription:
-      "Live US stock prices for AAPL, NVDA, TSLA, MSFT and more — tick-by-tick quotes, real intraday charts and AI forecasts. Free, no account, no cost.",
+      "Live US stock prices for AAPL, NVDA, TSLA, MSFT and more - tick-by-tick quotes, real intraday charts and AI forecasts. Free, no account, no cost.",
     lede: [
-      "OmegaTrade Ultra streams US equities tick-by-tick straight from the Finnhub trade WebSocket. Every quote, candle and order book is real — there is no mock data anywhere in the terminal, and every figure on this page is served by the same live feed store the app uses.",
+      "OmegaTrade Ultra streams US equities tick-by-tick straight from the Finnhub trade WebSocket. Every quote, candle and order book is real - there is no mock data anywhere in the terminal, and every figure on this page is served by the same live feed store the app uses.",
       "No account, no subscription, no install. The whole terminal runs in your browser and stays free because every data source it uses is a free public provider.",
     ],
     sections: [
@@ -45,49 +45,49 @@ export const MARKET_GUIDES: MarketGuide[] = [
         heading: "Which stocks are covered",
         body: [
           "Eighteen blue-chip symbols across the sectors retail traders watch most: mega-cap technology (AAPL, MSFT, NVDA, AMD, AVGO, CRM, ORCL), consumer and media (AMZN, TSLA, NFLX, WMT, KO), financials (JPM, BAC, V) and energy (XOM). Each symbol streams a live quote, a real intraday candle series from 1-minute up to 1-day, an order book where the venue publishes one, and headline news with sentiment tagging.",
-          "Click any symbol in the terminal to open its full desk — live tape, chart, technical indicators, and the AI forecast panel.",
+          "Click any symbol in the terminal to open its full desk - live tape, chart, technical indicators, and the AI forecast panel.",
         ],
       },
       {
         heading: "How the live feed works",
         body: [
-          "The primary stream is Finnhub's trade WebSocket, which pushes real executions as they print. When a source is rate-limited or unreachable, the terminal says so and fails over to the next live provider in the mesh — Polygon and the Yahoo relays — rather than freezing or guessing a number. The fastest valid quote wins.",
+          "The primary stream is Finnhub's trade WebSocket, which pushes real executions as they print. When a source is rate-limited or unreachable, the terminal says so and fails over to the next live provider in the mesh - Polygon and the Yahoo relays - rather than freezing or guessing a number. The fastest valid quote wins.",
         ],
       },
       {
         heading: "Paper trading and forecasts",
         body: [
-          "Every stock desk includes the built-in paper-trading engine, so you can test entries and exits with live prices and zero risk. The 7-model AI ensemble produces forecasts with uncertainty bands, and the terminal keeps an accuracy ledger of its own predictions — it retrains on its own misses and withholds signals when confidence is too low.",
+          "Every stock desk includes the built-in paper-trading engine, so you can test entries and exits with live prices and zero risk. The 7-model AI ensemble produces forecasts with uncertainty bands, and the terminal keeps an accuracy ledger of its own predictions - it retrains on its own misses and withholds signals when confidence is too low.",
         ],
       },
     ],
-    sources: ["Finnhub trade WebSocket (live ticks)", "Polygon REST failover", "Yahoo Finance relays", "Free public keys only — optional personal keys raise your rate limits"],
+    sources: ["Finnhub trade WebSocket (live ticks)", "Polygon REST failover", "Yahoo Finance relays", "Free public keys only - optional personal keys raise your rate limits"],
     tagline: "Tick-by-tick quotes, real charts and AI forecasts for 18 blue-chip US stocks.",
   },
   {
     slug: "crypto",
     market: "crypto",
     label: "Crypto",
-    micro: "The Coverage — Digital Assets",
+    micro: "The Coverage - Digital Assets",
     h1: "Crypto prices, 24/7.",
-    metaTitle: "Free Real-Time Crypto Prices & Charts — 24/7 — OmegaTrade Ultra",
+    metaTitle: "Free Real-Time Crypto Prices & Charts - 24/7 - OmegaTrade Ultra",
     metaDescription:
-      "Live crypto prices for BTC, ETH, SOL, XRP and more — streamed 24/7 from independent venues with AI forecasts. Free, no account, no geo-blocks.",
+      "Live crypto prices for BTC, ETH, SOL, XRP and more - streamed 24/7 from independent venues with AI forecasts. Free, no account, no geo-blocks.",
     lede: [
-      "Fourteen crypto pairs, streamed around the clock from independent venues so no single exchange can take the feed down — and none are geo-locked out. Bitcoin, Ethereum, Solana and the rest of the majors trade 24/7, and so does this desk.",
+      "Fourteen crypto pairs, streamed around the clock from independent venues so no single exchange can take the feed down - and none are geo-locked out. Bitcoin, Ethereum, Solana and the rest of the majors trade 24/7, and so does this desk.",
       "Every price is real and current. The crypto desk reads from three live WebSockets plus an eighteen-provider REST mesh, racing sources and taking the fastest valid print.",
     ],
     sections: [
       {
         heading: "Which pairs are covered",
         body: [
-          "BTC/USDT and ETH/USDT lead the desk, followed by SOL, BNB, XRP, ADA, DOGE, AVAX, LTC, LINK, DOT, SUI, NEAR and ARB — fourteen pairs in total. Each streams a live price, real kline candles from 1-minute to 1-day, and where the venue publishes depth, the order book.",
+          "BTC/USDT and ETH/USDT lead the desk, followed by SOL, BNB, XRP, ADA, DOGE, AVAX, LTC, LINK, DOT, SUI, NEAR and ARB - fourteen pairs in total. Each streams a live price, real kline candles from 1-minute to 1-day, and where the venue publishes depth, the order book.",
         ],
       },
       {
         heading: "Why the mesh matters",
         body: [
-          "The terminal aggregates independent venues — Kraken, Coinbase, OKX and Binance's public market-data domain among them — through separate WebSockets and a wide REST mesh. If one venue rate-limits or blocks a region, the others keep the feed live. The app never falls back to a stale or synthetic print; when a source stops responding it is flagged and bypassed.",
+          "The terminal aggregates independent venues - Kraken, Coinbase, OKX and Binance's public market-data domain among them - through separate WebSockets and a wide REST mesh. If one venue rate-limits or blocks a region, the others keep the feed live. The app never falls back to a stale or synthetic print; when a source stops responding it is flagged and bypassed.",
         ],
       },
       {
@@ -104,13 +104,13 @@ export const MARKET_GUIDES: MarketGuide[] = [
     slug: "forex",
     market: "forex",
     label: "Forex",
-    micro: "The Coverage — Currency Pairs",
+    micro: "The Coverage - Currency Pairs",
     h1: "Forex rates, live.",
-    metaTitle: "Free Live Forex Rates & Charts — Major & Cross Pairs",
+    metaTitle: "Free Live Forex Rates & Charts - Major & Cross Pairs",
     metaDescription:
-      "Live forex rates for EUR/USD, GBP/USD, USD/JPY and more — keyless multi-provider quotes refreshed every few seconds, with AI forecasts. Free.",
+      "Live forex rates for EUR/USD, GBP/USD, USD/JPY and more - keyless multi-provider quotes refreshed every few seconds, with AI forecasts. Free.",
     lede: [
-      "Twelve major and cross currency pairs, quoted to five decimals and refreshed every few seconds — through a keyless multi-provider chain that mixes er-api rates, official ECB fixings and AlphaVantage FX. No API key is required to start trading the desk.",
+      "Twelve major and cross currency pairs, quoted to five decimals and refreshed every few seconds - through a keyless multi-provider chain that mixes er-api rates, official ECB fixings and AlphaVantage FX. No API key is required to start trading the desk.",
     ],
     sections: [
       {
@@ -122,13 +122,13 @@ export const MARKET_GUIDES: MarketGuide[] = [
       {
         heading: "A keyless provider chain",
         body: [
-          "Rates flow through a fallback chain rather than a single point of failure: er-api serves the real-time stream, ECB fixings anchor the daily reference rates, and AlphaVantage FX backs the chain up. When one provider rate-limits, the next live source takes over — the price you see is always the best available live print.",
+          "Rates flow through a fallback chain rather than a single point of failure: er-api serves the real-time stream, ECB fixings anchor the daily reference rates, and AlphaVantage FX backs the chain up. When one provider rate-limits, the next live source takes over - the price you see is always the best available live print.",
         ],
       },
       {
         heading: "Why five decimals matter",
         body: [
-          "Pip movement lives in the fourth and fifth decimals, so the forex desk preserves full precision in its quotes, charts and forecasts — a pip-sized move is visible instead of being rounded away.",
+          "Pip movement lives in the fourth and fifth decimals, so the forex desk preserves full precision in its quotes, charts and forecasts - a pip-sized move is visible instead of being rounded away.",
         ],
       },
     ],
@@ -139,11 +139,11 @@ export const MARKET_GUIDES: MarketGuide[] = [
     slug: "indices",
     market: "indices",
     label: "Indices",
-    micro: "The Coverage — Index Levels",
+    micro: "The Coverage - Index Levels",
     h1: "Real index levels, live.",
-    metaTitle: "Live Index Levels — S&P 500, Nasdaq, Dow, VIX",
+    metaTitle: "Live Index Levels - S&P 500, Nasdaq, Dow, VIX",
     metaDescription:
-      "Real index levels for the S&P 500, Nasdaq Composite, Dow, Russell 2000 and VIX — plus SPY, QQQ, DIA and more. Live, free, no account needed.",
+      "Real index levels for the S&P 500, Nasdaq Composite, Dow, Russell 2000 and VIX - plus SPY, QQQ, DIA and more. Live, free, no account needed.",
     lede: [
       "True index levels, not ETF proxies. The indices desk reads the actual prints for the S&P 500, Nasdaq Composite, Dow Jones, Russell 2000 and the VIX through the Yahoo relay, which maps each ticker to the real index series.",
     ],
@@ -151,7 +151,7 @@ export const MARKET_GUIDES: MarketGuide[] = [
       {
         heading: "Which indices are covered",
         body: [
-          "Five headline levels — ^GSPC (S&P 500), ^IXIC (Nasdaq Composite), ^DJI (Dow), ^RUT (Russell 2000) and ^VIX (the volatility 'fear gauge') — stream live alongside the index-tracking ETFs that mirror them: SPY, QQQ, DIA, IWM, VOO and VTI.",
+          "Five headline levels - ^GSPC (S&P 500), ^IXIC (Nasdaq Composite), ^DJI (Dow), ^RUT (Russell 2000) and ^VIX (the volatility 'fear gauge') - stream live alongside the index-tracking ETFs that mirror them: SPY, QQQ, DIA, IWM, VOO and VTI.",
         ],
       },
       {
@@ -163,30 +163,30 @@ export const MARKET_GUIDES: MarketGuide[] = [
       {
         heading: "Same tools, same forecast engine",
         body: [
-          "Each index and ETF opens the full terminal desk — live tape, candles, technical analysis and the AI ensemble — so you can compare the real index against its tracking ETF in real time.",
+          "Each index and ETF opens the full terminal desk - live tape, candles, technical analysis and the AI ensemble - so you can compare the real index against its tracking ETF in real time.",
         ],
       },
     ],
     sources: ["Yahoo Finance relay (true index prints)", "Finnhub + Polygon equity feeds for ETFs", "Live WebSockets on every symbol"],
-    tagline: "True S&P 500, Nasdaq, Dow, Russell 2000 and VIX levels — not ETF proxies.",
+    tagline: "True S&P 500, Nasdaq, Dow, Russell 2000 and VIX levels - not ETF proxies.",
   },
   {
     slug: "futures",
     market: "futures",
     label: "Futures",
-    micro: "The Coverage — Futures Contracts",
+    micro: "The Coverage - Futures Contracts",
     h1: "Futures prices, real contracts.",
-    metaTitle: "Live Futures Prices — ES, CL, NG, Metals & Grains",
+    metaTitle: "Live Futures Prices - ES, CL, NG, Metals & Grains",
     metaDescription:
-      "Live futures prices for E-mini S&P 500, crude oil, natural gas, gold, silver and grains — real contracts via Finnhub. Free, no account, no cost.",
+      "Live futures prices for E-mini S&P 500, crude oil, natural gas, gold, silver and grains - real contracts via Finnhub. Free, no account, no cost.",
     lede: [
-      "Thirteen futures contracts across the financials, energy, metals, softs and grains complexes — served by real contract roots so the terminal never labels a stock as a futures price.",
+      "Thirteen futures contracts across the financials, energy, metals, softs and grains complexes - served by real contract roots so the terminal never labels a stock as a futures price.",
     ],
     sections: [
       {
         heading: "Which contracts are covered",
         body: [
-          "The desk streams the E-mini S&P 500 (ES), crude oil (CL), natural gas (NG), RBOB gasoline (RB), Brent (BZ), silver (SI), copper (HG), micro gold (MGC), soybeans (ZS), soybean meal (ZM), coffee (KC), sugar (SB) and feeder cattle (GF) — the contracts day traders actually follow.",
+          "The desk streams the E-mini S&P 500 (ES), crude oil (CL), natural gas (NG), RBOB gasoline (RB), Brent (BZ), silver (SI), copper (HG), micro gold (MGC), soybeans (ZS), soybean meal (ZM), coffee (KC), sugar (SB) and feeder cattle (GF) - the contracts day traders actually follow.",
         ],
       },
       {
@@ -198,7 +198,7 @@ export const MARKET_GUIDES: MarketGuide[] = [
       {
         heading: "Intraday history that stays free",
         body: [
-          "Candle history for futures comes through the TwelveData free tier, the only free source the app relies on for real futures candles, alongside the live Finnhub stream — so the desk works keyless out of the box.",
+          "Candle history for futures comes through the TwelveData free tier, the only free source the app relies on for real futures candles, alongside the live Finnhub stream - so the desk works keyless out of the box.",
         ],
       },
     ],
