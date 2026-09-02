@@ -528,6 +528,9 @@ bun run scripts/journal-test.mts
 
 # Leakage suite - proves the model never sees future data (no-cheating guarantee)
 bun run scripts/leakage-test.mts
+
+# Repo hygiene suite - docs, PWA, CI and metadata contracts
+bun run scripts/repo-hygiene-test.mts
 ```
 
 | Suite | Coverage |
@@ -538,6 +541,7 @@ bun run scripts/leakage-test.mts
 | **EyeQuant safety** | MC-dropout variance sane, attribution sign-correct, EWC constrains drift, circuit breaker honors, integrity verdicts |
 | **Decision journal** | every live cycle emits SIGNAL (with top factors + ensemble mechanics), SCAN heartbeats, VERDICT entries on resolution, LEARN entries on failure-driven updates, GUARD entries on breaker engagement |
 | **Leakage (no-cheating)** | feature windows are strictly causal - the engine trains on past bars only, forecasts future bars only |
+| **Repo hygiene** | README/provider/env contracts, PWA manifest wiring, CI suite wiring, contributor metadata, domain pin, license presence |
 | **Consumer E2E** | landing → terminal, all 5 market tabs, live price + auto-update + real history, timeframes, all 6 right panels, scanner, footer mesh |
 
 ### Linting & formatting
