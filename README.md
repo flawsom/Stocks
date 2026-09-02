@@ -755,6 +755,7 @@ OmegaTrade Ultra is free, open source, and costs nothing to run - and it stays t
 | 🫶 **GitHub Sponsors** | [github.com/sponsors/flawsom](https://github.com/sponsors/flawsom) |
 | ☕ **Ko-fi** | [ko-fi.com/flawsom](https://ko-fi.com/flawsom) |
 | ☕ **Buy me a coffee** | [buymeacoffee.com/flawsom](https://www.buymeacoffee.com/flawsom) |
+| 💳 **UPI (Razorpay)** | [razorpay.me/@unifies](https://razorpay.me/@unifies) - for supporters in India |
 | ✉️ **Contact** | Open an issue or discussion - I read everything |
 
 ---
