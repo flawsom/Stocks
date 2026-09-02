@@ -314,6 +314,10 @@ function StatFigure({ value, label }: { value: string; label: string }) {
 }
 
 export default function Landing() {
+  useEffect(() => {
+    document.getElementById("seo-fallback-heading")?.remove();
+  }, []);
+
   const [scrolled, setScrolled] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
 
