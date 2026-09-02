@@ -69,3 +69,6 @@ jobs:
 
       - name: Leakage (no-cheating) suite
         run: bun run scripts/leakage-test.mts
+
+      - name: Repo hygiene suite
+        run: bun run scripts/repo-hygiene-test.mts
