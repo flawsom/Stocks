@@ -111,7 +111,11 @@ export function useMarketData() {
         mlBusyRef.current = true;
         engine.train(mlSeries, { quick: true }).finally(() => { mlBusyRef.current = false; });
       } else if (engine.isInitialized()) {
-        const pred = engine.predict(mlSeries, tfSeconds);
+        // Prefer the real-time watchlist quote as the forecast price target so
+        // the journal and prediction track the live tape, not the last bar close.
+        const liveW = state.watchlist.find(w => w.symbol === state.activeSymbol);
+        const livePrice = liveW && liveW.price > 0 ? liveW.price : undefined;
+        const pred = engine.predict(mlSeries, tfSeconds, livePrice);
         if (pred) {
           state.setPrediction({ ...pred, symbol: state.activeSymbol });
           state.appendPredictionHistory({
@@ -218,6 +222,29 @@ export function useMarketData() {
       evaluateAllOutcomes(prices, candlesBySymbol);
       state.setOutcomes(getEngine(state.activeSymbol).getOutcomes());
     }, 60000);
+    return () => clearInterval(iv);
+  }, []);
+
+  /* ── 24/7 journal heartbeat: independent 5s loop ──────────── */
+  // Runs even when no new candles arrive (halts, market close, provider
+  // cooldown) so the prediction log never goes quiet. Re-emits the latest
+  // ensemble state with the freshest live quote; resolution + learning
+  // continue on their own schedules above.
+  useEffect(() => {
+    const iv = setInterval(() => {
+      const state = useTradingStore.getState();
+      const engine = getEngine(state.activeSymbol, s => useTradingStore.getState().setMLStats(s));
+      if (!engine.isInitialized()) return;
+      const tfSeconds = TIMEFRAME_SECONDS[state.activeTimeframe] || 900;
+      const series = aggregator.getActiveSeries();
+      const minSeries = aggregator.getMinuteSeries();
+      const mlSeries = series.length >= 12 ? series : minSeries.length >= 12 ? minSeries : series;
+      if (mlSeries.length < 12) return;
+      const liveW = state.watchlist.find(w => w.symbol === state.activeSymbol);
+      const livePrice = liveW && liveW.price > 0 ? liveW.price : undefined;
+      const pred = engine.predict(mlSeries, tfSeconds, livePrice);
+      if (pred) state.setPrediction({ ...pred, symbol: state.activeSymbol });
+    }, 5000);
     return () => clearInterval(iv);
   }, []);
 

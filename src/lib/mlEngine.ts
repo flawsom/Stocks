@@ -1221,7 +1221,7 @@ export class MLEngine {
   }
 
   /* ── Prediction ───────────────────────────────────────────── */
-  predict(candles: OHLCV[], tfSeconds = 900): MLPrediction | null {
+  predict(candles: OHLCV[], tfSeconds = 900, livePrice?: number): MLPrediction | null {
     if (!this.initialized || candles.length < 12) return null;
     this.symbolTfSeconds = tfSeconds;
 
@@ -1269,7 +1269,9 @@ export class MLEngine {
     let confidence = Math.round(50 + agreement * 50 * (avgAbs * 2));
     confidence = Math.min(97, Math.max(40, confidence));
 
-    const currentPrice = candles[candles.length - 1].close;
+    // Live quote wins when provided: the forecast targets the *actual* current
+    // price (features are computed from past candles, so this stays causal).
+    const currentPrice = livePrice && livePrice > 0 ? livePrice : candles[candles.length - 1].close;
     const ind = computeIndicators(candles);
 
     // Localized volatility (ATR matched to the forecast granularity)
@@ -1368,7 +1370,7 @@ export class MLEngine {
         howLine
       );
       this.lastScanLogAt = Date.now();
-    } else if (Date.now() - this.lastScanLogAt > 60_000) {
+    } else if (Date.now() - this.lastScanLogAt > 15_000) {
       this.lastScanLogAt = Date.now();
       this.logDecision(
         "scan",
