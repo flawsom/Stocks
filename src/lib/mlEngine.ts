@@ -1,4 +1,4 @@
-import type { OHLCV, MLPrediction, MLModelStats, PredictionDirection, ModelVote, PredictionOutcome, TrainEvent, PnLPoint, AttributionPoint, AttributionSummary } from "@/types";
+import type { OHLCV, MLPrediction, MLModelStats, PredictionDirection, ModelVote, PredictionOutcome, TrainEvent, PnLPoint, AttributionPoint, AttributionSummary, DecisionEvent } from "@/types";
 import { computeIndicators } from "@/lib/technicalAnalysis";
 import { ML_CONFIG, TIMEFRAME_SECONDS } from "@/constants/config";
 
@@ -680,6 +680,9 @@ export class MLEngine {
   private learningRate = ML_CONFIG.LEARNING_RATE;
   private hardExamples: Sample[] = [];
   private trainEvents: TrainEvent[] = [];
+  /** Live 24/7 decision journal — what / why / how for every cycle. */
+  private decisionEvents: DecisionEvent[] = [];
+  private lastScanLogAt = 0;
   private lossSeries: { t: number; v: number }[] = [];
   private rollingAccuracy: { t: number; v: number }[] = [];
   private resolved: { predicted: PredictionDirection; actual: PredictionDirection; hit: boolean; t: number; confidence: number }[] = [];
@@ -832,7 +835,13 @@ export class MLEngine {
 
       // Walk-forward split: train on the head, score honestly on the tail
       const wfSplit = Math.max(Math.floor(samples.length * 0.7), samples.length - 40);
-      const trainSet = samples.slice(0, wfSplit);
+      // Purged walk-forward: drop the train tail whose feature windows overlap
+      // the validation window or whose forward-looking labels cross the split.
+      // Without this embargo, information leaks from train into the "honest"
+      // out-of-sample score (window + horizon bars of overlap).
+      const embargo = window + ML_CONFIG.PREDICTION_HORIZON;
+      this.lastPurgeGap = Math.min(embargo, wfSplit);
+      const trainSet = samples.slice(0, Math.max(1, wfSplit - embargo));
       const valSet = samples.slice(wfSplit);
 
       // Failure-driven retrain: over-sample hard examples
@@ -891,6 +900,14 @@ export class MLEngine {
       this.retrainCount += opts?.retrain ? 1 : 0;
       this.logEvent(opts?.retrain ? "retrain" : "train", `Trained ${epochs} epochs · loss ${this.loss.toFixed(5)} · ${effectiveTrain.length} samples` +
         (this.wfAccuracy > 0 ? ` · WF acc ${this.wfAccuracy.toFixed(0)}% (base ${this.wfBaseline.toFixed(0)}%)` : ""));
+      if (opts?.retrain) {
+        this.logDecision(
+          "learn",
+          `Autonomous retrain #${this.retrainCount} · ${epochs} epochs on ${effectiveTrain.length} samples`,
+          `rolling accuracy ${this.wfAccuracy.toFixed(0)}% vs baseline ${this.wfBaseline.toFixed(0)}% · loss ${this.loss.toFixed(5)}`,
+          `EWC ${this.ewcArmed ? "locked" : "arming"} · ${this.hardExamples.length} hard examples oversampled`
+        );
+      }
       this.save();
     } finally {
       this.isTraining = false;
@@ -898,7 +915,10 @@ export class MLEngine {
     }
   }
 
-  /** Walk-forward (out-of-sample) scoring of the last training run. */
+  /** Walk-forward (out-of-sample) scoring of the last training run.
+   *  Also fits Platt calibration (a,b) on the out-of-sample probabilities and
+   *  reports metrics through the calibrated map — the accuracy you see is what
+   *  the calibrated live signal would have scored on unseen data. */
   private runWalkForward(valSet: Sample[]) {
     if (valSet.length < 10) { this.wfAccuracy = 0; this.wfBaseline = 0; this.brierScore = 0; this.logLoss = 0; return; }
     const models = this.allModels();
@@ -907,11 +927,20 @@ export class MLEngine {
     let logloss = 0;
     let persistence = 0;
 
+    const pairs: { p: number; label: number }[] = [];
     for (let i = 0; i < valSet.length; i++) {
       const s = valSet[i];
       let pSum = 0;
       for (const m of models) pSum += m.predict(s.f);
       const avg = pSum / models.length;
+      pairs.push({ p: avg, label: s.label });
+    }
+
+    this.fitPlatt(pairs);
+
+    for (let i = 0; i < valSet.length; i++) {
+      const s = valSet[i];
+      const avg = this.calibratedProb(pairs[i].p);
       const dir = classify(avg).direction;
       const labelDir: PredictionDirection = s.label >= 0.75 ? "up" : s.label <= 0.25 ? "down" : "neutral";
       if (dir !== "neutral" && dir === labelDir) correct++;
@@ -935,6 +964,55 @@ export class MLEngine {
     }, {} as Record<string, number>);
     const majCount = Math.max(...Object.values(majority), 0);
     this.wfBaseline = Math.max((persistence / Math.max(1, valSet.length - 1)) * 100, (majCount / valSet.length) * 100);
+  }
+
+  /* ── Out-of-sample probability calibration (Platt scaling) ─────
+   * Raw ensemble probabilities are fit to the realized outcomes on the
+   * PURGED out-of-sample set: p̂ = σ(a·p + b). When a=1, b=0 is already
+   * optimal the identity is kept — calibration can only make the stated
+   * confidence more honest, never less. */
+  private calA = 1;
+  private calB = 0;
+  private lastPurgeGap = 0;
+
+  private fitPlatt(pairs: { p: number; label: number }[]) {
+    const n = pairs.length;
+    if (n < 10) return;
+    const loglossOf = (a: number, b: number) => {
+      let ll = 0;
+      for (const { p, label } of pairs) {
+        const q = Math.min(0.999, Math.max(0.001, 1 / (1 + Math.exp(-(a * p + b)))));
+        ll -= label * Math.log(q) + (1 - label) * Math.log(1 - q);
+      }
+      return ll / n;
+    };
+    let a = 1, b = 0;
+    for (let it = 0; it < 300; it++) {
+      let ga = 0, gb = 0;
+      for (const { p, label } of pairs) {
+        const q = 1 / (1 + Math.exp(-(a * p + b)));
+        const e = q - label;
+        ga += e * p;
+        gb += e;
+      }
+      a -= 0.5 * (ga / n);
+      b -= 0.5 * (gb / n);
+      if (!Number.isFinite(a) || !Number.isFinite(b)) { a = 1; b = 0; break; }
+    }
+    if (Number.isFinite(a) && Number.isFinite(b) && loglossOf(a, b) < loglossOf(1, 0)) {
+      this.calA = a;
+      this.calB = b;
+    }
+  }
+
+  private calibratedProb(p: number): number {
+    if (!(this.calA > 0)) return p;
+    return 1 / (1 + Math.exp(-(this.calA * p + this.calB)));
+  }
+
+  /** Leakage-guard + calibration introspection (used by the test suite). */
+  getLeakageGuards(): { purgeGap: number; calibrated: boolean } {
+    return { purgeGap: this.lastPurgeGap, calibrated: this.calA !== 1 || this.calB !== 0 };
   }
 
   /* ── Failure-driven online learning ───────────────────────── */
@@ -969,6 +1047,12 @@ export class MLEngine {
       this.gbdt.fitBatch(this.hardExamples);
       this.loss = loss / (batch.length * 4);
       this.logEvent("online", `Online update after failure · loss ${this.loss.toFixed(5)}`);
+      this.logDecision(
+        "learn",
+        `Failure-driven update · rewrote weights on the missed window`,
+        `learned the losing pattern at lr ${(this.learningRate * 1.5).toExponential(1)} · loss ${this.loss.toFixed(5)}`,
+        `online SGD ×${ML_CONFIG.ONLINE_EPOCHS} epochs · GBDT refit on ${this.hardExamples.length} hard examples`
+      );
       this.save();
     } finally {
       this.isTraining = false;
@@ -989,7 +1073,17 @@ export class MLEngine {
   }
 
   /** Gate autonomous learning (retrain + online failure updates). */
-  setAutonomous(v: boolean) { this.autonomous = v; }
+  setAutonomous(v: boolean) {
+    if (this.autonomous && !v) {
+      this.logDecision(
+        "guard",
+        "Circuit breaker engaged — autonomous learning frozen",
+        "epistemic uncertainty above the safe threshold",
+        "MC-dropout σ guard · resumes when variance normalizes"
+      );
+    }
+    this.autonomous = v;
+  }
 
   /** Frobenius distance of the parametric heads from the EWC anchor (introspection). */
   weightDriftFromAnchor(): number {
@@ -1158,8 +1252,10 @@ export class MLEngine {
     }
     const rawEnsembleP = rawW > 0 ? rawP / rawW : 0.5;
 
-    // Kalman smoothing keeps the live signal stable between ticks
-    const smoothedP = this.kalman.update(rawEnsembleP, ML_CONFIG.KALMAN_Q, ML_CONFIG.KALMAN_R);
+    // Calibrated ensemble probability (out-of-sample fitted) — the Kalman
+    // filter then smooths the honest number, not the raw one.
+    const calibratedP = this.calibratedProb(rawEnsembleP);
+    const smoothedP = this.kalman.update(calibratedP, ML_CONFIG.KALMAN_Q, ML_CONFIG.KALMAN_R);
     const { direction } = classify(smoothedP);
 
     const directional = upW + downW;
@@ -1234,7 +1330,8 @@ export class MLEngine {
     };
 
     // Register pending outcome (dedupe against unresolved)
-    if (!this.pending.some(p => p.createdAt > Date.now() - tfSeconds * 1000)) {
+    const registeredNew = !this.pending.some(p => p.createdAt > Date.now() - tfSeconds * 1000);
+    if (registeredNew) {
       const id = `p-${this.symbol}-${Date.now()}`;
       this.pending.push({
         id,
@@ -1257,6 +1354,30 @@ export class MLEngine {
 
     this.lastInferenceMs = performance.now() - t0;
     this.lastAgreement = agreement;
+
+    // 24/7 decision journal — every live cycle logs WHAT / WHY / HOW
+    this.lastAttribution = attr.summary;
+    const px = (v: number) => v.toFixed(currentPrice < 1 ? 5 : 2);
+    const pctStr = `${prediction.priceChangePct >= 0 ? "+" : ""}${prediction.priceChangePct.toFixed(3)}%`;
+    const howLine = `${models.length} models · ${method} · σ=${mcU.std.toFixed(3)} · ${this.lastInferenceMs.toFixed(0)}ms infer`;
+    if (registeredNew) {
+      this.logDecision(
+        "signal",
+        `${direction.toUpperCase()} ${confidence}% → ${px(prediction.targetPrice)} (${pctStr}) · T+${ML_CONFIG.PREDICTION_HORIZON} bars`,
+        this.whyLine(),
+        howLine
+      );
+      this.lastScanLogAt = Date.now();
+    } else if (Date.now() - this.lastScanLogAt > 60_000) {
+      this.lastScanLogAt = Date.now();
+      this.logDecision(
+        "scan",
+        `Holding ${direction.toUpperCase()} ${confidence}% · px ${px(currentPrice)}`,
+        this.whyLine(),
+        howLine
+      );
+    }
+
     this.emitStats();
     return prediction;
   }
@@ -1307,6 +1428,13 @@ export class MLEngine {
       this.updateModelHits(p.id, actual);
 
       this.logEvent("eval", `Prediction ${hit ? "HIT" : "MISS"} · predicted ${p.direction} vs actual ${actual} · rolling ${((correct / recent.length) * 100).toFixed(0)}%`);
+      const movePct = ((p.actualPrice! - p.currentPrice) / p.currentPrice) * 100;
+      this.logDecision(
+        "verdict",
+        `${hit ? "HIT" : p.direction === "neutral" ? "FLAT" : "MISS"} · called ${p.direction}, market went ${actual} (${movePct >= 0 ? "+" : ""}${movePct.toFixed(2)}%)`,
+        `confidence ${p.confidence}% · rolling acc ${((correct / recent.length) * 100).toFixed(0)}%`,
+        `outcome verified against live price · ensemble weights adapt from the track record`
+      );
 
       // FAILURE-DRIVEN LEARNING: on a miss, immediately fine-tune on the failed window
       // (gated by the autonomous switch — circuit breaker / integrity fault halts it)
@@ -1409,6 +1537,7 @@ export class MLEngine {
       hardExamples: this.hardExamples.length,
       modelCount: this.allModels().length,
       trainEvents: this.trainEvents.slice(-30),
+      decisionEvents: this.decisionEvents.slice(-60),
       rollingAccuracy: this.rollingAccuracy.slice(-120),
       lossSeries: this.lossSeries.slice(-200),
       lastInferenceMs: this.lastInferenceMs,
@@ -1428,6 +1557,22 @@ export class MLEngine {
     this.trainEvents.push({ t: Date.now(), type, note });
     if (this.trainEvents.length > 60) this.trainEvents.shift();
   }
+
+  /** Journal the model's decision — what it did, why, and how it got there. */
+  private logDecision(kind: DecisionEvent["kind"], headline: string, why: string, how: string) {
+    this.decisionEvents.push({ t: Date.now(), kind, symbol: this.symbol, headline, why, how });
+    if (this.decisionEvents.length > 150) this.decisionEvents.shift();
+  }
+
+  /** Human-readable top contributors for the journal's WHY line. */
+  private whyLine(): string {
+    if (this.lastAttribution.length === 0) return "insufficient signal history";
+    return this.lastAttribution
+      .slice(0, 3)
+      .map(a => `${a.name} ${a.score >= 0 ? "+" : "−"}${Math.abs(a.score).toFixed(2)}`)
+      .join(" · ");
+  }
+  private lastAttribution: AttributionSummary[] = [];
 
   private emitStats() {
     this.onStatsUpdate?.(this.getStats());

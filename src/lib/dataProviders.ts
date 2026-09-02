@@ -920,14 +920,21 @@ export async function fetchCandles(
     };
   }
 
-  // Stocks / forex / futures / indices → Twelve Data (budget-aware, cached)
-  try {
-    const data = await fetchCandlesTwelveData(symbol, interval);
-    if (data.length > 0) {
-      setCache(symbol, interval, data);
-      return { candles: data, source: "twelvedata-rest", streaming: false };
-    }
-  } catch (e) { errors.push(`TwelveData: ${e}`); }
+  // Stocks / forex / indices → Twelve Data (budget-aware, cached).
+  // FUTURES ARE EXCLUDED: the TwelveData free plan carries no futures contracts,
+  // so bare roots (ES, CL, NG…) silently resolve to unrelated STOCKS there
+  // (ES=Eversource, CL=Colgate) — a futures chart must never come from here.
+  if (market !== "futures") {
+    try {
+      const data = await fetchCandlesTwelveData(symbol, interval);
+      if (data.length > 0) {
+        setCache(symbol, interval, data);
+        return { candles: data, source: "twelvedata-rest", streaming: false };
+      }
+    } catch (e) { errors.push(`TwelveData: ${e}`); }
+  } else {
+    errors.push("TwelveData: skipped for futures (free plan has no real contracts)");
+  }
 
   // Intraday for non-crypto: TwelveData (personal key) → Yahoo (full current
   // history in one call via the relay chain — stocks, index ETFs, forex =X and
@@ -1196,7 +1203,39 @@ export async function fetchLivePrice(
     if (data) return { ...data, source: "Binance" };
   }
 
-  if (market === "futures" || market === "stocks" || market === "indices") {
+  if (market === "futures") {
+    // NEVER Finnhub/TwelveData for futures: bare roots (ES, CL, NG…) resolve to
+    // unrelated STOCKS there (ES=Eversource $70 vs the real ES=F contract ~$7600).
+    // Yahoo maps roots to REAL contracts (ES=F…) — it is the only free path.
+    if (!isYahooBlocked()) {
+      try {
+        const y = toYahooChartSymbol(symbol, market);
+        const yd = await fetchJson(
+          `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(y)}?interval=1d&range=1d`,
+          { timeoutMs: 4000, proxy: "yahoo" }
+        );
+        const meta = yd?.chart?.result?.[0]?.meta;
+        const price = parseFloat(meta?.regularMarketPrice);
+        if (price > 0) {
+          const prev = parseFloat(meta?.chartPreviousClose) || parseFloat(meta?.previousClose) || price;
+          noteYahooSuccess();
+          return {
+            price,
+            change: prev > 0 ? price - prev : 0,
+            changePct: prev > 0 ? ((price - prev) / prev) * 100 : 0,
+            volume: parseFloat(meta?.regularMarketVolume) || 0,
+            source: "Yahoo",
+          };
+        }
+        noteYahooFailure();
+      } catch { noteYahooFailure(); }
+    }
+    // No reachable real-contract source → honest null. A missing futures price
+    // beats a stock price wearing a futures ticker.
+    return null;
+  }
+
+  if (market === "stocks" || market === "indices") {
     const data = await fetchQuoteFinnhub(symbol);
     if (data) return { price: data.price, change: data.change, changePct: data.changePct, volume: data.volume, source: "Finnhub" };
     // Finnhub does not carry real index LEVELS (^GSPC…) — Yahoo does (inline

@@ -204,6 +204,61 @@ function SafetySystems() {
   );
 }
 
+/** Kind badge colors for the prediction journal. */
+const kindStyle: Record<string, string> = {
+  signal: "#0a9c36",
+  scan: "#516254",
+  verdict: "#16a034",
+  learn: "#a16207",
+  guard: "#d43b36",
+};
+
+/** The 24/7 live prediction journal — what the model decided, why, and how. */
+function PredictionJournal() {
+  const { mlStats } = useTradingStore();
+  const events = mlStats?.decisionEvents ?? [];
+
+  return (
+    <div className="terminal-panel p-3">
+      <div className="flex items-center gap-1.5 mb-2">
+        <Cpu size={10} className="text-brand-cyan" />
+        <span className="text-xs font-mono text-slate-500">PREDICTION LOG</span>
+        <span className="ml-auto flex items-center gap-1 text-[9px] font-mono text-bull">
+          <span className="indicator-dot bg-bull" /> LIVE 24/7
+        </span>
+      </div>
+      {events.length === 0 ? (
+        <div className="text-xs font-mono text-slate-600 py-1">
+          Journal boots with the first live forecast — what / why / how on every cycle.
+        </div>
+      ) : (
+        <div className="space-y-1.5 max-h-44 overflow-y-auto">
+          {events.slice(-14).reverse().map((e, i) => (
+            <div key={`${e.t}-${i}`} className="flex items-start gap-2 text-[10px] font-mono">
+              <span className="text-slate-600 shrink-0">
+                {new Date(e.t).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false })}
+              </span>
+              <span className="shrink-0 font-bold" style={{ color: kindStyle[e.kind] ?? "#516254" }}>
+                [{e.kind.toUpperCase()}]
+              </span>
+              <div className="min-w-0">
+                <div className="text-slate-400 leading-tight">{e.headline}</div>
+                <div className="text-slate-600 leading-tight">why: {e.why}</div>
+                <div className="text-slate-600 leading-tight">how: {e.how}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+      {mlStats && mlStats.hardExamples > 0 && (
+        <div className="flex items-center gap-1.5 mt-2 text-[10px] font-mono text-bear/80">
+          <Flame size={9} />
+          {mlStats.hardExamples} failed windows retained for failure-driven retraining
+        </div>
+      )}
+    </div>
+  );
+}
 /** Execute a $1,000-notional paper order in the given direction at the live price. */
 function tradeOnSignal(side: "long" | "short") {
   const state = useTradingStore.getState();
@@ -565,36 +620,8 @@ export default function MLPredictionPanel() {
         <OutcomesList />
       </div>
 
-      {/* Training events */}
-      {mlStats && mlStats.trainEvents.length > 0 && (
-        <div className="terminal-panel p-3">
-          <div className="flex items-center gap-1.5 mb-2">
-            <Cpu size={10} className="text-slate-500" />
-            <span className="text-xs font-mono text-slate-500">TRAINING LOG</span>
-          </div>
-          <div className="space-y-1 max-h-28 overflow-y-auto">
-            {mlStats.trainEvents.slice(-12).reverse().map((e, i) => (
-              <div key={i} className="flex items-start gap-2 text-[10px] font-mono">
-                <span className="text-slate-600 shrink-0">
-                  {new Date(e.t).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false })}
-                </span>
-                <span className={
-                  e.type === "retrain" ? "text-bear" : e.type === "online" ? "text-predict" : e.type === "eval" ? "text-brand-cyan" : "text-neural"
-                }>
-                  [{e.type.toUpperCase()}]
-                </span>
-                <span className="text-slate-500 leading-tight">{e.note}</span>
-              </div>
-            ))}
-          </div>
-          {mlStats.hardExamples > 0 && (
-            <div className="flex items-center gap-1.5 mt-2 text-[10px] font-mono text-bear/80">
-              <Flame size={9} />
-              {mlStats.hardExamples} failed windows retained for failure-driven retraining
-            </div>
-          )}
-        </div>
-      )}
+      {/* Prediction journal — live 24/7 what/why/how */}
+      <PredictionJournal />
     </div>
   );
 }

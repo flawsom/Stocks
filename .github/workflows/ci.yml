@@ -1,0 +1,71 @@
+# Continuous Integration — quality gate for every push and PR.
+#
+# Runs the full verification stack the project is tested with:
+#   1. TypeScript project check (tsc -b --noEmit)
+#   2. Production build (vite build → dist/)
+#   3. ML engine behavioral suite
+#   4. Backtest engine behavioral suite
+#   5. EyeQuant safety suite (MC-dropout, Grad-CAM, EWC, circuit breaker)
+#
+# The live-API data-integrity suite intentionally does NOT run here — CI
+# runners share IPs that free providers rate-limit aggressively, and a
+# rate-limit is not a code regression. Run it locally with:
+#   bun run scripts/data-integrity-test.mts
+
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Typecheck · Build · Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Typecheck
+        run: bun tsc -b --noEmit
+
+      - name: Build
+        run: bun run build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+          retention-days: 7
+
+      - name: ML engine suite
+        run: bun run scripts/ml-test.mts
+
+      - name: Backtest suite
+        run: bun run scripts/backtest-test.mts
+
+      - name: EyeQuant safety suite
+        run: bun run scripts/eyequant-test.mts
+
+      - name: Decision journal suite
+        run: bun run scripts/journal-test.mts
+
+      - name: Leakage (no-cheating) suite
+        run: bun run scripts/leakage-test.mts

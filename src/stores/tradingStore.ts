@@ -54,7 +54,7 @@ interface TradingState {
   newsLoading: boolean;
 
   // UI
-  rightPanel: "ml" | "indicators" | "orderbook" | "news" | "portfolio" | "lab";
+  rightPanel: "ml" | "analyst" | "indicators" | "orderbook" | "news" | "portfolio" | "lab";
   scannerOpen: boolean;
   isConnected: boolean;
   lastTick: number;

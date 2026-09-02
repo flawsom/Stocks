@@ -1,5 +1,5 @@
 import type { MarketType, ProviderQuote, IntegrityReport } from "@/types";
-import { fetchPriceBinance, fetchQuoteFrankfurter, fetchQuoteFinnhub, fetchQuoteTwelveData, isTdDayExhausted } from "@/lib/dataProviders";
+import { fetchPriceBinance, fetchQuoteFrankfurter, fetchQuoteFinnhub, fetchQuoteTwelveData } from "@/lib/dataProviders";
 import { getSymbolMeta } from "@/constants/config";
 import { fetchJson } from "@/lib/net";
 
@@ -471,6 +471,182 @@ export async function fetchQuotePoloniex(symbol: string): Promise<MeshQuote | nu
   return { price, change: 0, changePct: 0, volume: 0 };
 }
 
+/* ── World-coverage crypto venues (EU · APAC · LatAm) ────────── */
+
+/** Bitfinex (EU/Hong Kong) — free public v2 ticker, no key.
+ *  Bitfinex lists USDT pairs under the "UST" suffix; fall back to USD. */
+export async function fetchQuoteBitfinex(symbol: string): Promise<MeshQuote | null> {
+  const [b, qRaw] = baseQuote(symbol);
+  const q = qRaw === "USDT" ? "UST" : qRaw;
+  let data = await jsonFetch(`https://api-pub.bitfinex.com/v2/ticker/t${b}${q}`);
+  if (!Array.isArray(data) && qRaw === "USDT") {
+    data = await jsonFetch(`https://api-pub.bitfinex.com/v2/ticker/t${b}USD`);
+  }
+  if (!Array.isArray(data)) return null;
+  // [BID, BID_SIZE, ASK, ASK_SIZE, DAILY_CHANGE, DAILY_CHANGE_RELATIVE, LAST, VOLUME]
+  const price = Number(data[6]);
+  if (!(price > 0)) return null;
+  const change = Number(data[4]) || 0;
+  const changePct = Number(data[5]) || 0;
+  return { price, change, changePct: changePct * 100, volume: Number(data[7]) || 0 };
+}
+
+/** Crypto.com Exchange (Singapore) — free public ticker, no key. */
+export async function fetchQuoteCryptoCom(symbol: string): Promise<MeshQuote | null> {
+  const inst = symbol.replace("/", "_");
+  const data = await jsonFetch(`https://api.crypto.com/exchange/v1/public/get-ticker?instrument_name=${inst}`);
+  const d = data?.result?.data;
+  const price = parseFloat(d?.a);
+  if (!(price > 0)) return null;
+  // "c" = 24h price change as a ratio (e.g. 0.0123 = +1.23%)
+  const chgRatio = parseFloat(d?.c);
+  return {
+    price,
+    change: Number.isFinite(chgRatio) ? price - price / (1 + chgRatio) : 0,
+    changePct: Number.isFinite(chgRatio) ? chgRatio * 100 : 0,
+    volume: parseFloat(d?.v) || 0,
+  };
+}
+
+/** Upbit (South Korea) — free public ticker, no key, USDT-quoted markets. */
+export async function fetchQuoteUpbit(symbol: string): Promise<MeshQuote | null> {
+  const [b] = baseQuote(symbol);
+  const data = await jsonFetch(`https://api.upbit.com/v1/ticker?markets=USDT-${b}`);
+  const d = Array.isArray(data) ? data[0] : undefined;
+  const price = parseFloat(d?.trade_price);
+  if (!(price > 0)) return null;
+  const change = parseFloat(d?.signed_change_price) || 0;
+  const changePct = parseFloat(d?.signed_change_rate) || 0;
+  return { price, change, changePct: changePct * 100, volume: parseFloat(d?.acc_trade_volume_24h) || 0 };
+}
+
+/** Bitso (Mexico / LatAm) — free public v3 ticker, no key. */
+export async function fetchQuoteBitso(symbol: string): Promise<MeshQuote | null> {
+  const book = symbol.replace("/", "_").toLowerCase();
+  const data = await jsonFetch(`https://api.bitso.com/v3/ticker/?book=${book}`);
+  const d = data?.payload;
+  const price = parseFloat(d?.last);
+  if (!(price > 0)) return null;
+  return { price, change: 0, changePct: 0, volume: parseFloat(d?.volume) || 0 };
+}
+
+/** WhiteBIT (EU) — free public v4 ticker, no key. */
+export async function fetchQuoteWhiteBit(symbol: string): Promise<MeshQuote | null> {
+  const market = symbol.replace("/", "_");
+  const data = await jsonFetch(`https://api.whitebit.com/api/v4/public/ticker?market=${market}`);
+  const d = data?.[market];
+  const price = parseFloat(d?.close);
+  if (!(price > 0)) return null;
+  const open = parseFloat(d?.open);
+  return {
+    price,
+    change: open > 0 ? price - open : 0,
+    changePct: open > 0 ? ((price - open) / open) * 100 : 0,
+    volume: parseFloat(d?.volume) || 0,
+  };
+}
+
+/** LBank — free public v2 ticker, no key. */
+export async function fetchQuoteLBank(symbol: string): Promise<MeshQuote | null> {
+  const sym = symbol.replace("/", "").toLowerCase();
+  const data = await jsonFetch(`https://api.lbank.info/v2/ticker.do?symbol=${sym}`);
+  const d = Array.isArray(data?.data) ? data.data[0] : undefined;
+  const price = parseFloat(d?.latest);
+  if (!(price > 0)) return null;
+  const open = parseFloat(d?.open);
+  return {
+    price,
+    change: open > 0 ? price - open : 0,
+    changePct: open > 0 ? ((price - open) / open) * 100 : 0,
+    volume: parseFloat(d?.vol) || 0,
+  };
+}
+
+/** Blockchain.info (global) — keyless BTC ticker in all fiat; serves BTC/USDT ≈ USD. */
+export async function fetchQuoteBlockchainInfo(symbol: string): Promise<MeshQuote | null> {
+  const [b] = baseQuote(symbol);
+  if (b !== "BTC") return null;
+  const data = await jsonFetch(`https://blockchain.info/ticker?cors=true`);
+  const d = data?.USD;
+  const price = parseFloat(d?.last);
+  if (!(price > 0)) return null;
+  return { price, change: 0, changePct: 0, volume: 0 };
+}
+
+/** currency-api (global) — keyless FX rates for ~200 world currencies via CDN. */
+export async function fetchQuoteCurrencyApi(symbol: string): Promise<MeshQuote | null> {
+  const [b, q] = baseQuote(symbol);
+  if (b.toLowerCase() === q.toLowerCase()) return null;
+  const data = await jsonFetch(`https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${b.toLowerCase()}.json`);
+  const rate = data?.[b.toLowerCase()]?.[q.toLowerCase()];
+  const price = Number(rate);
+  if (!(price > 0)) return null;
+  return { price, change: 0, changePct: 0, volume: 0 };
+}
+
+/* ── Aggregators & more venues ───────────────────────────────── */
+
+/** Coinlore (global aggregator) — keyless, CORS-enabled, top-100 coins.
+ *  Serves every symbol in the universe from one call; a strong redundant
+ *  backbone when multiple exchanges are geo-blocked. */
+const COINLORE_IDS: Record<string, number> = {
+  "BTC/USDT": 90, "ETH/USDT": 80, "LTC/USDT": 1, "XRP/USDT": 58,
+  "DOGE/USDT": 2, "ADA/USDT": 257, "LINK/USDT": 2751, "DOT/USDT": 4532,
+  "BNB/USDT": 2710, "SOL/USDT": 48543,
+};
+export async function fetchQuoteCoinlore(symbol: string): Promise<MeshQuote | null> {
+  const id = COINLORE_IDS[symbol];
+  if (!id) return null;
+  const data = await jsonFetch(`https://api.coinlore.net/api/ticker/?id=${id}`);
+  const d = Array.isArray(data) ? data[0] : undefined;
+  const price = parseFloat(d?.price_usd);
+  if (!(price > 0)) return null;
+  const chg = parseFloat(d?.percent_change_24h);
+  return {
+    price,
+    change: price * (Number.isFinite(chg) ? chg / 100 : 0),
+    changePct: Number.isFinite(chg) ? chg : 0,
+    volume: parseFloat(d?.volume24) || 0,
+  };
+}
+
+// Bithumb & Coinone were evaluated and REJECTED: both send no CORS headers,
+// so a browser can never read them (and Coinone's legacy ticker quotes KRW,
+// which would paint a wrong-scale price if ever proxied). Only CORS-enabled
+// sources belong in a client-side mesh.
+
+/** Bitvavo (Netherlands/EU) — keyless ticker where USDT markets are listed. */
+export async function fetchQuoteBitvavo(symbol: string): Promise<MeshQuote | null> {
+  const pair = symbol.replace("/", "-");
+  const data = await jsonFetch(`https://api.bitvavo.com/v2/ticker/24h?market=${pair}`);
+  const d = Array.isArray(data) ? data[0] : undefined;
+  const price = parseFloat(d?.last);
+  if (!(price > 0)) return null;
+  const open = parseFloat(d?.open);
+  return {
+    price,
+    change: open > 0 ? price - open : 0,
+    changePct: open > 0 ? ((price - open) / open) * 100 : 0,
+    volume: parseFloat(d?.volume) || 0,
+  };
+}
+
+/** XT.com (global) — keyless public ticker. */
+export async function fetchQuoteXT(symbol: string): Promise<MeshQuote | null> {
+  const pair = symbol.replace("/", "_").toLowerCase();
+  const data = await jsonFetch(`https://sapi.xt.com/v4/public/ticker/24h?symbol=${pair}`);
+  const d = Array.isArray(data?.result) ? data.result[0] : undefined;
+  const price = parseFloat(d?.c);
+  if (!(price > 0)) return null;
+  const open = parseFloat(d?.o);
+  return {
+    price,
+    change: open > 0 ? price - open : 0,
+    changePct: open > 0 ? ((price - open) / open) * 100 : 0,
+    volume: parseFloat(d?.q) || 0,
+  };
+}
+
 /* ── Equities / indices / futures providers ──────────────────── */
 
 /** Yahoo Finance chart API — free, no key. Sends NO CORS headers, so the
@@ -553,6 +729,17 @@ function meshProvidersFor(symbol: string, market: MarketType): MeshProvider[] {
         { name: "mexc", fetch: () => fetchQuoteMexc(symbol) },
         { name: "gateio", fetch: () => fetchQuoteGateio(symbol) },
         { name: "poloniex", fetch: () => fetchQuotePoloniex(symbol) },
+        // ── World coverage: EU · APAC · LatAm ──
+        { name: "bitfinex", fetch: () => fetchQuoteBitfinex(symbol) },
+        { name: "cryptodotcom", fetch: () => fetchQuoteCryptoCom(symbol) },
+        { name: "upbit", fetch: () => fetchQuoteUpbit(symbol) },
+        { name: "bitso", fetch: () => fetchQuoteBitso(symbol) },
+        { name: "whitebit", fetch: () => fetchQuoteWhiteBit(symbol) },
+        { name: "lbank", fetch: () => fetchQuoteLBank(symbol) },
+        { name: "blockchaininfo", fetch: () => fetchQuoteBlockchainInfo(symbol) },
+        { name: "coinlore", fetch: () => fetchQuoteCoinlore(symbol) },
+        { name: "bitvavo", fetch: () => fetchQuoteBitvavo(symbol) },
+        { name: "xt", fetch: () => fetchQuoteXT(symbol) },
       ];
     case "stocks":
     case "indices": {
@@ -565,20 +752,15 @@ function meshProvidersFor(symbol: string, market: MarketType): MeshProvider[] {
       return providers;
     }
     case "futures": {
-      // NEVER poll Finnhub/Polygon with bare futures roots: they resolve to
-      // unrelated STOCKS (ES=Eversource, CL=Colgate, NG=NovaGold, HG=Hamilton,
-      // ZS=Zscaler). The only real-contract sources are Yahoo (ES=F, CL=F, …
-      // — works where the browser can reach it; CORS-blocked in many regions,
-      // fails fast and is blacklisted after 3 misses) and TwelveData (needs a
-      // personal VITE_TWELVE_DATA_KEY when the shared key is day-exhausted).
-      // No reachable source → honest null, never a wrong price.
-      const providers: MeshProvider[] = [
+      // NEVER Finnhub/Polygon/TwelveData with bare futures roots: they resolve
+      // to unrelated STOCKS (ES=Eversource, CL=Colgate, NG=NovaGold, HG=Hamilton,
+      // ZS=Zscaler). The free TwelveData plan carries no futures contracts at
+      // all, so "ES" there IS Eversource Energy. The only real-contract free
+      // source is Yahoo (ES=F, CL=F, …). No reachable source → honest null,
+      // never a stock price wearing a futures ticker.
+      return [
         { name: "yahoo", fetch: () => fetchQuoteYahoo(symbol, market) },
       ];
-      if (!isTdDayExhausted()) {
-        providers.push({ name: "twelvedata", fetch: () => fetchQuoteTwelveData(symbol) });
-      }
-      return providers;
     }
     case "forex":
       return [
@@ -592,6 +774,7 @@ function meshProvidersFor(symbol: string, market: MarketType): MeshProvider[] {
         },
         { name: "floatrates", fetch: () => fetchQuoteFloatrates(symbol) },
         { name: "exchangerate", fetch: () => fetchQuoteExchangerate(symbol) },
+        { name: "currencyapi", fetch: () => fetchQuoteCurrencyApi(symbol) },
       ];
     default:
       return [];

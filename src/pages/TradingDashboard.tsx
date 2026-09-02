@@ -10,20 +10,22 @@ import NewsPanel from "@/components/features/NewsPanel";
 import TradingTicket from "@/components/features/TradingTicket";
 import PortfolioPanel from "@/components/features/PortfolioPanel";
 import StrategyLab from "@/components/features/StrategyLab";
+import AnalystChat from "@/components/features/AnalystChat";
 import MarketScanner from "@/components/features/MarketScanner";
 import { useMarketData } from "@/hooks/useMarketData";
 import { useTradingStore } from "@/stores/tradingStore";
 import { usePortfolioStore, selectEquity } from "@/stores/portfolioStore";
 import { getPolygonBudget } from "@/lib/dataProviders";
-import { Brain, BarChart2, BookOpen, Newspaper, Wallet, FlaskConical, AlertTriangle, Loader2, RefreshCw, X } from "lucide-react";
+import { Brain, BarChart2, BookOpen, Newspaper, Wallet, FlaskConical, MessageSquareText, AlertTriangle, Loader2, RefreshCw, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatPrice, formatVolume } from "@/lib/utils";
 import { toast } from "sonner";
 
-type RightPanelType = "ml" | "indicators" | "orderbook" | "news" | "portfolio" | "lab";
+type RightPanelType = "ml" | "analyst" | "indicators" | "orderbook" | "news" | "portfolio" | "lab";
 
 const RIGHT_PANEL_TABS: { id: RightPanelType; label: string; icon: typeof Brain }[] = [
   { id: "ml", label: "AI", icon: Brain },
+  { id: "analyst", label: "CHAT", icon: MessageSquareText },
   { id: "indicators", label: "TA", icon: BarChart2 },
   { id: "orderbook", label: "DEPTH", icon: BookOpen },
   { id: "news", label: "NEWS", icon: Newspaper },
@@ -485,6 +487,7 @@ export default function TradingDashboard() {
           {/* Panel content */}
           <div className="flex-1 overflow-hidden">
             {rightPanel === "ml" && <MLPredictionPanel />}
+            {rightPanel === "analyst" && <AnalystChat />}
             {rightPanel === "indicators" && <TechnicalIndicators />}
             {rightPanel === "orderbook" && <OrderBook />}
             {rightPanel === "news" && <NewsPanel />}

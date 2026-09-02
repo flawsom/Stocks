@@ -25,6 +25,19 @@ export type DataSource =
   | "deribit"
   | "bitmart"
   | "floatrates"
+  | "bitfinex"
+  | "cryptodotcom"
+  | "upbit"
+  | "bitso"
+  | "whitebit"
+  | "lbank"
+  | "blockchaininfo"
+  | "coinlore"
+  | "bithumb"
+  | "coinone"
+  | "bitvavo"
+  | "xt"
+  | "currencyapi"
   | "yahoo"
   | "exchangerate"
   | "frankfurter"
@@ -232,6 +245,19 @@ export interface TrainEvent {
   note: string;
 }
 
+/** One entry in the 24/7 live prediction journal — what / why / how. */
+export interface DecisionEvent {
+  t: number;
+  kind: "signal" | "scan" | "verdict" | "learn" | "guard";
+  symbol: string;
+  /** WHAT — the decision or observation headline */
+  headline: string;
+  /** WHY — the market factors that drove it */
+  why: string;
+  /** HOW — the ensemble mechanics behind the number */
+  how: string;
+}
+
 /** One point on the forecast track-record / equity curve. */
 export interface PnLPoint {
   t: number;
@@ -261,6 +287,8 @@ export interface MLModelStats {
   modelCount: number;
   /** Events: training / retraining / outcome evaluation */
   trainEvents: TrainEvent[];
+  /** Live 24/7 decision journal — what the model decided, why, and how */
+  decisionEvents: DecisionEvent[];
   /** Rolling accuracy over recent resolved outcomes */
   rollingAccuracy: { t: number; v: number }[];
   /** Loss curve from the last training run */

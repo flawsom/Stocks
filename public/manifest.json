@@ -1,0 +1,27 @@
+{
+  "name": "OmegaTrade Ultra — Live Markets & AI Forecasts",
+  "short_name": "Ω Ultra",
+  "description": "Free real-time multi-market trading terminal for Stocks, Forex, Crypto, Indices and Futures with an in-browser, self-improving 7-model AI forecast ensemble. Zero mock data.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#fafffa",
+  "theme_color": "#121613",
+  "categories": ["finance", "business", "productivity"],
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

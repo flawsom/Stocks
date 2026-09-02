@@ -6,6 +6,7 @@ import Landing from "@/pages/Landing";
 import NotFound from "@/pages/NotFound";
 import MarketPage, { MARKET_GUIDES } from "@/pages/MarketPage";
 import { startLiveFeeds } from "@/lib/feeds";
+import { analyst } from "@/lib/analyst";
 import useCanvasCursor from "@/hooks/useCanvasCursor";
 
 // The terminal is code-split so the landing page — the SEO-critical document —
@@ -37,6 +38,9 @@ export default function App() {
   // Start the global live feeds once — landing and terminal share the same stream.
   useEffect(() => {
     startLiveFeeds();
+    // The autonomous analyst journals every forecast / outcome / system event
+    // app-wide, 24/7, regardless of which route is open.
+    analyst.start();
   }, []);
 
   // Canvas cursor trail — fixed overlay, rendered once for every page/route.

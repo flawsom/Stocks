@@ -88,8 +88,8 @@ async function main() {
     ok("landing renders title", (await bodyText()).includes("OmegaTrade Ultra"));
     ok("landing hero CTA exists", await page.locator("a:has-text('OPEN LIVE TERMINAL')").count() > 0);
     ok("nav LAUNCH TERMINAL exists", await page.locator("a:has-text('LAUNCH TERMINAL')").count() > 0);
-    ok("nav anchor CAPABILITIES target exists", await page.locator("#features").count() > 0);
-    ok("nav anchor LIVE DATA target exists", await page.locator("#data").count() > 0);
+    ok("nav anchor MARKETS target exists", await page.locator("#markets").count() > 0);
+    ok("nav anchor THE MACHINE target exists", await page.locator("#system").count() > 0);
 
     const liveStripLive = await waitFor(async () => {
       const txt = await bodyText();

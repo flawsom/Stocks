@@ -8,14 +8,15 @@
 
 ### Real-time markets, forecast by a machine that learns from its own misses.
 
-A professional-grade, **zero-cost** trading terminal that streams **live real-time data** across **Stocks, Forex, Crypto, Indices and Futures**, runs an **autonomous self-improving 7-model prediction ensemble** entirely in the browser, verifies every forecast, and shows its own precision — walk-forward accuracy, calibration and signal P&L vs buy-and-hold — right next to the live data.
+A professional-grade, **zero-cost** trading terminal that streams **live real-time data** across **Stocks, Forex, Crypto, Indices and Futures**, runs an **autonomous self-improving 7-model prediction ensemble** entirely in the browser, narrates every decision in a **24/7 live prediction log** (what it did, why, and how), verifies every forecast, and shows its own precision — walk-forward accuracy, calibration and signal P&L vs buy-and-hold — right next to the live data.
 
 **Zero mock data.** Every number on screen comes from a live provider feed (WebSocket or REST) or is derived from real trades. When a provider is rate-limited or unavailable, the terminal says so and falls back to another live source — it never fabricates prices.
 
 <!-- BADGES -->
 <img src="https://img.shields.io/badge/version-0.0.0-16a034?style=flat-square" alt="Version" />
 <img src="https://img.shields.io/github/license/flawsom/Stocks?style=flat-square&color=16a034" alt="License" />
-<img src="https://img.shields.io/github/actions/workflow/status/flawsom/Stocks/deploy-pages.yml?style=flat-square&label=build&color=16a034" alt="Build" />
+<img src="https://img.shields.io/github/actions/workflow/status/flawsom/Stocks/ci.yml?style=flat-square&label=CI&color=16a034" alt="CI" />
+<img src="https://img.shields.io/github/actions/workflow/status/flawsom/Stocks/deploy-pages.yml?style=flat-square&label=deploy&color=16a034" alt="Deploy" />
 <img src="https://img.shields.io/github/stars/flawsom/Stocks?style=flat-square&color=121613" alt="Stars" />
 <img src="https://img.shields.io/github/forks/flawsom/Stocks?style=flat-square&color=121613" alt="Forks" />
 <img src="https://img.shields.io/github/downloads/flawsom/Stocks/total?style=flat-square&color=121613" alt="Downloads" />
@@ -46,7 +47,7 @@ A professional-grade, **zero-cost** trading terminal that streams **live real-ti
 
 | | | |
 |---|---|---|
-| [✨ Features](#-features) | [📸 Screenshots](#-screenshots) | [🎥 Demo](#-demo) |
+| [✨ Features](#-features) | [📸 Animated Screens](#-animated-screens) | [🎥 Demo](#-demo) |
 | [🏗️ Architecture](#-architecture) | [🛠 Tech Stack](#-tech-stack) | [⚡ Quick Start](#-quick-start) |
 | [📁 Project Structure](#-project-structure) | [🔐 Environment Variables](#-environment-variables) | [📖 API Documentation](#-api-documentation) |
 | [🎯 Usage Examples](#-usage-examples) | [📊 Performance](#-performance) | [🧪 Testing](#-testing) |
@@ -74,6 +75,7 @@ A professional-grade, **zero-cost** trading terminal that streams **live real-ti
 | Feature | Detail |
 |---|---|
 | **7-model ensemble** | 3 multi-layer perceptrons, logistic regression, a kNN pattern matcher, **gradient-boosted trees**, and a momentum/mean-reversion model — votes **weighted by each model's verified track record** |
+| **24/7 decision journal** | The PREDICTION LOG narrates the machine's every move on live data: `[SIGNAL]` (direction, target price, horizon, top attributed factors, ensemble mechanics), `[SCAN]` heartbeats between horizons, `[VERDICT]` HIT/MISS with rolling accuracy as each forecast resolves, `[LEARN]` failure-driven updates and retrains, `[GUARD]` circuit-breaker events — a continuous what/why/how stream, not a training status panel |
 | **Multi-horizon forecasts** | T+1 / T+3 / T+5 targets plotted as a forecast path with an uncertainty cone on the chart |
 | **Walk-forward validation** | Every training run scores the ensemble out-of-sample against persistence/majority baselines; Brier score and log loss shown in the panel |
 | **Trains on its failures** | Every forecast resolves after its horizon; misses become *hard examples*, replayed online immediately and over-sampled on the next retrain. Rolling accuracy < 45% triggers automatic retraining |
@@ -100,9 +102,13 @@ A professional-grade, **zero-cost** trading terminal that streams **live real-ti
 
 ---
 
-## 📸 Screenshots
+## 📸 Animated Screens
 
-<img src="assets/readme/screens.svg" alt="OmegaTrade Ultra interface screens" width="100%" />
+<!-- Motion graphics: the panels below are hand-built SVGs with CSS keyframe animation —
+     the candles build themselves, the prediction log types live, the accuracy bars fill,
+     the equity curve draws, and the scanner rows cycle — exactly like the real terminal. -->
+
+<img src="assets/readme/screens.svg" alt="Animated OmegaTrade Ultra screens — live terminal, mobile watchlist, analytics ledger, market scanner" width="100%" />
 
 | View | Where |
 |---|---|
@@ -147,6 +153,14 @@ A professional-grade, **zero-cost** trading terminal that streams **live real-ti
 
 The entire product is a **single static client**. There is no backend server and no database — the "backend" is the provider mesh, and the "AI" runs in your browser.
 
+<!-- Watch the full pipeline in motion: providers race → candles aggregate →
+     7 models vote → forecasts resolve → the journal narrates. -->
+
+<img src="assets/readme/pipeline.svg" alt="Animated pipeline — provider mesh race, candle aggregation, 7-model ensemble voting, verdict and decision journal" width="100%" />
+
+<details>
+<summary><b>Mermaid source diagram</b> (click to expand)</summary>
+
 ```mermaid
 flowchart TB
     subgraph Client["Browser — Vite + React SPA"]
@@ -180,6 +194,8 @@ flowchart TB
     WS --> INT
     REST --> INT
 ```
+
+</details>
 
 **Data flow:** every symbol's eligible free providers are raced in parallel; the fastest valid quote lands instantly. Ticks flow through a `CandleAggregator` that buckets them into candles for the active timeframe *and* a dense 1-minute series used to train the ML engine. Forecasts are registered with a horizon, resolved against realized prices, and misses are replayed as hard examples.
 
@@ -322,6 +338,8 @@ Stocks/
 │                                  #   MarketScanner
 ├── scripts/
 │   ├── data-integrity-test.mts    # Live-API integrity suite (30 checks)
+│   ├── journal-test.mts           # Decision-journal suite (SIGNAL/VERDICT/LEARN/GUARD)
+│   ├── leakage-test.mts           # No-cheating guarantee (causal windows)
 │   ├── ml-test.mts                # ML engine behavioral suite
 │   ├── backtest-test.mts          # Backtest engine behavioral suite
 │   ├── eyequant-test.mts          # EyeQuant safety systems (MC, XAI, EWC, integrity, breaker)
@@ -484,7 +502,7 @@ startLiveFeeds();
 
 ## 🧪 Testing
 
-Four suites, all runnable locally. The data-integrity suite hits **real live APIs** and asserts fresh, finite, non-zero data.
+Five-plus suites, all runnable locally. The data-integrity suite hits **real live APIs** and asserts fresh, finite, non-zero data. GitHub Actions runs the offline suites as a CI gate on every push and PR (`.github/workflows/ci.yml` — typecheck → build → ML → backtest → EyeQuant → journal → leakage).
 
 ```bash
 # Type check
@@ -504,6 +522,12 @@ bun run scripts/eyequant-test.mts
 
 # Consumer E2E probe — boots real Chromium, clicks through like a user (41 checks)
 bun run scripts/e2e-consumer.mjs
+
+# Decision journal suite — SIGNAL/VERDICT/LEARN/GUARD emission on live cycles
+bun run scripts/journal-test.mts
+
+# Leakage suite — proves the model never sees future data (no-cheating guarantee)
+bun run scripts/leakage-test.mts
 ```
 
 | Suite | Coverage |
@@ -512,6 +536,8 @@ bun run scripts/e2e-consumer.mjs
 | **ML engine** | training converges, ensemble predicts direction, adaptive weights, multi-horizon targets, HIT/MISS resolution, walk-forward + calibration metrics, persistence |
 | **Backtest** | all 3 strategies end-to-end, fee monotonicity, long-only constraint, zero-signal edge cases |
 | **EyeQuant safety** | MC-dropout variance sane, attribution sign-correct, EWC constrains drift, circuit breaker honors, integrity verdicts |
+| **Decision journal** | every live cycle emits SIGNAL (with top factors + ensemble mechanics), SCAN heartbeats, VERDICT entries on resolution, LEARN entries on failure-driven updates, GUARD entries on breaker engagement |
+| **Leakage (no-cheating)** | feature windows are strictly causal — the engine trains on past bars only, forecasts future bars only |
 | **Consumer E2E** | landing → terminal, all 5 market tabs, live price + auto-update + real history, timeframes, all 6 right panels, scanner, footer mesh |
 
 ### Linting & formatting
@@ -549,6 +575,11 @@ One click does everything:
 3. **Build & deploy** — framework preset **Vite** is auto-detected · build `bun run build` (or `npm run build`) · output `dist` · SPA routing via `vercel.json` (included). Your live URL appears in ~1 minute.
 
 Afterwards you can manage the env vars under **Project → Settings → Environment Variables** (they are build-time vars, so redeploy after changing them), and attach your own domain under **Settings → Domains** — e.g. point `stock.unifies.codes` at Vercel instead of GitHub Pages to sidestep ISP-level GitHub Pages blocks.
+
+> ⚠️ **Custom-domain gotcha (the one that causes "site doesn't load"):** never leave DNS for the same hostname pointing at **two hosts at once**. If `stock.unifies.codes` has both GitHub Pages records (`185.199.x.x`) and Vercel records (`76.76.21.21` / `216.198.x.x` / `cname.vercel-dns.com`) active simultaneously, some visitors resolve to whichever host has **not** finished its side of the setup — Vercel without the domain added to a project serves **no TLS certificate**, and the connection dies with an SSL error. The fix is one of:
+> - **Going with Vercel** → in the Vercel dashboard: Project → Settings → Domains → add `stock.unifies.codes` → follow the DNS instructions **exactly** (single `A 76.76.21.21` + `CNAME` for `www`, or the new anycast set Vercel shows you) and **remove the GitHub Pages records** (`A 185.199.108–111.153`) once Vercel's certificate is issued (check for a padlock, then `curl -sI https://stock.unifies.codes/` returns `server: Vercel`).
+> - **Staying on GitHub Pages** → delete the Vercel DNS records, keep the four `185.199.x.x` records, and enable Pages (Settings → Pages → GitHub Actions).
+> Either way, one hostname → one host.
 
 ### 🏗️ Netlify (free tier)
 
@@ -627,10 +658,13 @@ test(backtest): cover zero-signal edge cases
 
 ### 🔜 In progress / planned
 
+- [x] 24/7 decision journal — SIGNAL / SCAN / VERDICT / LEARN / GUARD narration on live data
+- [x] CI quality gate (typecheck → build → offline test suites) on every push and PR
+- [x] Installable PWA (manifest + theming) — add the terminal to your home screen
 - [ ] Multi-symbol simultaneous ML training (worker pool)
 - [ ] Portfolio-level risk analytics (VaR, drawdown heatmap)
 - [ ] Alerting via webhooks (Discord / Telegram)
-- [ ] PWA offline mode with IndexedDB candle cache
+- [ ] PWA offline mode with IndexedDB candle cache (manifest + install are done — this is the offline data layer)
 - [ ] WebSocket reconnection backoff tuning per provider
 - [ ] i18n (EN → ES, DE, JA)
 - [ ] Theme variants (dark terminal mode preserved as an option)

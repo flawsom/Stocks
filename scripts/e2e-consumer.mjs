@@ -30,8 +30,10 @@ page.on("pageerror", e => pageErrs.push(String(e).slice(0, 200)));
 
 const clickText = async (text) => {
   return page.evaluate((text) => {
+    // Match on "contains" — CTAs carry a decorative arrow span, so textContent
+    // is e.g. "LAUNCH TERMINAL→" and an exact-equality match never succeeds.
     const el = [...document.querySelectorAll("button,a")].find(b =>
-      b.textContent?.trim().toUpperCase() === text.toUpperCase());
+      b.textContent?.trim().toUpperCase().includes(text.toUpperCase()));
     if (el) { el.click(); return true; }
     return false;
   }, text);
@@ -76,7 +78,10 @@ const markets = [
   { header: "STOCKS", active: "AAPL", min: 10, max: 2000 },
   { header: "FOREX", active: "EUR/USD", min: 0.5, max: 3 },
   { header: "CRYPTO", active: "BTC/USDT", min: 1000, max: 1000000 },
-  { header: "INDICES", active: "SPY", min: 100, max: 5000 },
+  // Bands sized for 2026 index levels (S&P ~7,600; ES ~7,600) — wide enough to
+  // stay stable across market cycles, narrow enough to catch wrong-scale data.
+  // The app leads with REAL index levels (^GSPC ≈ 7,600 in 2026), not ETF proxies.
+  { header: "INDICES", active: "^GSPC", min: 1000, max: 25000 },
   { header: "FUTURES", active: "ES", min: 1000, max: 50000 },
 ];
 

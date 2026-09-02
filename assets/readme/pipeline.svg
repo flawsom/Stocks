@@ -1,0 +1,213 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 860" width="1400" height="860" role="img" aria-label="Animated architecture: 30+ free providers race quotes into the candle aggregator, feeding the 7-model ensemble, which emits verified forecasts into the 24/7 decision journal">
+  <style><![CDATA[
+    /* ── Pipeline motion system ─────────────────────────────────────── */
+    @keyframes dashFlow { to { stroke-dashoffset: -240; } }
+    @keyframes dashFlowSlow { to { stroke-dashoffset: -120; } }
+    @keyframes raceDot {
+      0%   { transform: translateX(0); opacity: 0; }
+      8%   { opacity: 1; }
+      92%  { opacity: 1; }
+      100% { transform: translateX(150px); opacity: 0; }
+    }
+    @keyframes raceDot2 {
+      0%   { transform: translateX(0); opacity: 0; }
+      8%   { opacity: 1; }
+      92%  { opacity: 1; }
+      100% { transform: translateX(118px); opacity: 0; }
+    }
+    @keyframes corePulse {
+      0%, 100% { transform: scale(1); opacity: 0.16; }
+      50%      { transform: scale(1.12); opacity: 0.34; }
+    }
+    @keyframes voteWave {
+      0%, 100% { opacity: 0.5; }
+      50%      { opacity: 1; }
+    }
+    @keyframes bannerSlide {
+      0%, 12%   { transform: translateY(34px); opacity: 0; }
+      22%, 78%  { transform: translateY(0); opacity: 1; }
+      88%, 100% { transform: translateY(-34px); opacity: 0; }
+    }
+    @keyframes logType {
+      0%, 8%   { opacity: 0; }
+      14%, 82% { opacity: 1; }
+      90%,100% { opacity: 0; }
+    }
+    @keyframes logType2 {
+      0%, 24%  { opacity: 0; }
+      30%, 92% { opacity: 1; }
+      100%     { opacity: 0; }
+    }
+    @keyframes hitGlow {
+      0%, 100% { opacity: 0.55; }
+      50%      { opacity: 1; }
+    }
+    @keyframes wsWave {
+      0%   { opacity: 0.2; }
+      50%  { opacity: 0.75; }
+      100% { opacity: 0.2; }
+    }
+    .flow     { stroke-dasharray: 10 8; animation: dashFlow 2.6s linear infinite; }
+    .flowSlow { stroke-dasharray: 7 7;  animation: dashFlowSlow 2.2s linear infinite; }
+    .core-halo { animation: corePulse 3s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+    .vote     { animation: voteWave 1.8s ease-in-out infinite; }
+    .banner   { animation: bannerSlide 6s ease-in-out infinite; }
+    .logA     { animation: logType 6s linear infinite; }
+    .logB     { animation: logType2 6s linear infinite; }
+    .hit      { animation: hitGlow 2s ease-in-out infinite; }
+    .ws       { animation: wsWave 2.4s ease-in-out infinite; }
+    .dotA { animation: raceDot 2.4s linear infinite; }
+    .dotB { animation: raceDot2 2s linear infinite 0.5s; }
+    .dotC { animation: raceDot2 2.6s linear infinite 1s; }
+  ]]></style>
+
+  <defs>
+    <filter id="pBlur" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="40"/>
+    </filter>
+    <radialGradient id="pGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#2bee4b" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#2bee4b" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="pPanel" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#f2f7f0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- canvas -->
+  <rect width="1400" height="860" fill="#fafffa"/>
+  <ellipse cx="700" cy="120" rx="500" ry="180" fill="url(#pGlow)" filter="url(#pBlur)"/>
+  <g stroke="#e3ebe1" stroke-width="1" opacity="0.6">
+    <path d="M0 172 H1400 M0 344 H1400 M0 516 H1400 M0 688 H1400"/>
+    <path d="M233 0 V860 M466 0 V860 M700 0 V860 M933 0 V860 M1166 0 V860"/>
+  </g>
+
+  <!-- title -->
+  <text x="700" y="56" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="34" font-weight="700" fill="#121613">How a quote becomes a verified forecast</text>
+  <rect x="560" y="72" width="280" height="4" rx="2" fill="#2bee4b"/>
+
+  <!-- ══════════ STAGE 1: provider mesh ══════════ -->
+  <g>
+    <text x="64" y="128" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#516254" letter-spacing="3">STAGE 1 — LIVE DATA MESH</text>
+    <rect x="64" y="148" width="560" height="330" rx="14" fill="url(#pPanel)" stroke="#c8d2c8" stroke-width="1.5"/>
+
+    <!-- WS providers -->
+    <g font-family="monospace" font-size="12.5">
+      <rect class="ws" x="88" y="172" width="150" height="40" rx="8" fill="#ddf4e3" stroke="#0a9c36"/>
+      <text x="163" y="197" text-anchor="middle" fill="#0b8a31" font-weight="700">Finnhub WS</text>
+      <rect class="ws" x="254" y="172" width="150" height="40" rx="8" fill="#ddf4e3" stroke="#0a9c36"/>
+      <text x="329" y="197" text-anchor="middle" fill="#0b8a31" font-weight="700">Binance WS</text>
+      <rect class="ws" x="420" y="172" width="150" height="40" rx="8" fill="#ddf4e3" stroke="#0a9c36"/>
+      <text x="495" y="197" text-anchor="middle" fill="#0b8a31" font-weight="700">Kraken WS</text>
+    </g>
+
+    <!-- REST providers grid -->
+    <g font-family="monospace" font-size="12">
+      <rect x="88" y="230" width="118" height="34" rx="8" fill="#ffffff" stroke="#c8d2c8"/><text x="147" y="252" text-anchor="middle" fill="#121613">Coinbase</text>
+      <rect x="218" y="230" width="118" height="34" rx="8" fill="#ffffff" stroke="#c8d2c8"/><text x="277" y="252" text-anchor="middle" fill="#121613">OKX</text>
+      <rect x="348" y="230" width="118" height="34" rx="8" fill="#ffffff" stroke="#c8d2c8"/><text x="407" y="252" text-anchor="middle" fill="#121613">Bitstamp</text>
+      <rect x="478" y="230" width="122" height="34" rx="8" fill="#ffffff" stroke="#c8d2c8"/><text x="539" y="252" text-anchor="middle" fill="#121613">Yahoo</text>
+
+      <rect x="88" y="276" width="118" height="34" rx="8" fill="#ffffff" stroke="#c8d2c8"/><text x="147" y="298" text-anchor="middle" fill="#121613">TwelveData</text>
+      <rect x="218" y="276" width="118" height="34" rx="8" fill="#ffffff" stroke="#c8d2c8"/><text x="277" y="298" text-anchor="middle" fill="#121613">Polygon</text>
+      <rect x="348" y="276" width="118" height="34" rx="8" fill="#ffffff" stroke="#c8d2c8"/><text x="407" y="298" text-anchor="middle" fill="#121613">CoinGecko</text>
+      <rect x="478" y="276" width="122" height="34" rx="8" fill="#ffffff" stroke="#c8d2c8"/><text x="539" y="298" text-anchor="middle" fill="#121613">ECB / FX</text>
+
+      <rect x="88" y="322" width="118" height="34" rx="8" fill="#ffffff" stroke="#c8d2c8"/><text x="147" y="344" text-anchor="middle" fill="#121613">HTX</text>
+      <rect x="218" y="322" width="118" height="34" rx="8" fill="#ffffff" stroke="#c8d2c8"/><text x="277" y="344" text-anchor="middle" fill="#121613">Gemini</text>
+      <rect x="348" y="322" width="118" height="34" rx="8" fill="#ffffff" stroke="#c8d2c8"/><text x="407" y="344" text-anchor="middle" fill="#121613">Bybit</text>
+      <rect x="478" y="322" width="122" height="34" rx="8" fill="#ffffff" stroke="#c8d2c8"/><text x="539" y="344" text-anchor="middle" fill="#121613">+ 15 more</text>
+    </g>
+
+    <!-- race strip: dots racing to the winner -->
+    <g>
+      <rect x="88" y="382" width="512" height="66" rx="10" fill="#0a0d0b"/>
+      <text x="104" y="406" font-family="monospace" font-size="11" fill="#7b8a7d" letter-spacing="2">FASTEST-WINS RACE · LATENCY REGISTRY LEARNS</text>
+      <line x1="120" y1="428" x2="270" y2="428" stroke="#2bee4b" stroke-width="2" class="flowSlow"/>
+      <circle class="dotA" cx="120" cy="428" r="5" fill="#2bee4b"/>
+      <circle class="dotB" cx="130" cy="428" r="4" fill="#93b799"/>
+      <circle class="dotC" cx="140" cy="428" r="4" fill="#516254"/>
+      <rect x="270" y="414" width="120" height="28" rx="14" fill="#2bee4b"/>
+      <text x="330" y="433" text-anchor="middle" font-family="monospace" font-size="12" font-weight="700" fill="#061308">26–150 ms</text>
+      <text x="410" y="433" font-family="monospace" font-size="11" fill="#9fe8ac">✓ valid price</text>
+    </g>
+
+    <!-- integrity auditor -->
+    <g>
+      <rect x="88" y="438" width="512" height="26" rx="8" fill="#fdf3da" stroke="#a16207"/>
+      <text x="344" y="456" text-anchor="middle" font-family="monospace" font-size="11.5" fill="#8a5206">⛨ INTEGRITY AUDITOR — cross-provider divergence &gt; 1% ⇒ DATA DE-SYNC shield</text>
+    </g>
+  </g>
+
+  <!-- ══════════ STAGE 2: aggregator ══════════ -->
+  <g>
+    <text x="700" y="536" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#516254" letter-spacing="3">STAGE 2 — CANDLE AGGREGATOR</text>
+    <rect x="560" y="556" width="280" height="130" rx="14" fill="url(#pPanel)" stroke="#c8d2c8" stroke-width="1.5"/>
+    <g>
+      <rect x="584" y="580" width="30" height="52" rx="3" fill="#0a9c36"/>
+      <rect x="626" y="592" width="30" height="40" rx="3" fill="#d43b36"/>
+      <rect x="668" y="574" width="30" height="58" rx="3" fill="#0a9c36"/>
+      <rect x="710" y="588" width="30" height="44" rx="3" fill="#d43b36"/>
+      <rect x="752" y="568" width="30" height="64" rx="3" fill="#0a9c36"/>
+    </g>
+    <text x="700" y="668" text-anchor="middle" font-family="monospace" font-size="11.5" fill="#516254">ticks → live candles · dense 1-min training series</text>
+  </g>
+
+  <!-- ══════════ STAGE 3: ensemble ══════════ -->
+  <g>
+    <text x="1056" y="536" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#516254" letter-spacing="3">STAGE 3 — 7-MODEL ENSEMBLE</text>
+    <rect x="936" y="556" width="400" height="130" rx="14" fill="url(#pPanel)" stroke="#c8d2c8" stroke-width="1.5"/>
+    <circle class="core-halo" cx="1136" cy="612" r="44" fill="#2bee4b"/>
+    <circle cx="1136" cy="612" r="30" fill="#121613"/>
+    <text x="1136" y="618" text-anchor="middle" font-family="Georgia, serif" font-size="24" fill="#2bee4b">Ω</text>
+    <g class="vote" font-family="monospace" font-size="10.5" fill="#516254">
+      <text x="972" y="590">MLP ×3</text>
+      <text x="1206" y="590">kNN · LOGIT</text>
+      <text x="972" y="648">GBT</text>
+      <text x="1216" y="648">MOMENTUM</text>
+    </g>
+    <g stroke="#c8d2c8" stroke-width="1.5">
+      <line x1="1010" y1="586" x2="1112" y2="604" class="flowSlow"/>
+      <line x1="1262" y1="586" x2="1160" y2="604" class="flowSlow"/>
+      <line x1="1010" y1="644" x2="1112" y2="622" class="flowSlow"/>
+      <line x1="1262" y1="644" x2="1160" y2="622" class="flowSlow"/>
+    </g>
+    <text x="1136" y="672" text-anchor="middle" font-family="monospace" font-size="11" fill="#516254">walk-forward · EWC · Kalman · MC-dropout σ · Grad-CAM</text>
+  </g>
+
+  <!-- mesh → aggregator flow -->
+  <path d="M624 486 C624 520 660 540 680 552" fill="none" stroke="#16a034" stroke-width="2.5" class="flow"/>
+  <!-- aggregator → ensemble flow -->
+  <path d="M848 620 L928 620" fill="none" stroke="#16a034" stroke-width="2.5" class="flow"/>
+
+  <!-- ══════════ STAGE 4: journal ══════════ -->
+  <g>
+    <text x="700" y="742" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#516254" letter-spacing="3">STAGE 4 — VERDICT + 24/7 DECISION JOURNAL</text>
+    <rect x="180" y="762" width="1040" height="76" rx="12" fill="#0a0d0b"/>
+    <g font-family="monospace" font-size="13">
+      <g class="logA">
+        <text x="208" y="790" fill="#0a9c36">[SIGNAL]</text>
+        <text x="292" y="790" fill="#c4e4c9">UP 68% → 230.10 (T+5) · why: RSI +0.03 · flow +0.02 · how: 7 models · σ 0.021</text>
+      </g>
+      <g class="logB">
+        <text x="208" y="816" class="hit" fill="#2bee4b">[VERDICT]</text>
+        <text x="312" y="816" fill="#c4e4c9">HIT · called UP, market went UP (+0.42%) · rolling acc 61% · ledger updated</text>
+      </g>
+    </g>
+    <!-- ensemble → journal flow -->
+    <path d="M1136 690 C1136 720 900 750 700 758" fill="none" stroke="#16a034" stroke-width="2.5" class="flow"/>
+
+    <!-- banner: circuit breaker occasionally slides in -->
+    <g class="banner">
+      <rect x="1016" y="556" width="300" height="34" rx="17" fill="#fbe7e5" stroke="#d43b36"/>
+      <text x="1166" y="578" text-anchor="middle" font-family="monospace" font-size="12" font-weight="700" fill="#bb352f">⛨ CIRCUIT BREAKER — σ too high, hold</text>
+    </g>
+  </g>
+
+  <!-- side annotations -->
+  <g font-family="system-ui, sans-serif" font-size="12.5" fill="#516254">
+    <text x="700" y="140" text-anchor="middle">Every quote races up to 30 free providers — the fastest valid price wins, provenance is stamped, and an</text>
+    <text x="700" y="162" text-anchor="middle">independent auditor cross-checks the winner. No provider? The terminal says so — it never fabricates.</text>
+  </g>
+</svg>
