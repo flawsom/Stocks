@@ -1,6 +1,11 @@
-# GitHub Sponsors - shows the "Sponsor this project" button on the repo.
-# Join the program first if you haven't: https://github.com/sponsors/accounts
+# Sponsor buttons - shows on the repo sidebar via the "Sponsor this project" button.
+# Each platform only appears if the username/account exists there.
+# Join GitHub Sponsors first (requires Stripe payout setup): https://github.com/sponsors/accounts
 github: flawsom
-
-# Also linked from the README Support section
+ko-fi: flawsom
 buy_me_a_coffee: flawsom
+# patreon: flawsom          # uncomment after creating patreon.com/flawsom
+# open_collective: flawsom  # uncomment after creating opencollective.com/flawsom
+# liberapay: flawsom        # uncomment after creating liberapay.com/flawsom
+# issuehunt: flawsom        # uncomment after creating issuehunt.io/u/flawsom
+# custom: ["https://razorpay.me/@flawsom"]  # UPI/India-friendly, swap for your link

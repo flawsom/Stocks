@@ -752,7 +752,8 @@ OmegaTrade Ultra is free, open source, and costs nothing to run - and it stays t
 | ⭐ **Star the repo** | [github.com/flawsom/Stocks](https://github.com/flawsom/Stocks) - stars keep the project alive |
 | 🐛 **Report an issue** | [github.com/flawsom/Stocks/issues](https://github.com/flawsom/Stocks/issues) |
 | 💬 **Start a discussion** | [github.com/flawsom/Stocks/discussions](https://github.com/flawsom/Stocks/discussions) |
-| 🫶 **Sponsor** | [github.com/sponsors/flawsom](https://github.com/sponsors/flawsom) |
+| 🫶 **GitHub Sponsors** | [github.com/sponsors/flawsom](https://github.com/sponsors/flawsom) |
+| ☕ **Ko-fi** | [ko-fi.com/flawsom](https://ko-fi.com/flawsom) |
 | ☕ **Buy me a coffee** | [buymeacoffee.com/flawsom](https://www.buymeacoffee.com/flawsom) |
 | ✉️ **Contact** | Open an issue or discussion - I read everything |
 
