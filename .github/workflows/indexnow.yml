@@ -29,23 +29,24 @@ jobs:
           HOST="stocks.unifies.codes"
           KEY_LOCATION="https://${HOST}/9f8e7d6c5b4a3210fedcba9876543210.txt"
 
-          URLS=$(cat <<'JSON'
+          URLS=$(cat <<JSON
           {
-            "host": "${HOST}",
-            "key": "${KEY}",
-            "keyLocation": "${KEY_LOCATION}",
+            "host": "$HOST",
+            "key": "$KEY",
+            "keyLocation": "$KEY_LOCATION",
             "urlList": [
-              "https://${HOST}/",
-              "https://${HOST}/terminal",
-              "https://${HOST}/stocks",
-              "https://${HOST}/crypto",
-              "https://${HOST}/forex",
-              "https://${HOST}/indices",
-              "https://${HOST}/futures"
+              "https://$HOST/",
+              "https://$HOST/terminal",
+              "https://$HOST/stocks",
+              "https://$HOST/crypto",
+              "https://$HOST/forex",
+              "https://$HOST/indices",
+              "https://$HOST/futures"
             ]
           }
           JSON
           )
+          echo "Payload: $URLS"
 
           for ENDPOINT in \
             "https://api.indexnow.org/indexnow" \
