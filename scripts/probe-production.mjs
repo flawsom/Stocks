@@ -6,18 +6,15 @@
 //   4. PREDICTION LOG · LIVE 24/7 panel renders
 //   5. No uncaught page errors
 // Run: node scripts/probe-production.mjs
-// DNS note: stocks.unifies.codes currently round-robins between healthy GitHub
-// Pages IPs (185.199.x.x) and unclaimed Vercel anycast IPs (SSL-dead). Pin the
-// browser to the Pages IPs so the probe tests the app, not the DNS transition.
+// DNS note: production runs on Vercel anycast (216.198.79.1 / 64.29.17.1) with
+// valid TLS for stocks.unifies.codes - no IP pinning needed.
 import { chromium } from "playwright";
 
 const BASE = "https://stocks.unifies.codes/";
 let fails = 0;
 const check = (n, c, x = "") => { console.log(`${c ? "PASS" : "FAIL"}  ${n}${x ? " — " + x : ""}`); if (!c) fails++; };
 
-const browser = await chromium.launch({
-  args: ["--host-resolver-rules=MAP stocks.unifies.codes 185.199.108.153"],
-});
+const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1600, height: 1000 } });
 const pageErrs = [];
 page.on("pageerror", e => pageErrs.push(String(e).slice(0, 160)));
