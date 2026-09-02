@@ -356,12 +356,12 @@ export default function TradingDashboard() {
       <Helmet>
         <title>Live Trading Terminal — Free Real-Time Charts & AI Forecasts — OmegaTrade Ultra</title>
         <meta name="description" content="Open the live trading terminal — real-time charts, order books, technical analysis and AI forecasts across stocks, crypto, forex, indices and futures. Free, no account." />
-        <link rel="canonical" href="https://stock.unifies.codes/terminal" />
+        <link rel="canonical" href="https://stocks.unifies.codes/terminal" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://stock.unifies.codes/terminal" />
+        <meta property="og:url" content="https://stocks.unifies.codes/terminal" />
         <meta property="og:title" content="Live Trading Terminal — OmegaTrade Ultra" />
         <meta property="og:description" content="Free real-time multi-market trading terminal with AI forecasts, technical analysis and paper trading." />
-        <meta property="og:image" content="https://stock.unifies.codes/og-image.png" />
+        <meta property="og:image" content="https://stocks.unifies.codes/og-image.png" />
       </Helmet>
       {scannerOpen && <MarketScanner />}
       <Header />

@@ -1,0 +1,59 @@
+# IndexNow - instant indexing ping for Bing, Yandex, Seznam and Naver.
+# Runs after every push to main (which triggers the Vercel deploy), pinging
+# all sitemap URLs so search engines re-crawl changed pages within minutes
+# instead of waiting for their organic crawl schedule.
+#
+# The verification key file lives at public/9f8e7d6c5b4a3210fedcba9876543210.txt
+# (key = 3f7a9c1e5b2d84f06a13c7e9542b8d60). Search engines fetch it once to
+# verify ownership of the host.
+
+name: IndexNow ping
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+concurrency:
+  group: indexnow
+  cancel-in-progress: true
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Ping IndexNow with sitemap URLs
+        run: |
+          KEY="3f7a9c1e5b2d84f06a13c7e9542b8d60"
+          HOST="stocks.unifies.codes"
+          KEY_LOCATION="https://${HOST}/9f8e7d6c5b4a3210fedcba9876543210.txt"
+
+          URLS=$(cat <<'JSON'
+          {
+            "host": "${HOST}",
+            "key": "${KEY}",
+            "keyLocation": "${KEY_LOCATION}",
+            "urlList": [
+              "https://${HOST}/",
+              "https://${HOST}/terminal",
+              "https://${HOST}/stocks",
+              "https://${HOST}/crypto",
+              "https://${HOST}/forex",
+              "https://${HOST}/indices",
+              "https://${HOST}/futures"
+            ]
+          }
+          JSON
+          )
+
+          for ENDPOINT in \
+            "https://api.indexnow.org/indexnow" \
+            "https://bing.com/indexnow" \
+            "https://yandex.com/indexnow"; do
+            CODE=$(curl -sS -o /dev/null -w "%{http_code}" \
+              -X POST "$ENDPOINT" \
+              -H "Content-Type: application/json; charset=utf-8" \
+              -d "$URLS" --max-time 20 || echo "000")
+            echo "$ENDPOINT -> HTTP $CODE"
+          done

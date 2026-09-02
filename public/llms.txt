@@ -1,6 +1,6 @@
 # OmegaTrade Ultra
 
-> Free real-time multi-market trading terminal — live stock, crypto, forex, index and futures prices with an in-browser AI forecast ensemble. Zero mock data, 20+ free data sources, paper trading included. No account, no cost.
+> Free real-time multi-market trading terminal - live stock, crypto, forex, index and futures prices with an in-browser AI forecast ensemble. Zero mock data, 20+ free data sources, paper trading included. No account, no cost.
 
 ## Key pages
 
@@ -10,11 +10,11 @@
 - [Forex](https://stocks.unifies.codes/forex): 12 major and cross currency pairs with keyless, live quotes.
 - [Indices](https://stocks.unifies.codes/indices): Real S&P 500, Nasdaq Composite, Dow, Russell 2000 and VIX index levels.
 - [Futures](https://stocks.unifies.codes/futures): E-mini S&P 500, crude oil, natural gas, metals, grains and softs futures on real contracts.
-- [Trading Terminal](https://stocks.unifies.codes/terminal): The full live terminal — candlestick charts, order books, technical analysis, AI forecasts and paper trading.
+- [Trading Terminal](https://stocks.unifies.codes/terminal): The full live terminal - candlestick charts, order books, technical analysis, AI forecasts and paper trading.
 
 ## Facts
 
 - The terminal runs entirely in the browser. There is no account, no subscription, and nothing to install.
-- Prices come from free public providers — Finnhub, Polygon, Kraken, Coinbase, OKX, Binance public market data, TwelveData, er-api, the European Central Bank, Alpha Vantage and Yahoo Finance relays — with automatic failover when a source is rate-limited.
+- Prices come from free public providers - Finnhub, Polygon, Kraken, Coinbase, OKX, Binance public market data, TwelveData, er-api, the European Central Bank, Alpha Vantage and Yahoo Finance relays - with automatic failover when a source is rate-limited.
 - The self-improving 7-model AI forecast ensemble runs client-side, keeps a public accuracy ledger of its own predictions and retrains on its own misses.
 - Every number displayed is live; the application contains no mock data.

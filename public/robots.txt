@@ -1,4 +1,4 @@
-# OmegaTrade Ultra — crawl rules
+# OmegaTrade Ultra - crawl rules
 User-agent: *
 Allow: /
 
@@ -6,4 +6,4 @@ Allow: /
 Disallow: /*/assets/
 
 # Public sitemap
-Sitemap: https://stock.unifies.codes/sitemap.xml
+Sitemap: https://stocks.unifies.codes/sitemap.xml

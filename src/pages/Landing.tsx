@@ -335,13 +335,13 @@ export default function Landing() {
       <Helmet>
         <title>OmegaTrade Ultra — Free Live Stock Prices & AI Forecasts</title>
         <meta name="description" content="Real-time stock, crypto, forex, index & futures prices with self-improving AI forecasts — in your browser. Zero mock data, 20+ free sources, paper trading. No account, no cost." />
-        <link rel="canonical" href="https://stock.unifies.codes/" />
+        <link rel="canonical" href="https://stocks.unifies.codes/" />
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="OmegaTrade Ultra" />
-        <meta property="og:url" content="https://stock.unifies.codes/" />
+        <meta property="og:url" content="https://stocks.unifies.codes/" />
         <meta property="og:title" content="OmegaTrade Ultra — Free Live Stock Prices & AI Forecasts" />
         <meta property="og:description" content="Live prices across Stocks, Forex, Crypto, Indices & Futures — forecast by a self-improving 7-model AI that learns from its own misses. Zero mock data, 20+ free sources." />
-        <meta property="og:image" content="https://stock.unifies.codes/og-image.png" />
+        <meta property="og:image" content="https://stocks.unifies.codes/og-image.png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
         <meta property="og:image:type" content="image/png" />
@@ -350,7 +350,7 @@ export default function Landing() {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="OmegaTrade Ultra — Free Live Stock Prices & AI Forecasts" />
         <meta name="twitter:description" content="Live prices across 5 markets, forecast by a self-improving 7-model AI ensemble. Zero mock data, 20+ free sources, runs free in your browser." />
-        <meta name="twitter:image" content="https://stock.unifies.codes/og-image.png" />
+        <meta name="twitter:image" content="https://stocks.unifies.codes/og-image.png" />
         <meta name="twitter:image:alt" content="OmegaTrade Ultra — live multi-market terminal with AI forecasts" />
       </Helmet>
 

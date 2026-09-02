@@ -213,7 +213,7 @@ export const MARKET_LINKS: { slug: string; label: string; tagline: string }[] = 
   tagline: g.tagline,
 }));
 
-const SITE_URL = "https://stock.unifies.codes";
+const SITE_URL = "https://stocks.unifies.codes";
 
 function SymbolRow({ symbol, name, exchange }: { symbol: string; name: string; exchange?: string }) {
   return (
