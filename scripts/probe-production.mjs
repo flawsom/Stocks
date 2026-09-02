@@ -1,4 +1,4 @@
-// Production E2E probe — real Chromium against https://stock.unifies.codes/
+// Production E2E probe — real Chromium against https://stocks.unifies.codes/
 // Verifies the consumer journey end-to-end on the deployed site:
 //   1. Landing renders (hero + CTA)
 //   2. Terminal boots from the landing CTA
@@ -6,17 +6,17 @@
 //   4. PREDICTION LOG · LIVE 24/7 panel renders
 //   5. No uncaught page errors
 // Run: node scripts/probe-production.mjs
-// DNS note: stock.unifies.codes currently round-robins between healthy GitHub
+// DNS note: stocks.unifies.codes currently round-robins between healthy GitHub
 // Pages IPs (185.199.x.x) and unclaimed Vercel anycast IPs (SSL-dead). Pin the
 // browser to the Pages IPs so the probe tests the app, not the DNS transition.
 import { chromium } from "playwright";
 
-const BASE = "https://stock.unifies.codes/";
+const BASE = "https://stocks.unifies.codes/";
 let fails = 0;
 const check = (n, c, x = "") => { console.log(`${c ? "PASS" : "FAIL"}  ${n}${x ? " — " + x : ""}`); if (!c) fails++; };
 
 const browser = await chromium.launch({
-  args: ["--host-resolver-rules=MAP stock.unifies.codes 185.199.108.153"],
+  args: ["--host-resolver-rules=MAP stocks.unifies.codes 185.199.108.153"],
 });
 const page = await browser.newPage({ viewport: { width: 1600, height: 1000 } });
 const pageErrs = [];

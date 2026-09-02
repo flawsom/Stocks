@@ -4,13 +4,13 @@
 
 ## Key pages
 
-- [Home](https://stock.unifies.codes/): Multi-market terminal landing page with a live real-time ticker.
-- [US Stocks](https://stock.unifies.codes/stocks): Live prices, charts and AI forecasts for 18 blue-chip US stocks (AAPL, NVDA, TSLA, MSFT, AMZN and more).
-- [Crypto](https://stock.unifies.codes/crypto): 14 crypto pairs (BTC, ETH, SOL, XRP, ...) streamed 24/7 from independent venues.
-- [Forex](https://stock.unifies.codes/forex): 12 major and cross currency pairs with keyless, live quotes.
-- [Indices](https://stock.unifies.codes/indices): Real S&P 500, Nasdaq Composite, Dow, Russell 2000 and VIX index levels.
-- [Futures](https://stock.unifies.codes/futures): E-mini S&P 500, crude oil, natural gas, metals, grains and softs futures on real contracts.
-- [Trading Terminal](https://stock.unifies.codes/terminal): The full live terminal — candlestick charts, order books, technical analysis, AI forecasts and paper trading.
+- [Home](https://stocks.unifies.codes/): Multi-market terminal landing page with a live real-time ticker.
+- [US Stocks](https://stocks.unifies.codes/stocks): Live prices, charts and AI forecasts for 18 blue-chip US stocks (AAPL, NVDA, TSLA, MSFT, AMZN and more).
+- [Crypto](https://stocks.unifies.codes/crypto): 14 crypto pairs (BTC, ETH, SOL, XRP, ...) streamed 24/7 from independent venues.
+- [Forex](https://stocks.unifies.codes/forex): 12 major and cross currency pairs with keyless, live quotes.
+- [Indices](https://stocks.unifies.codes/indices): Real S&P 500, Nasdaq Composite, Dow, Russell 2000 and VIX index levels.
+- [Futures](https://stocks.unifies.codes/futures): E-mini S&P 500, crude oil, natural gas, metals, grains and softs futures on real contracts.
+- [Trading Terminal](https://stocks.unifies.codes/terminal): The full live terminal — candlestick charts, order books, technical analysis, AI forecasts and paper trading.
 
 ## Facts
 

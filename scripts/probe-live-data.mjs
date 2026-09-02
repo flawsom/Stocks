@@ -4,7 +4,7 @@
 // Run: node scripts/probe-live-data.mjs
 import { chromium } from "playwright";
 
-const BASE = "https://stock.unifies.codes/terminal";
+const BASE = "https://stocks.unifies.codes/terminal";
 let fails = 0;
 const check = (n, c, x = "") => { console.log(`${c ? "PASS" : "FAIL"}  ${n}${x ? " — " + x : ""}`); if (!c) fails++; };
 

@@ -27,7 +27,7 @@ A professional-grade, **zero-cost** trading terminal that streams **live real-ti
 <img src="https://img.shields.io/badge/Zero%20Mock%20Data-verified-2bee4b?style=flat-square" alt="Zero mock data" />
 
 <!-- CTA BUTTONS -->
-<a href="https://stock.unifies.codes/"><kbd style="background:#2bee4b;color:#061308;padding:10px 22px;border-radius:6px;font-weight:700;font-family:sans-serif;text-decoration:none;">🚀 LIVE DEMO</kbd></a>
+<a href="https://stocks.unifies.codes/"><kbd style="background:#2bee4b;color:#061308;padding:10px 22px;border-radius:6px;font-weight:700;font-family:sans-serif;text-decoration:none;">🚀 LIVE DEMO</kbd></a>
 <a href="#table-of-contents"><kbd style="background:#121613;color:#fafffa;padding:10px 22px;border-radius:6px;font-weight:700;font-family:sans-serif;text-decoration:none;">📖 DOCUMENTATION</kbd></a>
 <a href="#quick-start"><kbd style="background:#121613;color:#fafffa;padding:10px 22px;border-radius:6px;font-weight:700;font-family:sans-serif;text-decoration:none;">⚡ INSTALLATION</kbd></a>
 <a href="https://github.com/flawsom/Stocks"><kbd style="background:#121613;color:#fafffa;padding:10px 22px;border-radius:6px;font-weight:700;font-family:sans-serif;text-decoration:none;">⭐ GITHUB</kbd></a>
@@ -37,7 +37,7 @@ A professional-grade, **zero-cost** trading terminal that streams **live real-ti
 <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fflawsom%2FStocks&env=VITE_FINNHUB_KEY,VITE_TWELVE_DATA_KEY,VITE_POLYGON_KEY,VITE_ALPHA_VANTAGE_KEY&project-name=omegatrade-ultra&repository-name=omegatrade-ultra"><img src="https://vercel.com/button" alt="Deploy with Vercel" /></a>
 <a href="https://app.netlify.com/start/deploy?repository=https://github.com/flawsom/Stocks"><img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" /></a>
 
-> 🟢 **Live demo note:** `stock.unifies.codes` goes live the moment GitHub Pages is enabled - **Repo → Settings → Pages → Source: "GitHub Actions"**, then **Actions → "Deploy to GitHub Pages" → Run workflow**. Prefer an instant host? The Vercel / Netlify buttons above are live now.
+> 🟢 **Live demo note:** `stocks.unifies.codes` goes live the moment GitHub Pages is enabled - **Repo → Settings → Pages → Source: "GitHub Actions"**, then **Actions → "Deploy to GitHub Pages" → Run workflow**. Prefer an instant host? The Vercel / Netlify buttons above are live now.
 
 </div>
 
@@ -119,7 +119,7 @@ A professional-grade, **zero-cost** trading terminal that streams **live real-ti
 | **Settings** | Provider mesh status, auto-training, uncertainty guard, paper account, theme |
 | **Order depth** | Live bid/ask ladder with spread + real venue order books |
 
-> 🖼️ The terminal itself is best seen live - open the **[Live Demo](https://stock.unifies.codes/)** and watch the candles build themselves.
+> 🖼️ The terminal itself is best seen live - open the **[Live Demo](https://stocks.unifies.codes/)** and watch the candles build themselves.
 
 <div align="right"><a href="#top">Back to top ↑</a></div>
 
@@ -129,7 +129,7 @@ A professional-grade, **zero-cost** trading terminal that streams **live real-ti
 
 | Type | Link |
 |---|---|
-| 🟢 **Live deployment** | [stock.unifies.codes](https://stock.unifies.codes/) - zero cost; enable once via Settings → Pages → "GitHub Actions" |
+| 🟢 **Live deployment** | [stocks.unifies.codes](https://stocks.unifies.codes/) - zero cost; enable once via Settings → Pages → "GitHub Actions" |
 | ▶️ **Video walkthrough** | Drop a `demo.mp4` in `assets/readme/` and reference it here: `<video src="assets/readme/demo.mp4" controls />` |
 | 🎞️ **GIF teaser** | Drop a `demo.gif` in `assets/readme/` and reference it here: `![](assets/readme/demo.gif)` |
 | 📺 **YouTube** | Embed with `<iframe width="560" height="315" src="https://www.youtube.com/embed/…" />` once a channel video is published |
@@ -566,7 +566,7 @@ The app builds to a **pure static bundle** (`dist/`) - deploy it anywhere. Pick 
 # Deploy from the Actions tab: "Deploy to GitHub Pages" → Run workflow
 # (manual dispatch keeps every run attributed to the repo owner).
 ```
-Live at: `https://stock.unifies.codes/`
+Live at: `https://stocks.unifies.codes/`
 
 ### ▲ Vercel (free Hobby tier)
 
@@ -578,10 +578,10 @@ One click does everything:
 2. **Env setup** - the link pre-registers the four optional `VITE_*` provider keys. Fill them in if you want (all free), or leave them **blank and skip** - bundled shared keys + the keyless mesh keep everything running.
 3. **Build & deploy** - framework preset **Vite** is auto-detected · build `bun run build` (or `npm run build`) · output `dist` · SPA routing via `vercel.json` (included). Your live URL appears in ~1 minute.
 
-Afterwards you can manage the env vars under **Project → Settings → Environment Variables** (they are build-time vars, so redeploy after changing them), and attach your own domain under **Settings → Domains** - e.g. point `stock.unifies.codes` at Vercel instead of GitHub Pages to sidestep ISP-level GitHub Pages blocks.
+Afterwards you can manage the env vars under **Project → Settings → Environment Variables** (they are build-time vars, so redeploy after changing them), and attach your own domain under **Settings → Domains** - e.g. point `stocks.unifies.codes` at Vercel instead of GitHub Pages to sidestep ISP-level GitHub Pages blocks.
 
-> ⚠️ **Custom-domain gotcha (the one that causes "site doesn't load"):** never leave DNS for the same hostname pointing at **two hosts at once**. If `stock.unifies.codes` has both GitHub Pages records (`185.199.x.x`) and Vercel records (`76.76.21.21` / `216.198.x.x` / `cname.vercel-dns.com`) active simultaneously, some visitors resolve to whichever host has **not** finished its side of the setup - Vercel without the domain added to a project serves **no TLS certificate**, and the connection dies with an SSL error. The fix is one of:
-> - **Going with Vercel** → in the Vercel dashboard: Project → Settings → Domains → add `stock.unifies.codes` → follow the DNS instructions **exactly** (single `A 76.76.21.21` + `CNAME` for `www`, or the new anycast set Vercel shows you) and **remove the GitHub Pages records** (`A 185.199.108–111.153`) once Vercel's certificate is issued (check for a padlock, then `curl -sI https://stock.unifies.codes/` returns `server: Vercel`).
+> ⚠️ **Custom-domain gotcha (the one that causes "site doesn't load"):** never leave DNS for the same hostname pointing at **two hosts at once**. If `stocks.unifies.codes` has both GitHub Pages records (`185.199.x.x`) and Vercel records (`76.76.21.21` / `216.198.x.x` / `cname.vercel-dns.com`) active simultaneously, some visitors resolve to whichever host has **not** finished its side of the setup - Vercel without the domain added to a project serves **no TLS certificate**, and the connection dies with an SSL error. The fix is one of:
+> - **Going with Vercel** → in the Vercel dashboard: Project → Settings → Domains → add `stocks.unifies.codes` → follow the DNS instructions **exactly** (single `A 76.76.21.21` + `CNAME` for `www`, or the new anycast set Vercel shows you) and **remove the GitHub Pages records** (`A 185.199.108–111.153`) once Vercel's certificate is issued (check for a padlock, then `curl -sI https://stocks.unifies.codes/` returns `server: Vercel`).
 > - **Staying on GitHub Pages** → delete the Vercel DNS records, keep the four `185.199.x.x` records, and enable Pages (Settings → Pages → GitHub Actions).
 > Either way, one hostname → one host.
 
