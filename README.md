@@ -2,15 +2,15 @@
 
 <div align="center">
 
-<img src="assets/readme/hero.svg" alt="OmegaTrade Ultra — Real-Time Multi-Market Intelligence Terminal" width="100%" />
+<img src="assets/readme/hero.svg" alt="OmegaTrade Ultra - Real-Time Multi-Market Intelligence Terminal" width="100%" />
 
 # Ω OmegaTrade Ultra
 
 ### Real-time markets, forecast by a machine that learns from its own misses.
 
-A professional-grade, **zero-cost** trading terminal that streams **live real-time data** across **Stocks, Forex, Crypto, Indices and Futures**, runs an **autonomous self-improving 7-model prediction ensemble** entirely in the browser, narrates every decision in a **24/7 live prediction log** (what it did, why, and how), verifies every forecast, and shows its own precision — walk-forward accuracy, calibration and signal P&L vs buy-and-hold — right next to the live data.
+A professional-grade, **zero-cost** trading terminal that streams **live real-time data** across **Stocks, Forex, Crypto, Indices and Futures**, runs an **autonomous self-improving 7-model prediction ensemble** entirely in the browser, narrates every decision in a **24/7 live prediction log** (what it did, why, and how), verifies every forecast, and shows its own precision - walk-forward accuracy, calibration and signal P&L vs buy-and-hold - right next to the live data.
 
-**Zero mock data.** Every number on screen comes from a live provider feed (WebSocket or REST) or is derived from real trades. When a provider is rate-limited or unavailable, the terminal says so and falls back to another live source — it never fabricates prices.
+**Zero mock data.** Every number on screen comes from a live provider feed (WebSocket or REST) or is derived from real trades. When a provider is rate-limited or unavailable, the terminal says so and falls back to another live source - it never fabricates prices.
 
 <!-- BADGES -->
 <img src="https://img.shields.io/badge/version-0.0.0-16a034?style=flat-square" alt="Version" />
@@ -37,7 +37,7 @@ A professional-grade, **zero-cost** trading terminal that streams **live real-ti
 <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fflawsom%2FStocks&env=VITE_FINNHUB_KEY,VITE_TWELVE_DATA_KEY,VITE_POLYGON_KEY,VITE_ALPHA_VANTAGE_KEY&project-name=omegatrade-ultra&repository-name=omegatrade-ultra"><img src="https://vercel.com/button" alt="Deploy with Vercel" /></a>
 <a href="https://app.netlify.com/start/deploy?repository=https://github.com/flawsom/Stocks"><img src="https://www.netlify.com/img/deploy/button.svg" alt="Deploy to Netlify" /></a>
 
-> 🟢 **Live demo note:** `stock.unifies.codes` goes live the moment GitHub Pages is enabled — **Repo → Settings → Pages → Source: "GitHub Actions"**, then **Actions → "Deploy to GitHub Pages" → Run workflow**. Prefer an instant host? The Vercel / Netlify buttons above are live now.
+> 🟢 **Live demo note:** `stock.unifies.codes` goes live the moment GitHub Pages is enabled - **Repo → Settings → Pages → Source: "GitHub Actions"**, then **Actions → "Deploy to GitHub Pages" → Run workflow**. Prefer an instant host? The Vercel / Netlify buttons above are live now.
 
 </div>
 
@@ -59,42 +59,42 @@ A professional-grade, **zero-cost** trading terminal that streams **live real-ti
 
 ## ✨ Features
 
-### 🖥️ Real-time data — the honest kind
+### 🖥️ Real-time data - the honest kind
 
 | Feature | Detail |
 |---|---|
 | **5 markets, one stream** | US equities, Forex, Crypto (24/7), Indices (**real levels**: `^GSPC`, `^IXIC`, `^DJI`, `^RUT`, `^VIX` + ETFs), Futures (13 real contracts: E-mini S&P, crude, Brent, metals, grains, softs) |
-| **Multi-provider mesh (all free)** | **20+ providers raced in parallel** — Finnhub (WS+REST), Binance (WS+REST), TwelveData (WS+REST), CoinGecko, Coinbase, Kraken, Bybit, OKX, Bitstamp, Bitget, HTX, Gemini, CoinPaprika, Bitrue, Deribit, BitMart, Yahoo Finance, Frankfurter (ECB), Floatrates, open.er-api, AlphaVantage, Polygon — the **fastest valid quote wins instantly** with a latency registry that learns the fastest provider from your network |
+| **Multi-provider mesh (all free)** | **20+ providers raced in parallel** - Finnhub (WS+REST), Binance (WS+REST), TwelveData (WS+REST), CoinGecko, Coinbase, Kraken, Bybit, OKX, Bitstamp, Bitget, HTX, Gemini, CoinPaprika, Bitrue, Deribit, BitMart, Yahoo Finance, Frankfurter (ECB), Floatrates, open.er-api, AlphaVantage, Polygon - the **fastest valid quote wins instantly** with a latency registry that learns the fastest provider from your network |
 | **Cross-modal integrity auditor** | Independent providers cross-validate the active symbol every 20s; persistent divergence >1% flags a **DATA DE-SYNC** that pauses autonomous ML updates until quotes re-converge |
 | **Real-time ticks** | Finnhub trade WebSocket (stocks/indices), Binance + Coinbase + Kraken trade/kline WebSockets (crypto, three independent venues), TwelveData quote WebSocket (forex, key-gated), keyless er-api/ECB/AlphaVantage FX chain, active-symbol multi-provider race every 2s |
-| **Live candle aggregation** | Candles are built from the actual trade stream — watch the chart construct itself in real time |
+| **Live candle aggregation** | Candles are built from the actual trade stream - watch the chart construct itself in real time |
 | **Multi-provider history** | Crypto: Kraken → OKX → Coinbase → Bitstamp → BitMart → Binance. Stocks/indices/forex: TwelveData (key) → **Yahoo full intraday history** → Polygon → AlphaVantage → live-built stream, with per-provider budget guards and caching |
 
-### 🧠 The machine — a self-improving AI ensemble
+### 🧠 The machine - a self-improving AI ensemble
 
 | Feature | Detail |
 |---|---|
-| **7-model ensemble** | 3 multi-layer perceptrons, logistic regression, a kNN pattern matcher, **gradient-boosted trees**, and a momentum/mean-reversion model — votes **weighted by each model's verified track record** |
-| **24/7 decision journal** | The PREDICTION LOG narrates the machine's every move on live data: `[SIGNAL]` (direction, target price, horizon, top attributed factors, ensemble mechanics), `[SCAN]` heartbeats between horizons, `[VERDICT]` HIT/MISS with rolling accuracy as each forecast resolves, `[LEARN]` failure-driven updates and retrains, `[GUARD]` circuit-breaker events — a continuous what/why/how stream, not a training status panel |
+| **7-model ensemble** | 3 multi-layer perceptrons, logistic regression, a kNN pattern matcher, **gradient-boosted trees**, and a momentum/mean-reversion model - votes **weighted by each model's verified track record** |
+| **24/7 decision journal** | The PREDICTION LOG narrates the machine's every move on live data: `[SIGNAL]` (direction, target price, horizon, top attributed factors, ensemble mechanics), `[SCAN]` heartbeats between horizons, `[VERDICT]` HIT/MISS with rolling accuracy as each forecast resolves, `[LEARN]` failure-driven updates and retrains, `[GUARD]` circuit-breaker events - a continuous what/why/how stream, not a training status panel |
 | **Multi-horizon forecasts** | T+1 / T+3 / T+5 targets plotted as a forecast path with an uncertainty cone on the chart |
 | **Walk-forward validation** | Every training run scores the ensemble out-of-sample against persistence/majority baselines; Brier score and log loss shown in the panel |
 | **Trains on its failures** | Every forecast resolves after its horizon; misses become *hard examples*, replayed online immediately and over-sampled on the next retrain. Rolling accuracy < 45% triggers automatic retraining |
 | **Kalman-smoothed signals** | A 1D Kalman filter stabilizes live probabilities so the signal doesn't flip-flop between ticks |
 | **MC-dropout uncertainty + circuit breaker** | 10 stochastic forward passes per forecast → epistemic σ. Above the circuit threshold the terminal **halts auto-training** with a breaker banner until variance normalizes |
-| **EWC memory locks** | Elastic-Weight-Consolidation after first training run — the model adapts to new regimes without catastrophic forgetting (verified: drift 0.49 with EWC vs 1.45 without) |
-| **Grad-CAM-style XAI** | Per-candle attribution — flip the **XAI** toggle to heat-color the candles (green = what drove the bullish signal, red = bearish) |
+| **EWC memory locks** | Elastic-Weight-Consolidation after first training run - the model adapts to new regimes without catastrophic forgetting (verified: drift 0.49 with EWC vs 1.45 without) |
+| **Grad-CAM-style XAI** | Per-candle attribution - flip the **XAI** toggle to heat-color the candles (green = what drove the bullish signal, red = bearish) |
 | **Model persistence** | Weights saved to `localStorage` per symbol (`omegatrade-models-v3:<symbol>`) |
 
 ### 🛠️ The toolset
 
 | Feature | Detail |
 |---|---|
-| **Full TA stack** | RSI, MACD, Bollinger Bands, EMA 20/50, ATR, Stochastic, ADX, VWAP — computed from live candles |
+| **Full TA stack** | RSI, MACD, Bollinger Bands, EMA 20/50, ATR, Stochastic, ADX, VWAP - computed from live candles |
 | **Live news + sentiment** | Real Finnhub headlines (general + per-symbol) with lexicon sentiment tagging, keyless Hacker News fallback |
-| **Paper trading engine** | A persisted $100,000 virtual account — LONG/SHORT with 0.02% commission, live mark-to-market, equity curve, win rate, order log, one-click closes, reset |
+| **Paper trading engine** | A persisted $100,000 virtual account - LONG/SHORT with 0.02% commission, live mark-to-market, equity curve, win rate, order log, one-click closes, reset |
 | **One-click AI execution** | Every AI signal card carries TRADE LONG/SHORT $1K paper orders filled instantly at the live feed price |
-| **Live market scanner** | Full-screen overlay scanning all 60+ symbols: 20-tick momentum, tick RSI(14), signed volume flow, swing %, composite score — sortable, filterable, searchable, CSV export |
-| **Strategy lab (backtester)** | Deterministic backtests on real candle history: EMA crossover, RSI mean reversion, momentum breakout — long/short, configurable fees, equity curve, win rate, profit factor, max drawdown, annualized Sharpe, CSV export |
+| **Live market scanner** | Full-screen overlay scanning all 60+ symbols: 20-tick momentum, tick RSI(14), signed volume flow, swing %, composite score - sortable, filterable, searchable, CSV export |
+| **Strategy lab (backtester)** | Deterministic backtests on real candle history: EMA crossover, RSI mean reversion, momentum breakout - long/short, configurable fees, equity curve, win rate, profit factor, max drawdown, annualized Sharpe, CSV export |
 | **Provider budget guards** | TwelveData (8/min, 800/day), Polygon (4/min, 300/day), Finnhub (58/min) tracked live in the footer; the no-key mesh adds unlimited redundancy |
 | **Data provenance** | Every view shows which live source feeds it; the footer tracks the whole mesh with a **FASTEST provider** latency readout |
 
@@ -104,22 +104,22 @@ A professional-grade, **zero-cost** trading terminal that streams **live real-ti
 
 ## 📸 Animated Screens
 
-<!-- Motion graphics: the panels below are hand-built SVGs with CSS keyframe animation —
+<!-- Motion graphics: the panels below are hand-built SVGs with CSS keyframe animation -
      the candles build themselves, the prediction log types live, the accuracy bars fill,
-     the equity curve draws, and the scanner rows cycle — exactly like the real terminal. -->
+     the equity curve draws, and the scanner rows cycle - exactly like the real terminal. -->
 
-<img src="assets/readme/screens.svg" alt="Animated OmegaTrade Ultra screens — live terminal, mobile watchlist, analytics ledger, market scanner" width="100%" />
+<img src="assets/readme/screens.svg" alt="Animated OmegaTrade Ultra screens - live terminal, mobile watchlist, analytics ledger, market scanner" width="100%" />
 
 | View | Where |
 |---|---|
-| **Terminal** (desktop) | The full workstation — 5 market tabs, live chart, order ticket, 6 right panels, footer mesh status |
+| **Terminal** (desktop) | The full workstation - 5 market tabs, live chart, order ticket, 6 right panels, footer mesh status |
 | **Mobile** | Fully responsive watchlist + live quotes + AI signal cards |
 | **Authentication** | Sign-in / sign-up with email + socials, `returnTo` deep-linking |
 | **Analytics** | Rolling accuracy, calibration, signal P&L vs buy-and-hold, hard-example mining |
 | **Settings** | Provider mesh status, auto-training, uncertainty guard, paper account, theme |
 | **Order depth** | Live bid/ask ladder with spread + real venue order books |
 
-> 🖼️ The terminal itself is best seen live — open the **[Live Demo](https://stock.unifies.codes/)** and watch the candles build themselves.
+> 🖼️ The terminal itself is best seen live - open the **[Live Demo](https://stock.unifies.codes/)** and watch the candles build themselves.
 
 <div align="right"><a href="#top">Back to top ↑</a></div>
 
@@ -129,7 +129,7 @@ A professional-grade, **zero-cost** trading terminal that streams **live real-ti
 
 | Type | Link |
 |---|---|
-| 🟢 **Live deployment** | [stock.unifies.codes](https://stock.unifies.codes/) — zero cost; enable once via Settings → Pages → "GitHub Actions" |
+| 🟢 **Live deployment** | [stock.unifies.codes](https://stock.unifies.codes/) - zero cost; enable once via Settings → Pages → "GitHub Actions" |
 | ▶️ **Video walkthrough** | Drop a `demo.mp4` in `assets/readme/` and reference it here: `<video src="assets/readme/demo.mp4" controls />` |
 | 🎞️ **GIF teaser** | Drop a `demo.gif` in `assets/readme/` and reference it here: `![](assets/readme/demo.gif)` |
 | 📺 **YouTube** | Embed with `<iframe width="560" height="315" src="https://www.youtube.com/embed/…" />` once a channel video is published |
@@ -137,11 +137,11 @@ A professional-grade, **zero-cost** trading terminal that streams **live real-ti
 <details>
 <summary><b>What to look for when you open the terminal</b></summary>
 
-1. **Live tape** — the top ticker scrolls real prices from the mesh.
-2. **The chart fills in** — candles aggregate from the live trade stream, not a canned series.
-3. **AI signal appears** — within ~1 minute of data, the ensemble emits its first verified forecast with confidence + uncertainty.
-4. **It gets scored** — after the forecast horizon, the panel marks HIT/MISS and updates the accuracy ledger.
-5. **Failure-driven learning** — a miss replays online instantly; you can watch the loss curve re-train.
+1. **Live tape** - the top ticker scrolls real prices from the mesh.
+2. **The chart fills in** - candles aggregate from the live trade stream, not a canned series.
+3. **AI signal appears** - within ~1 minute of data, the ensemble emits its first verified forecast with confidence + uncertainty.
+4. **It gets scored** - after the forecast horizon, the panel marks HIT/MISS and updates the accuracy ledger.
+5. **Failure-driven learning** - a miss replays online instantly; you can watch the loss curve re-train.
 
 </details>
 
@@ -151,19 +151,19 @@ A professional-grade, **zero-cost** trading terminal that streams **live real-ti
 
 ## 🏗️ Architecture
 
-The entire product is a **single static client**. There is no backend server and no database — the "backend" is the provider mesh, and the "AI" runs in your browser.
+The entire product is a **single static client**. There is no backend server and no database - the "backend" is the provider mesh, and the "AI" runs in your browser.
 
 <!-- Watch the full pipeline in motion: providers race → candles aggregate →
      7 models vote → forecasts resolve → the journal narrates. -->
 
-<img src="assets/readme/pipeline.svg" alt="Animated pipeline — provider mesh race, candle aggregation, 7-model ensemble voting, verdict and decision journal" width="100%" />
+<img src="assets/readme/pipeline.svg" alt="Animated pipeline - provider mesh race, candle aggregation, 7-model ensemble voting, verdict and decision journal" width="100%" />
 
 <details>
 <summary><b>Mermaid source diagram</b> (click to expand)</summary>
 
 ```mermaid
 flowchart TB
-    subgraph Client["Browser — Vite + React SPA"]
+    subgraph Client["Browser - Vite + React SPA"]
         UI["Terminal UI<br/>(chart, watchlist, panels, scanner)"]
         ML["ML Ensemble (in-browser)<br/>7 models + walk-forward + EWC + MC-dropout"]
         PF["Paper Trading Engine<br/>$100K virtual account"]
@@ -244,9 +244,9 @@ flowchart TB
 
 ### Prerequisites
 
-- **Node.js ≥ 18** (or [Bun ≥ 1.0](https://bun.sh) — recommended)
-- A modern browser (Chrome / Edge / Firefox / Safari) — WebSockets + ES modules
-- **No API keys required** — the app ships with bundled shared free keys and falls back across the keyless mesh
+- **Node.js ≥ 18** (or [Bun ≥ 1.0](https://bun.sh) - recommended)
+- A modern browser (Chrome / Edge / Firefox / Safari) - WebSockets + ES modules
+- **No API keys required** - the app ships with bundled shared free keys and falls back across the keyless mesh
 
 > 💡 **Bun is the project's package manager.** All commands below use `bun`; swap `bun` → `npm` if you prefer.
 
@@ -261,7 +261,7 @@ cd Stocks
 bun install
 
 # 3. (Optional) add your own free keys
-cp env.example .env.local     # then fill in your keys — every key is optional
+cp env.example .env.local     # then fill in your keys - every key is optional
 
 # 4. Run the dev server
 bun run dev                   # → http://localhost:8080
@@ -357,7 +357,7 @@ Stocks/
 
 ## 🔐 Environment Variables
 
-All variables are **optional**. Copy `env.example` → `.env.local` (dev) or set them in your host's dashboard (prod). Keys are read at **build time** by Vite, so they must keep the `VITE_` prefix. When a personal key is exhausted or geo-blocked, the app detects it and falls back to another live source — it never shows stale data.
+All variables are **optional**. Copy `env.example` → `.env.local` (dev) or set them in your host's dashboard (prod). Keys are read at **build time** by Vite, so they must keep the `VITE_` prefix. When a personal key is exhausted or geo-blocked, the app detects it and falls back to another live source - it never shows stale data.
 
 | Variable | Service | What it unlocks | Free tier | Where to get it |
 |---|---|---|---|---|
@@ -366,14 +366,14 @@ All variables are **optional**. Copy `env.example` → `.env.local` (dev) or set
 | `VITE_POLYGON_KEY` | [polygon.io](https://polygon.io) | Daily + intraday history for stocks/indices/forex (`C:` pairs), integrity cross-checks | 5 calls/min · 300/day | [polygon.io/dashboard/signup](https://polygon.io/dashboard/signup) |
 | `VITE_ALPHA_VANTAGE_KEY` | [alphavantage.co](https://www.alphavantage.co) | Real-time FX + daily history fallback | 25 req/day | [alphavantage.co/support/#api-key](https://www.alphavantage.co/support/#api-key) |
 
-**Keyless by design** — the following sources need no key and are always on the mesh:
+**Keyless by design** - the following sources need no key and are always on the mesh:
 
 | Category | Sources |
 |---|---|
-| Crypto | Kraken, Coinbase, OKX, Bitstamp, BitMart, HTX, Binance (`data-api.binance.vision` — CORS-enabled, geo-friendly), CoinGecko, CoinPaprika, Gemini, Bitrue, Deribit, Bybit, Bitget, MEXC, KuCoin, Gate.io, Poloniex |
+| Crypto | Kraken, Coinbase, OKX, Bitstamp, BitMart, HTX, Binance (`data-api.binance.vision` - CORS-enabled, geo-friendly), CoinGecko, CoinPaprika, Gemini, Bitrue, Deribit, Bybit, Bitget, MEXC, KuCoin, Gate.io, Poloniex |
 | FX | open.er-api.com, ECB/Frankfurter, Floatrates |
-| Indices | Yahoo Finance (`^GSPC`, `^IXIC`, `^DJI`, `^RUT`, `^VIX` — real index levels) |
-| Futures | Yahoo Finance (`ES=F`, `CL=F`, `NG=F`, `SI=F` — real contracts) |
+| Indices | Yahoo Finance (`^GSPC`, `^IXIC`, `^DJI`, `^RUT`, `^VIX` - real index levels) |
+| Futures | Yahoo Finance (`ES=F`, `CL=F`, `NG=F`, `SI=F` - real contracts) |
 | News | Hacker News (keyless fallback) alongside Finnhub |
 
 > 🔒 **Never commit real keys.** `.env.local`/`.env` are gitignored; only `env.example` is tracked.
@@ -384,7 +384,7 @@ All variables are **optional**. Copy `env.example` → `.env.local` (dev) or set
 
 ## 📖 API Documentation
 
-OmegaTrade Ultra is a **fully client-side application** — there is no backend server to deploy and no API key to route through. The public surface is the provider mesh itself plus the app's own data layer, which you can import directly.
+OmegaTrade Ultra is a **fully client-side application** - there is no backend server to deploy and no API key to route through. The public surface is the provider mesh itself plus the app's own data layer, which you can import directly.
 
 ### Base URLs (provider mesh)
 
@@ -405,10 +405,10 @@ OmegaTrade Ultra is a **fully client-side application** — there is no backend 
 ### The app's own data layer
 
 ```ts
-// Live quote — fastest provider wins (latency-registry aware)
+// Live quote - fastest provider wins (latency-registry aware)
 await fetchLivePrice("BTC/USDT", "crypto");            // → { price, change, changePct, ts, source }
 
-// Candles with provenance — fallback chain + budget guards
+// Candles with provenance - fallback chain + budget guards
 await fetchCandles("AAPL", "stocks", "15min");
 // → { candles: OHLCV[], source: "yahoo" | "polygon" | "kraken" | …, streaming: boolean }
 
@@ -417,7 +417,7 @@ import { startLiveFeeds } from "@/lib/feeds";
 startLiveFeeds();
 ```
 
-**Honesty guarantees:** every result carries a `source`; every chart shows which live source fed it; when no free source can serve a symbol, the terminal shows an empty state with an explanation — **never** a fabricated number.
+**Honesty guarantees:** every result carries a `source`; every chart shows which live source fed it; when no free source can serve a symbol, the terminal shows an empty state with an explanation - **never** a fabricated number.
 
 <div align="right"><a href="#top">Back to top ↑</a></div>
 
@@ -431,13 +431,13 @@ startLiveFeeds();
 import { useTradingStore } from "@/stores/tradingStore";
 
 function Watchlist() {
-  // Reactive — re-renders on every live tick from the mesh
+  // Reactive - re-renders on every live tick from the mesh
   const watchlist = useTradingStore(s => s.watchlist);
   return (
     <ul>
       {watchlist.map(w => (
         <li key={w.symbol}>
-          {w.symbol} — {w.price.toFixed(2)} ({w.changePct.toFixed(2)}%)
+          {w.symbol} - {w.price.toFixed(2)} ({w.changePct.toFixed(2)}%)
         </li>
       ))}
     </ul>
@@ -452,7 +452,7 @@ import { fetchCandles } from "@/lib/dataProviders";
 
 const result = await fetchCandles("^GSPC", "indices", "1day");
 console.log(`${result.candles.length} bars from ${result.source}`);
-// e.g. "252 bars from yahoo" — real index levels, never an ETF proxy
+// e.g. "252 bars from yahoo" - real index levels, never an ETF proxy
 ```
 
 ### 3. Run a backtest on real history
@@ -476,7 +476,7 @@ console.log(result.metrics); // totalReturn, maxDrawdown, winRate, profitFactor,
 ```ts
 import { startLiveFeeds } from "@/lib/feeds";
 
-// Call once at app boot — starts WS streams + budget-aware polling + fastest-wins mesh
+// Call once at app boot - starts WS streams + budget-aware polling + fastest-wins mesh
 startLiveFeeds();
 ```
 
@@ -491,10 +491,10 @@ startLiveFeeds();
 | **Initial JS (gzip)** | **303.7 kB** main bundle + **52.0 kB** charting | `bun run build` output (Vite) |
 | **Provider race latency** | **26–150 ms** per quote | measured live, fastest-wins mesh with learned latency registry |
 | **Tick cadence** | sub-1s (WS) / 2s (active REST race) | footer shows the real `TICK` age |
-| **Lighthouse** | to measure — `npx lighthouse https://<your-host>/ --view` | static SPA, expect high scores |
+| **Lighthouse** | to measure - `npx lighthouse https://<your-host>/ --view` | static SPA, expect high scores |
 | **First load data** | candles + quotes typically visible < 3s | parallel provider mesh, no blocking calls |
 
-> The bundle is a **single static client** — no server round-trips, no database queries, no cold starts. Everything after the first byte is network-fetch + in-browser compute.
+> The bundle is a **single static client** - no server round-trips, no database queries, no cold starts. Everything after the first byte is network-fetch + in-browser compute.
 
 <div align="right"><a href="#top">Back to top ↑</a></div>
 
@@ -502,13 +502,13 @@ startLiveFeeds();
 
 ## 🧪 Testing
 
-Five-plus suites, all runnable locally. The data-integrity suite hits **real live APIs** and asserts fresh, finite, non-zero data. GitHub Actions runs the offline suites as a CI gate on every push and PR (`.github/workflows/ci.yml` — typecheck → build → ML → backtest → EyeQuant → journal → leakage).
+Five-plus suites, all runnable locally. The data-integrity suite hits **real live APIs** and asserts fresh, finite, non-zero data. GitHub Actions runs the offline suites as a CI gate on every push and PR (`.github/workflows/ci.yml` - typecheck → build → ML → backtest → EyeQuant → journal → leakage).
 
 ```bash
 # Type check
 bun tsc -b --noEmit
 
-# Live data-integrity suite (30 checks — real providers)
+# Live data-integrity suite (30 checks - real providers)
 bun run scripts/data-integrity-test.mts
 
 # ML engine behavioral suite
@@ -517,27 +517,27 @@ bun run scripts/ml-test.mts
 # Backtest engine behavioral suite
 bun run scripts/backtest-test.mts
 
-# EyeQuant safety systems — MC uncertainty, Grad-CAM, EWC, integrity, circuit breaker
+# EyeQuant safety systems - MC uncertainty, Grad-CAM, EWC, integrity, circuit breaker
 bun run scripts/eyequant-test.mts
 
-# Consumer E2E probe — boots real Chromium, clicks through like a user (41 checks)
+# Consumer E2E probe - boots real Chromium, clicks through like a user (41 checks)
 bun run scripts/e2e-consumer.mjs
 
-# Decision journal suite — SIGNAL/VERDICT/LEARN/GUARD emission on live cycles
+# Decision journal suite - SIGNAL/VERDICT/LEARN/GUARD emission on live cycles
 bun run scripts/journal-test.mts
 
-# Leakage suite — proves the model never sees future data (no-cheating guarantee)
+# Leakage suite - proves the model never sees future data (no-cheating guarantee)
 bun run scripts/leakage-test.mts
 ```
 
 | Suite | Coverage |
 |---|---|
-| **Data integrity** | Finnhub AAPL/SPY/QQQ/IWM live quotes, Polygon daily recency, real futures contract roots (never a stock), crypto candle freshness across 7 venues, keyless FX chain, fresh headlines — cross-validated to < 0.15% between independent providers |
+| **Data integrity** | Finnhub AAPL/SPY/QQQ/IWM live quotes, Polygon daily recency, real futures contract roots (never a stock), crypto candle freshness across 7 venues, keyless FX chain, fresh headlines - cross-validated to < 0.15% between independent providers |
 | **ML engine** | training converges, ensemble predicts direction, adaptive weights, multi-horizon targets, HIT/MISS resolution, walk-forward + calibration metrics, persistence |
 | **Backtest** | all 3 strategies end-to-end, fee monotonicity, long-only constraint, zero-signal edge cases |
 | **EyeQuant safety** | MC-dropout variance sane, attribution sign-correct, EWC constrains drift, circuit breaker honors, integrity verdicts |
 | **Decision journal** | every live cycle emits SIGNAL (with top factors + ensemble mechanics), SCAN heartbeats, VERDICT entries on resolution, LEARN entries on failure-driven updates, GUARD entries on breaker engagement |
-| **Leakage (no-cheating)** | feature windows are strictly causal — the engine trains on past bars only, forecasts future bars only |
+| **Leakage (no-cheating)** | feature windows are strictly causal - the engine trains on past bars only, forecasts future bars only |
 | **Consumer E2E** | landing → terminal, all 5 market tabs, live price + auto-update + real history, timeframes, all 6 right panels, scanner, footer mesh |
 
 ### Linting & formatting
@@ -553,7 +553,7 @@ npx prettier --write .  # formatting (optional, Prettier config not required by 
 
 ## 🚀 Deployment
 
-The app builds to a **pure static bundle** (`dist/`) — deploy it anywhere. Pick one:
+The app builds to a **pure static bundle** (`dist/`) - deploy it anywhere. Pick one:
 
 ### 🆓 GitHub Pages (zero cost, manual deploy)
 
@@ -570,13 +570,13 @@ Live at: `https://stock.unifies.codes/`
 
 One click does everything:
 
-1. **Clone & import** — Vercel forks the repo into your account and creates the project.
-2. **Env setup** — the link pre-registers the four optional `VITE_*` provider keys. Fill them in if you want (all free), or leave them **blank and skip** — bundled shared keys + the keyless mesh keep everything running.
-3. **Build & deploy** — framework preset **Vite** is auto-detected · build `bun run build` (or `npm run build`) · output `dist` · SPA routing via `vercel.json` (included). Your live URL appears in ~1 minute.
+1. **Clone & import** - Vercel forks the repo into your account and creates the project.
+2. **Env setup** - the link pre-registers the four optional `VITE_*` provider keys. Fill them in if you want (all free), or leave them **blank and skip** - bundled shared keys + the keyless mesh keep everything running.
+3. **Build & deploy** - framework preset **Vite** is auto-detected · build `bun run build` (or `npm run build`) · output `dist` · SPA routing via `vercel.json` (included). Your live URL appears in ~1 minute.
 
-Afterwards you can manage the env vars under **Project → Settings → Environment Variables** (they are build-time vars, so redeploy after changing them), and attach your own domain under **Settings → Domains** — e.g. point `stock.unifies.codes` at Vercel instead of GitHub Pages to sidestep ISP-level GitHub Pages blocks.
+Afterwards you can manage the env vars under **Project → Settings → Environment Variables** (they are build-time vars, so redeploy after changing them), and attach your own domain under **Settings → Domains** - e.g. point `stock.unifies.codes` at Vercel instead of GitHub Pages to sidestep ISP-level GitHub Pages blocks.
 
-> ⚠️ **Custom-domain gotcha (the one that causes "site doesn't load"):** never leave DNS for the same hostname pointing at **two hosts at once**. If `stock.unifies.codes` has both GitHub Pages records (`185.199.x.x`) and Vercel records (`76.76.21.21` / `216.198.x.x` / `cname.vercel-dns.com`) active simultaneously, some visitors resolve to whichever host has **not** finished its side of the setup — Vercel without the domain added to a project serves **no TLS certificate**, and the connection dies with an SSL error. The fix is one of:
+> ⚠️ **Custom-domain gotcha (the one that causes "site doesn't load"):** never leave DNS for the same hostname pointing at **two hosts at once**. If `stock.unifies.codes` has both GitHub Pages records (`185.199.x.x`) and Vercel records (`76.76.21.21` / `216.198.x.x` / `cname.vercel-dns.com`) active simultaneously, some visitors resolve to whichever host has **not** finished its side of the setup - Vercel without the domain added to a project serves **no TLS certificate**, and the connection dies with an SSL error. The fix is one of:
 > - **Going with Vercel** → in the Vercel dashboard: Project → Settings → Domains → add `stock.unifies.codes` → follow the DNS instructions **exactly** (single `A 76.76.21.21` + `CNAME` for `www`, or the new anycast set Vercel shows you) and **remove the GitHub Pages records** (`A 185.199.108–111.153`) once Vercel's certificate is issued (check for a padlock, then `curl -sI https://stock.unifies.codes/` returns `server: Vercel`).
 > - **Staying on GitHub Pages** → delete the Vercel DNS records, keep the four `185.199.x.x` records, and enable Pages (Settings → Pages → GitHub Actions).
 > Either way, one hostname → one host.
@@ -610,7 +610,7 @@ aws s3 sync dist/ s3://my-bucket --delete
 
 - New project → Deploy from GitHub → start command `bun run preview` (or serve `dist` with any static server). Hobby plan includes free usage.
 
-> **Tip:** for a fully independent, always-on feed, add your personal free keys (see [🔐 Environment Variables](#-environment-variables)) in your host's dashboard — the app reads them as `VITE_*` build-time vars.
+> **Tip:** for a fully independent, always-on feed, add your personal free keys (see [🔐 Environment Variables](#-environment-variables)) in your host's dashboard - the app reads them as `VITE_*` build-time vars.
 
 <div align="right"><a href="#top">Back to top ↑</a></div>
 
@@ -618,7 +618,7 @@ aws s3 sync dist/ s3://my-bucket --delete
 
 ## 🤝 Contributing
 
-Contributions of every size are welcome — bug reports, provider additions, new indicators, docs, design.
+Contributions of every size are welcome - bug reports, provider additions, new indicators, docs, design.
 
 1. **Fork** the repo and create a branch from `main`.
 2. **Branch naming:** `feature/<short-description>` · `fix/<short-description>` · `docs/<short-description>` · `chore/<short-description>`
@@ -644,7 +644,7 @@ test(backtest): cover zero-signal edge cases
 
 ### ✅ Done
 
-- [x] 5-market live terminal (stocks, forex, crypto, indices, futures) — zero mock data
+- [x] 5-market live terminal (stocks, forex, crypto, indices, futures) - zero mock data
 - [x] 20+ provider free mesh with fastest-wins race + latency registry
 - [x] 7-model self-training ensemble with walk-forward validation
 - [x] MC-dropout uncertainty guard + circuit breaker
@@ -658,13 +658,13 @@ test(backtest): cover zero-signal edge cases
 
 ### 🔜 In progress / planned
 
-- [x] 24/7 decision journal — SIGNAL / SCAN / VERDICT / LEARN / GUARD narration on live data
+- [x] 24/7 decision journal - SIGNAL / SCAN / VERDICT / LEARN / GUARD narration on live data
 - [x] CI quality gate (typecheck → build → offline test suites) on every push and PR
-- [x] Installable PWA (manifest + theming) — add the terminal to your home screen
+- [x] Installable PWA (manifest + theming) - add the terminal to your home screen
 - [ ] Multi-symbol simultaneous ML training (worker pool)
 - [ ] Portfolio-level risk analytics (VaR, drawdown heatmap)
 - [ ] Alerting via webhooks (Discord / Telegram)
-- [ ] PWA offline mode with IndexedDB candle cache (manifest + install are done — this is the offline data layer)
+- [ ] PWA offline mode with IndexedDB candle cache (manifest + install are done - this is the offline data layer)
 - [ ] WebSocket reconnection backoff tuning per provider
 - [ ] i18n (EN → ES, DE, JA)
 - [ ] Theme variants (dark terminal mode preserved as an option)
@@ -678,31 +678,31 @@ test(backtest): cover zero-signal edge cases
 <details>
 <summary><b>Do I need an API key or a credit card?</b></summary>
 
-No. The app runs out of the box on bundled shared free keys plus a keyless mesh (Kraken, Coinbase, OKX, CoinGecko, ECB, Yahoo relays, …). Optional personal free keys make it fully independent and are read as `VITE_*` vars — no card, no subscription.
+No. The app runs out of the box on bundled shared free keys plus a keyless mesh (Kraken, Coinbase, OKX, CoinGecko, ECB, Yahoo relays, …). Optional personal free keys make it fully independent and are read as `VITE_*` vars - no card, no subscription.
 </details>
 
 <details>
 <summary><b>Is the AI "real"? It feels too good to be true.</b></summary>
 
-It's a real, in-browser, 7-model ensemble — three MLPs, logistic regression, kNN, gradient-boosted trees and a momentum model — trained on real candle history, evaluated out-of-sample (walk-forward), and scored after every forecast. It is not a demo; it also isn't investment advice. Its accuracy ledger updates live so you can judge it yourself.
+It's a real, in-browser, 7-model ensemble - three MLPs, logistic regression, kNN, gradient-boosted trees and a momentum model - trained on real candle history, evaluated out-of-sample (walk-forward), and scored after every forecast. It is not a demo; it also isn't investment advice. Its accuracy ledger updates live so you can judge it yourself.
 </details>
 
 <details>
 <summary><b>Why are futures/intraday charts sometimes empty?</b></summary>
 
-Free providers have real limits: TwelveData (the only free source of real futures candles) is 800 credits/day, and Yahoo's CORS relay 429s intermittently. When every free path is exhausted or blocked, the terminal says so honestly and builds candles live from the trade stream — it never substitutes a stock's price for a futures contract.
+Free providers have real limits: TwelveData (the only free source of real futures candles) is 800 credits/day, and Yahoo's CORS relay 429s intermittently. When every free path is exhausted or blocked, the terminal says so honestly and builds candles live from the trade stream - it never substitutes a stock's price for a futures contract.
 </details>
 
 <details>
 <summary><b>Is this a trading bot? Will it trade my money?</b></summary>
 
-No. Trading is **paper only** — a virtual $100,000 account with real live prices. The project is for research, education and engineering demonstration. Nothing here is financial advice.
+No. Trading is **paper only** - a virtual $100,000 account with real live prices. The project is for research, education and engineering demonstration. Nothing here is financial advice.
 </details>
 
 <details>
 <summary><b>Can I use the data layer in my own app?</b></summary>
 
-Yes — `fetchLivePrice`, `fetchCandles`, `startLiveFeeds` and the stores are exported modules you can import directly. See [🎯 Usage Examples](#-usage-examples).
+Yes - `fetchLivePrice`, `fetchCandles`, `startLiveFeeds` and the stores are exported modules you can import directly. See [🎯 Usage Examples](#-usage-examples).
 </details>
 
 <div align="right"><a href="#top">Back to top ↑</a></div>
@@ -711,9 +711,16 @@ Yes — `fetchLivePrice`, `fetchCandles`, `startLiveFeeds` and the stores are ex
 
 ## 🙌 Acknowledgements
 
-- **Live data providers** — Finnhub, Binance, TwelveData, Polygon, AlphaVantage, Yahoo Finance, Kraken, Coinbase, OKX, CoinGecko, Bitstamp, BitMart, HTX, Gemini, CoinPaprika, Bitrue, Deribit, Bybit, Bitget, Frankfurter (ECB), open.er-api, Floatrates — for generous free tiers that make a zero-cost terminal possible.
-- **Open-source foundations** — React, Vite, TypeScript, Tailwind CSS, Framer Motion, `lightweight-charts`, Recharts, Three.js, Zustand, TanStack Query, Playwright, Bun.
-- **The EyeQuant safety research lineage** — MC-dropout uncertainty, Elastic Weight Consolidation and Grad-CAM-style attribution techniques, implemented from the published literature.
+### 👥 Authors
+
+| | |
+|---|---|
+| <a href="https://github.com/flawsom"><img src="https://avatars.githubusercontent.com/u/64182228?v=4" width="48" alt="flawsom" /></a> | **[flawsom](https://github.com/flawsom)** - creator & maintainer |
+| <a href="https://github.com/ParimitaPriyadarsini"><img src="https://avatars.githubusercontent.com/u/297467081?v=4" width="48" alt="ParimitaPriyadarsini" /></a> | **[ParimitaPriyadarsini](https://github.com/ParimitaPriyadarsini)** (parimitapriyadarshini2@gmail.com) - contributor |
+
+- **Live data providers** - Finnhub, Binance, TwelveData, Polygon, AlphaVantage, Yahoo Finance, Kraken, Coinbase, OKX, CoinGecko, Bitstamp, BitMart, HTX, Gemini, CoinPaprika, Bitrue, Deribit, Bybit, Bitget, Frankfurter (ECB), open.er-api, Floatrates - for generous free tiers that make a zero-cost terminal possible.
+- **Open-source foundations** - React, Vite, TypeScript, Tailwind CSS, Framer Motion, `lightweight-charts`, Recharts, Three.js, Zustand, TanStack Query, Playwright, Bun.
+- **The EyeQuant safety research lineage** - MC-dropout uncertainty, Elastic Weight Consolidation and Grad-CAM-style attribution techniques, implemented from the published literature.
 
 <div align="right"><a href="#top">Back to top ↑</a></div>
 
@@ -724,7 +731,7 @@ Yes — `fetchLivePrice`, `fetchCandles`, `startLiveFeeds` and the stores are ex
 Distributed under the **MIT License**. See [LICENSE](LICENSE) for details.
 
 ```
-MIT License — Copyright (c) 2026 flawsom
+MIT License - Copyright (c) 2026 flawsom
 Free to use, modify, and distribute. Provided "as is", without warranty.
 ```
 
@@ -734,22 +741,22 @@ Free to use, modify, and distribute. Provided "as is", without warranty.
 
 ## ❤️ Support
 
-OmegaTrade Ultra is free, open source, and costs nothing to run — and it stays that way.
+OmegaTrade Ultra is free, open source, and costs nothing to run - and it stays that way.
 
 | Action | Link |
 |---|---|
-| ⭐ **Star the repo** | [github.com/flawsom/Stocks](https://github.com/flawsom/Stocks) — stars keep the project alive |
+| ⭐ **Star the repo** | [github.com/flawsom/Stocks](https://github.com/flawsom/Stocks) - stars keep the project alive |
 | 🐛 **Report an issue** | [github.com/flawsom/Stocks/issues](https://github.com/flawsom/Stocks/issues) |
 | 💬 **Start a discussion** | [github.com/flawsom/Stocks/discussions](https://github.com/flawsom/Stocks/discussions) |
 | 🫶 **Sponsor** | [github.com/sponsors/flawsom](https://github.com/sponsors/flawsom) |
 | ☕ **Buy me a coffee** | [buymeacoffee.com/flawsom](https://www.buymeacoffee.com/flawsom) |
-| ✉️ **Contact** | Open an issue or discussion — I read everything |
+| ✉️ **Contact** | Open an issue or discussion - I read everything |
 
 ---
 
 <div align="center">
 
-**Ω ULTRA.** — *Real-time markets, forecast by a machine that learns from its own misses.*
+**Ω ULTRA.** - *Real-time markets, forecast by a machine that learns from its own misses.*
 
 <img src="assets/readme/hero.svg" alt="OmegaTrade Ultra banner" width="60%" />
 
