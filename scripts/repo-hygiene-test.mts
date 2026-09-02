@@ -35,16 +35,18 @@ check("CI runs the build", ci.includes("bun run build"));
 check("CI runs the ML suite", ci.includes("ml-test.mts"));
 check("CI runs the leakage suite", ci.includes("leakage-test.mts"));
 check("CI runs the journal suite", ci.includes("journal-test.mts"));
-const pages = read(".github/workflows/deploy-pages.yml");
-check("Pages workflow builds and publishes dist", pages.includes("bun run build") && pages.includes("dist"));
+// Production deploys on Vercel: SPA routing + caching are enforced via vercel.json
+const vercel = read("vercel.json");
+check("vercel.json rewrites SPA routes", vercel.includes('"rewrites"') && vercel.includes('/index.html'));
+check("vercel.json caches hashed assets immutably", vercel.includes("max-age=31536000, immutable"));
 
 // 5. Contributor metadata
 const pkg = JSON.parse(read("package.json") || "{}");
 check("package.json lists contributors", Array.isArray(pkg.contributors) && pkg.contributors.length >= 2, (pkg.contributors || []).join(" | "));
 check("CONTRIBUTING.md exists", existsSync("CONTRIBUTING.md"));
 
-// 6. Custom domain pin
-check("public/CNAME pins the custom domain", read("public/CNAME").trim() === "stock.unifies.codes");
+// 6. Custom domain pin (Vercel owns production; CNAME documents the domain)
+check("public/CNAME pins the custom domain", read("public/CNAME").trim() === "stocks.unifies.codes");
 
 // 7. License present
 check("LICENSE exists", existsSync("LICENSE"));
