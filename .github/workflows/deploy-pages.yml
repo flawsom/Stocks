@@ -51,8 +51,12 @@ jobs:
       # the requested route.
       - name: SPA fallback for GitHub Pages
         run: cp dist/index.html dist/404.html
+      # enablement: true lets the workflow enable Pages itself on first run,
+      # so a fresh repo deploys without a manual Settings toggle.
       - name: Setup Pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
