@@ -186,6 +186,8 @@ export interface ModelVote {
   confidence: number; // 0-100
   /** Adaptive ensemble weight (from each model's verified track record) */
   weight: number;
+  /** Number of verified outcomes this model's weight is based on */
+  samples: number;
 }
 
 /** Per-horizon forecast target (candles ahead). Primary signal = max horizon. */

@@ -10,8 +10,8 @@ import type { PredictionOutcome } from "@/types";
 const dirColorOf = (dir?: string) =>
   dir === "up" ? "#0a9c36" : dir === "down" ? "#d43b36" : "#55635a";
 
-function ModelVoteRow({ name, direction, confidence, probability, weight }: {
-  name: string; direction: string; confidence: number; probability: number; weight: number;
+function ModelVoteRow({ name, direction, confidence, probability, weight, samples }: {
+  name: string; direction: string; confidence: number; probability: number; weight: number; samples: number;
 }) {
   const color = dirColorOf(direction);
   return (
@@ -27,7 +27,8 @@ function ModelVoteRow({ name, direction, confidence, probability, weight }: {
         />
       </div>
       <span className="text-xs font-mono font-bold w-8 text-right" style={{ color }}>{direction.toUpperCase()}</span>
-      <span className="text-[10px] font-mono text-slate-500 w-9 text-right">{weight.toFixed(2)}w</span>
+      <span className="text-[10px] font-mono text-slate-500 text-right">{weight.toFixed(2)}w</span>
+      <span className="text-[9px] font-mono text-slate-400 w-8 text-right" title="verified outcomes this weight is based on">×{samples}</span>
     </div>
   );
 }
@@ -534,9 +535,10 @@ export default function MLPredictionPanel() {
           <div className="mb-1 flex items-center gap-1.5">
             <Zap size={10} className="text-slate-500" />
             <span className="text-xs font-mono text-slate-500">MODEL VOTES · WEIGHTED</span>
+            <span className="text-[9px] font-mono text-slate-400 ml-auto">{prediction.votes.reduce((a, v) => a + (v.samples || 0), 0)} VERIFIED</span>
           </div>
           {prediction.votes.map(v => (
-            <ModelVoteRow key={v.name} name={v.name} direction={v.direction} confidence={v.confidence} probability={v.probability} weight={v.weight} />
+            <ModelVoteRow key={v.name} name={v.name} direction={v.direction} confidence={v.confidence} probability={v.probability} weight={v.weight} samples={v.samples || 0} />
           ))}
         </div>
       ) : (

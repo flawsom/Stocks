@@ -758,6 +758,16 @@ export class MLEngine {
         retrainCount: this.retrainCount,
         featureSize: this.featureSize,
         lastTrainedAt: this.lastTrainedAt,
+        // Verified track record → adaptive ensemble weights survive reloads
+        resolved: this.resolved.slice(-300),
+        rollingAccuracy: this.rollingAccuracy.slice(-120),
+        signalCum: this.signalCum,
+        buyHoldCum: this.buyHoldCum,
+        pnlSeries: this.pnlSeries.slice(-300),
+        modelRecent: Object.fromEntries(this.modelRecent),
+        modelWeights: { ...this.modelWeights },
+        outcomes: this.outcomes.slice(0, 60),
+        pending: this.pending.slice(0, 50),
       };
       localStorage.setItem(this.persistKey(), JSON.stringify(data));
       this.logEvent("persist", `Weights saved (${this.featureSize} features)`);
@@ -775,6 +785,14 @@ export class MLEngine {
         memory?: { f: number[]; label: number }[];
         lr?: number; epoch?: number; retrainCount?: number;
         featureSize?: number; lastTrainedAt?: number;
+        resolved?: { predicted: PredictionDirection; actual: PredictionDirection; hit: boolean; t: number; confidence: number }[];
+        rollingAccuracy?: { t: number; v: number }[];
+        signalCum?: number; buyHoldCum?: number;
+        pnlSeries?: { t: number; signal: number; buyHold: number }[];
+        modelRecent?: Record<string, number[]>;
+        modelWeights?: Record<string, number>;
+        outcomes?: PredictionOutcome[];
+        pending?: PredictionOutcome[];
       };
       if (!d.mlps || !d.featureSize) return;
       d.mlps.forEach((m, i) => {
@@ -789,6 +807,21 @@ export class MLEngine {
       this.featureSize = d.featureSize;
       this.initialized = true;
       this.lastTrainedAt = d.lastTrainedAt || 0;
+      // Restore the verified track record → adaptive ensemble weights
+      if (Array.isArray(d.resolved)) this.resolved = d.resolved.slice(-300);
+      if (Array.isArray(d.rollingAccuracy)) this.rollingAccuracy = d.rollingAccuracy.slice(-120);
+      if (typeof d.signalCum === "number") this.signalCum = d.signalCum;
+      if (typeof d.buyHoldCum === "number") this.buyHoldCum = d.buyHoldCum;
+      if (Array.isArray(d.pnlSeries)) this.pnlSeries = d.pnlSeries.slice(-300);
+      if (d.modelRecent && typeof d.modelRecent === "object") {
+        for (const [k, v] of Object.entries(d.modelRecent)) {
+          if (Array.isArray(v)) this.modelRecent.set(k, v.filter((x): x is number => typeof x === "number").slice(-30));
+        }
+      }
+      if (d.modelWeights && typeof d.modelWeights === "object") this.modelWeights = { ...d.modelWeights };
+      if (Array.isArray(d.outcomes)) this.outcomes = d.outcomes.slice(0, 60);
+      if (Array.isArray(d.pending)) this.pending = d.pending.slice(0, 50);
+      if (this.modelRecent.size > 0) this.recomputeWeights();
       // Restore the EWC lock if anchors survived persistence
       this.ewcArmed = this.mlps.some(m => m.anchorW.length > 0);
       this.logEvent("persist", "Model restored from memory");
@@ -1243,7 +1276,7 @@ export class MLEngine {
       const p = m.predict(features);
       const c = classify(p);
       const w = this.modelWeight(m.name);
-      votes.push({ name: m.name, direction: c.direction, probability: p, confidence: c.confidence, weight: w });
+      votes.push({ name: m.name, direction: c.direction, probability: p, confidence: c.confidence, weight: w, samples: (this.modelRecent.get(m.name) || []).length });
       if (c.direction === "up") upW += w;
       else if (c.direction === "down") downW += w;
       else neutralW += w;
@@ -1352,6 +1385,7 @@ export class MLEngine {
       this.registerPendingFeatures(id, features);
       this.registerModelProbs(id, votes.map(v => ({ name: v.name, prob: v.probability })));
       if (this.pending.length > 50) this.pending.shift();
+      this.save();
     }
 
     this.lastInferenceMs = performance.now() - t0;
@@ -1469,6 +1503,7 @@ export class MLEngine {
       this.modelRecent.set(name, recent);
     }
     this.recomputeWeights();
+    this.save();
   }
 
   /** Full PredictionOutcome objects for the UI (resolved, newest first) + pending. */
