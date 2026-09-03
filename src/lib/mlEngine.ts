@@ -697,6 +697,8 @@ export class MLEngine {
   // Adaptive ensemble weights (per model, from verified track record)
   private modelRecent = new Map<string, number[]>(); // name -> recent 0/1 hits
   private modelWeights: Record<string, number> = {};
+  /** True once the track record has been seeded from historical replay. */
+  private trackSeeded = false;
 
   // Prediction smoothing
   private kalman = new Kalman1D();
@@ -1134,6 +1136,58 @@ export class MLEngine {
   }
 
   /* ── Adaptive weights from each model's verified track record ─ */
+  totalModelSamples(): number {
+    let n = 0;
+    for (const arr of this.modelRecent.values()) n += arr.length;
+    return n;
+  }
+
+  /**
+   * One-time seeding: replay the recent historical windows through the
+   * ensemble so adaptive weights start informed instead of at the flat 1/N
+   * prior. Read-only evaluation on real candles - no training, no leakage
+   * into the live nets; live verified outcomes accrue on top.
+   */
+  backfillTrackRecord(candles: OHLCV[]): number {
+    if (!this.initialized) return 0;
+    const H = ML_CONFIG.PREDICTION_HORIZON;
+    const L = ML_CONFIG.SEQ_LENGTH;
+    const start = Math.max(L, candles.length - 90);
+    if (candles.length < start + H + 1) return 0;
+    const models = this.allModels();
+    let n = 0;
+    for (let i = start; i < candles.length - H; i++) {
+      const f = buildFeatures(candles.slice(i - L, i));
+      if (f.length !== this.featureSize) continue;
+      const change = (candles[i + H].close - candles[i].close) / candles[i].close;
+      let actual: PredictionDirection = "neutral";
+      if (change > THRESHOLD * 2) actual = "up";
+      else if (change < -THRESHOLD * 2) actual = "down";
+      for (const m of models) {
+        const dir = classify(m.predict(f)).direction;
+        const hit = dir !== "neutral" && dir === actual ? 1 : 0;
+        const recent = this.modelRecent.get(m.name) || [];
+        recent.push(hit);
+        if (recent.length > 30) recent.shift();
+        this.modelRecent.set(m.name, recent);
+      }
+      n++;
+    }
+    if (n > 0) {
+      this.recomputeWeights();
+      this.save();
+      this.trackSeeded = true;
+      this.logEvent("eval", `Track record seeded: replayed ${n} historical windows through the ensemble`);
+      this.logDecision(
+        "verdict",
+        `Weights seeded from ${n} replayed historical windows`,
+        "walk-forward replay on real candles · relative model accuracy drives the weights",
+        "historical replay, read-only evaluation · live verified outcomes accrue on top"
+      );
+    }
+    return n;
+  }
+
   private recomputeWeights() {
     const names = this.allModels().map(m => m.name);
     const raw: Record<string, number> = {};
@@ -1262,6 +1316,13 @@ export class MLEngine {
     const window = candles.slice(-Math.min(ML_CONFIG.SEQ_LENGTH, candles.length));
     const features = buildFeatures(window);
     if (features.length !== this.featureSize) return null;
+
+    // Seed adaptive weights once from a walk-forward replay when no verified
+    // outcomes exist yet (fresh browser or cleared storage). Real candles,
+    // causal windows; live outcomes accrue on top from here.
+    if (!this.trackSeeded && this.totalModelSamples() === 0 && candles.length >= ML_CONFIG.SEQ_LENGTH + 40) {
+      this.backfillTrackRecord(candles);
+    }
 
     // Epistemic uncertainty (MC dropout) + Grad-CAM-style attribution
     const mcU = this.mcUncertainty(features);

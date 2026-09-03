@@ -535,7 +535,7 @@ export default function MLPredictionPanel() {
           <div className="mb-1 flex items-center gap-1.5">
             <Zap size={10} className="text-slate-500" />
             <span className="text-xs font-mono text-slate-500">MODEL VOTES · WEIGHTED</span>
-            <span className="text-[9px] font-mono text-slate-400 ml-auto">{prediction.votes.reduce((a, v) => a + (v.samples || 0), 0)} VERIFIED</span>
+            <span className="text-[9px] font-mono text-slate-400 ml-auto" title="verified windows each model was evaluated on">{prediction.votes[0]?.samples || 0} EVAL</span>
           </div>
           {prediction.votes.map(v => (
             <ModelVoteRow key={v.name} name={v.name} direction={v.direction} confidence={v.confidence} probability={v.probability} weight={v.weight} samples={v.samples || 0} />
